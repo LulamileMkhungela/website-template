@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">LulaFind</string>
+    <string name="title_activity_main">LulaFind</string>
+    <string name="package_name">com.lulafind.app</string>
+    <string name="custom_url_scheme">com.lulafind.app</string>
+</resources>

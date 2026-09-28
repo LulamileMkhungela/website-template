@@ -1,0 +1,886 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <script src="../../lulamile/base-path-fix.js?v=2"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>(function () { try { var d = document.documentElement, c = d.classList; c.remove('light', 'dark'); var e = localStorage.getItem('theme'); if (e) { c.add(e || '') } else { c.add('light'); } if (e === 'light' || e === 'dark' || !e) d.style.colorScheme = e || 'light' } catch (t) { } })();</script>
+  <link rel="icon" href="../../favicon.webp?v=2" type="image/webp" />
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@200,300,400,500,600,700&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <title>FoodieZone — Live Food Ordering PWA | LulaMile-HalfMachine</title>
+  <meta name="description"
+    content="Case study: end-to-end design and build of FoodieZone, a live installable food ordering PWA for a kitchen in Pimville, Soweto — from discovery through to launch." />
+  <meta name="author" content="LulaMile-HalfMachine" />
+  <link rel="canonical" href="https://lulamilemkhungela.github.io/website-template/project/foodiezone-pwa/" />
+  <meta name="robots" content="index, follow, noai, noimageai" />
+  <meta property="og:title" content="FoodieZone — Live Food Ordering PWA" />
+  <meta property="og:description"
+    content="End-to-end design and build of a live, installable food ordering PWA for a Soweto kitchen — menu architecture, combos and offline-first ordering." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://lulamilemkhungela.github.io/website-template/project/foodiezone-pwa/" />
+  <meta property="og:image"
+    content="https://lulamilemkhungela.github.io/website-template/projects/lulamile/foodiezone-cover.png" />
+  <meta property="og:locale" content="en_ZA" />
+  <meta property="og:site_name" content="LulaMile-HalfMachine Portfolio" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="FoodieZone — Live Food Ordering PWA" />
+  <meta name="twitter:image"
+    content="https://lulamilemkhungela.github.io/website-template/projects/lulamile/foodiezone-cover.png" />
+  <style>
+    :root {
+      --background: 30 40% 97%;
+      --foreground: 25 45% 10%;
+      --card: 30 35% 94%;
+      --muted-foreground: 25 20% 42%;
+      --border: 25 22% 87%;
+      --hero-accent: 22 95% 48%;
+    }
+
+    .dark {
+      --background: 25 38% 10%;
+      --foreground: 30 40% 94%;
+      --card: 25 32% 14%;
+      --muted-foreground: 30 18% 64%;
+      --border: 25 26% 20%;
+      --hero-accent: 28 100% 58%;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block
+    }
+
+    a {
+      color: inherit
+    }
+
+    :root {
+      --glass-bg: hsl(var(--background)/0.7);
+      --glass-card: hsl(var(--card)/0.6);
+      --glass-brd: hsl(var(--foreground)/0.09);
+      --glass-sh: 0 8px 30px -10px hsl(var(--foreground)/0.16);
+    }
+
+    .dark {
+      --glass-bg: hsl(var(--card)/0.5);
+      --glass-brd: hsl(var(--background)/0.22);
+    }
+
+    .glass {
+      background: var(--glass-card);
+      -webkit-backdrop-filter: blur(14px) saturate(1.35);
+      backdrop-filter: blur(14px) saturate(1.35);
+      border: 1px solid var(--glass-brd);
+      box-shadow: var(--glass-sh);
+    }
+
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 4vw, 36px)
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--glass-bg);
+      -webkit-backdrop-filter: blur(18px) saturate(1.5);
+      backdrop-filter: blur(18px) saturate(1.5);
+      border-bottom: 1px solid var(--glass-brd);
+      box-shadow: var(--glass-sh);
+    }
+
+    .topbar .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 11px;
+      padding-bottom: 11px;
+      gap: 12px
+    }
+
+    .topbar a {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 22px
+    }
+
+    .nav a {
+      font-size: 14px;
+      font-weight: 500;
+      color: hsl(var(--foreground));
+      text-decoration: none;
+      transition: color .18s
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      color: hsl(var(--hero-accent));
+      font-weight: 700
+    }
+
+    .nav a.pill {
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: hsl(var(--hero-accent));
+      color: #fff;
+      font-weight: 700
+    }
+
+    .drop {
+      position: relative
+    }
+
+    .drop summary {
+      list-style: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: hsl(var(--foreground))
+    }
+
+    .drop summary::-webkit-details-marker {
+      display: none
+    }
+
+    .drop summary::after {
+      content: "▾";
+      font-size: 10px;
+      opacity: .55
+    }
+
+    .drop .menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 220px;
+      background: var(--glass-card);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-brd);
+      border-radius: 13px;
+      padding: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      box-shadow: 0 16px 40px -14px hsl(var(--foreground)/.28);
+      z-index: 100;
+    }
+
+    .drop .menu a {
+      padding: 8px 12px;
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: hsl(var(--foreground));
+      transition: background .15s, color .15s
+    }
+
+    .drop .menu a:hover,
+    .drop .menu a.active {
+      background: hsl(var(--background)/.7);
+      color: hsl(var(--hero-accent));
+      font-weight: 700
+    }
+
+    @media(max-width:780px) {
+
+      .nav a:not(.pill),
+      .drop {
+        display: none
+      }
+    }
+
+    .hero {
+      padding: clamp(56px, 9vw, 96px) 0 clamp(28px, 4vw, 44px)
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: hsl(var(--hero-accent));
+      margin-bottom: 15px
+    }
+
+    h1 {
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-size: clamp(28px, 5vw, 58px);
+      line-height: 1.06;
+      font-weight: 700;
+      letter-spacing: -.022em;
+      max-width: 22ch
+    }
+
+    .sub {
+      margin-top: 17px;
+      font-size: clamp(15px, 1.8vw, 18px);
+      color: hsl(var(--muted-foreground));
+      max-width: 60ch;
+      line-height: 1.65
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1px;
+      background: hsl(var(--border)/.7);
+      border: 1px solid hsl(var(--border)/.7);
+      border-radius: 15px;
+      overflow: hidden;
+      margin-top: 32px
+    }
+
+    .meta div {
+      background: hsl(var(--card));
+      padding: 13px 16px
+    }
+
+    .meta dt {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: hsl(var(--muted-foreground));
+      margin-bottom: 4px
+    }
+
+    .meta dd {
+      font-size: 13px;
+      font-weight: 600
+    }
+
+    .live-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 20px;
+      padding: 11px 22px;
+      border-radius: 999px;
+      background: hsl(var(--hero-accent));
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      transition: transform .2s, opacity .2s
+    }
+
+    .live-btn:hover {
+      transform: translateY(-2px);
+      opacity: .9
+    }
+
+    figure {
+      margin: clamp(24px, 4vw, 36px) 0
+    }
+
+    figure img {
+      width: 100%;
+      border-radius: 18px;
+      border: 1px solid hsl(var(--border)/.7);
+      transition: transform .5s ease, box-shadow .5s ease
+    }
+
+    figure img:hover {
+      transform: scale(1.012);
+      box-shadow: 0 24px 56px -22px hsl(var(--foreground)/.28)
+    }
+
+    figcaption {
+      margin-top: 9px;
+      font-size: 13px;
+      color: hsl(var(--muted-foreground));
+      text-align: center
+    }
+
+    section {
+      padding: clamp(36px, 5.5vw, 56px) 0;
+      border-top: 1px solid hsl(var(--border)/.6)
+    }
+
+    h2 {
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-size: clamp(22px, 3.4vw, 38px);
+      font-weight: 700;
+      letter-spacing: -.015em;
+      line-height: 1.1;
+      margin-bottom: 16px
+    }
+
+    h2 .acc {
+      color: hsl(var(--hero-accent))
+    }
+
+    p+p {
+      margin-top: 12px
+    }
+
+    .lede {
+      font-size: clamp(14px, 1.8vw, 17px);
+      color: hsl(var(--muted-foreground));
+      max-width: 66ch
+    }
+
+    ul.bullets {
+      list-style: none;
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      max-width: 680px
+    }
+
+    ul.bullets li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 14px
+    }
+
+    ul.bullets li::before {
+      content: "→";
+      color: hsl(var(--hero-accent));
+      font-size: 16px;
+      flex-shrink: 0;
+      line-height: 1.4
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 13px;
+      margin-top: 20px;
+      counter-reset: st
+    }
+
+    .step {
+      border: 1px solid hsl(var(--border)/.7);
+      border-radius: 14px;
+      padding: 17px;
+      background: hsl(var(--card)/0.5)
+    }
+
+    .step::before {
+      counter-increment: st;
+      content: "0" counter(st);
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      color: hsl(var(--hero-accent));
+      display: block;
+      margin-bottom: 7px
+    }
+
+    .step h3 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 5px
+    }
+
+    .step p {
+      font-size: 13px;
+      color: hsl(var(--muted-foreground));
+      line-height: 1.55
+    }
+
+    .g2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 15px;
+      margin-top: 20px
+    }
+
+    .card {
+      padding: 20px;
+      border-radius: 15px;
+      border: 1px solid hsl(var(--border)/.7);
+      background: hsl(var(--card)/0.5)
+    }
+
+    .card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 7px
+    }
+
+    .card p {
+      font-size: 13px;
+      color: hsl(var(--muted-foreground));
+      line-height: 1.6
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin-top: 20px
+    }
+
+    .kpi {
+      padding: 17px;
+      border-radius: 14px;
+      border: 1px solid hsl(var(--border)/.7);
+      background: hsl(var(--card)/0.5)
+    }
+
+    .kpi b {
+      display: block;
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-size: 28px;
+      color: hsl(var(--hero-accent));
+      letter-spacing: -.02em;
+      margin-bottom: 4px
+    }
+
+    .kpi span {
+      font-size: 12px;
+      color: hsl(var(--muted-foreground));
+      line-height: 1.5
+    }
+
+    .note {
+      margin-top: 16px;
+      font-size: 13px;
+      color: hsl(var(--muted-foreground));
+      border-left: 3px solid hsl(var(--hero-accent));
+      padding: 5px 0 5px 13px;
+      line-height: 1.65;
+      font-style: italic
+    }
+
+    .cta-block {
+      padding: clamp(48px, 7vw, 80px) 0 clamp(60px, 9vw, 100px);
+      text-align: center;
+      border-top: 1px solid hsl(var(--border)/.6)
+    }
+
+    .cta-main {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 13px 28px;
+      border-radius: 999px;
+      background: hsl(var(--hero-accent));
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 15px;
+      transition: transform .25s, box-shadow .25s
+    }
+
+    .cta-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px -10px hsl(var(--hero-accent)/.6)
+    }
+
+    .cta-ghost {
+      display: inline-block;
+      margin: 20px 0 0 12px;
+      padding: 13px 22px;
+      border-radius: 999px;
+      border: 1px solid hsl(var(--border));
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      color: hsl(var(--muted-foreground))
+    }
+
+    footer {
+      border-top: 1px solid hsl(var(--border)/.6);
+      padding: 22px 0;
+      font-size: 13px;
+      color: hsl(var(--muted-foreground))
+    }
+
+    footer .wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between
+    }
+
+    .rv {
+      opacity: 0;
+      transform: translateY(13px);
+      transition: opacity .6s ease, transform .6s ease
+    }
+
+    .rv.in {
+      opacity: 1;
+      transform: none
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      .rv {
+        opacity: 1;
+        transform: none;
+        transition: none
+      }
+
+      figure img:hover {
+        transform: none
+      }
+
+      html {
+        scroll-behavior: auto
+      }
+    }
+
+    @media(max-width:580px) {
+      .meta {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .steps,
+      .g2,
+      .kpis {
+        grid-template-columns: 1fr
+      }
+
+      .cta-ghost {
+        display: block;
+        margin: 12px auto 0;
+        width: fit-content
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="wrap">
+      <a href="../../">
+        <span
+          style="width:33px;height:33px;border-radius:50%;overflow:hidden;border:2px solid hsl(var(--hero-accent)/.3);flex-shrink:0">
+          <img src="../../lulamile/meew.jpeg" alt="LulaMile-HalfMachine"
+            style="width:100%;height:100%;object-fit:cover" />
+        </span>
+        <span style="display:flex;flex-direction:column;line-height:1.2">
+          <span style="font-size:14px;font-weight:600">LulaMile-HalfMachine</span>
+          <span style="font-size:11px;color:hsl(var(--muted-foreground))">Johannesburg, Anywhere Remote</span>
+        </span>
+      </a>
+      <nav class="nav" aria-label="Site">
+        <a href="../../">Home</a>
+        <a href="../../services/">Services</a>
+        <details class="drop">
+          <summary>Expertise &amp; Works</summary>
+          <div class="menu">
+            <a href="../../product-design-strategy/" class="active">Product Design &amp; Strategy</a>
+            <a href="../../brand-strategy-and-growth/">Brand Strategy &amp; Growth</a>
+            <a href="../../website-design-conversion/">Website Design &amp; Conversion</a>
+            <a href="../../frontend-development/">Frontend Development</a>
+            <a href="../../microfinance-impact-consulting/">Microfinance &amp; Impact</a>
+          </div>
+        </details>
+        <a href="../../about/">About</a>
+        <a class="pill" href="../../contact/">Book a Call</a>
+      </nav>
+    </div>
+  </div>
+
+  <header class="hero wrap">
+    <p class="eyebrow rv">Case Study · PWA Design &amp; Build · 2024</p>
+    <h1 class="rv">FoodieZone — a live food ordering PWA for a Soweto kitchen.</h1>
+    <p class="sub rv">Orders used to come in through WhatsApp all day. Now customers order themselves, reorder in a tap,
+      and the owner updates the menu from a phone. End-to-end PWA: research, information architecture, UX, UI and live
+      build.</p>
+    <dl class="meta rv">
+      <div>
+        <dt>Role</dt>
+        <dd>Product Designer &amp; Developer</dd>
+      </div>
+      <div>
+        <dt>Type</dt>
+        <dd>PWA Design &amp; Build</dd>
+      </div>
+      <div>
+        <dt>Client</dt>
+        <dd>FoodieZone, Pimville Soweto</dd>
+      </div>
+      <div>
+        <dt>Year</dt>
+        <dd>2024</dd>
+      </div>
+      <div>
+        <dt>Deliverables</dt>
+        <dd>Live installable PWA</dd>
+      </div>
+      <div>
+        <dt>Status</dt>
+        <dd>Live</dd>
+      </div>
+    </dl>
+    <a class="live-btn rv" href="https://loux91.github.io/foodiezone/" target="_blank" rel="noopener noreferrer">Open
+      live PWA ↗</a>
+  </header>
+
+  <main class="wrap">
+
+    <figure class="rv" style="margin-top:0">
+      <img src="../../projects/lulamile/foodiezone-cover.png"
+        alt="FoodieZone PWA — food ordering app home screen with category navigation and featured dishes"
+        loading="eager" fetchpriority="high" style="aspect-ratio:16/9;object-fit:cover;width:100%" />
+      <figcaption>FoodieZone on mobile — category navigation, daily specials and a one-tap reorder flow. Live at <a
+          href="https://loux91.github.io/foodiezone/" target="_blank" rel="noopener noreferrer"
+          style="color:hsl(var(--hero-accent));font-weight:600;">loux91.github.io/foodiezone ↗</a></figcaption>
+    </figure>
+
+    <section>
+      <p class="eyebrow rv">The brief</p>
+      <h2 class="rv">WhatsApp orders, <span class="acc">all day long</span>.</h2>
+      <p class="lede rv">FoodieZone is a home kitchen in Pimville, Soweto, serving daily specials, combos and family
+        meals. Before this project, every order came in via WhatsApp message — read, replied to, tracked manually. Busy
+        service meant missed orders and frustrated customers.</p>
+      <p class="rv">The owner needed one thing: customers order themselves, and I see it on my phone. No app store, no
+        monthly fees, no waiting for a developer to update the menu. A PWA was the right answer — installable,
+        offline-capable, and fast on a South African data connection.</p>
+    </section>
+
+    <section>
+      <p class="eyebrow rv">Discovery &amp; research</p>
+      <h2 class="rv">Understanding the <span class="acc">kitchen first</span>.</h2>
+      <p class="lede rv">Before wireframes: two sessions with the owner to map the menu, the ordering patterns, and the
+        pain points. Then a quick teardown of three competing township food ordering apps to understand what works at
+        low data speeds.</p>
+      <ul class="bullets rv">
+        <li>Menu items changed daily — the system had to let the owner update without a developer</li>
+        <li>Customers often reordered the same meals — a reorder shortcut would be used constantly</li>
+        <li>Connectivity was inconsistent — offline-first caching was non-negotiable, not a nice-to-have</li>
+        <li>Most customers were on Android, mid-range phones, 1–2 year old devices</li>
+        <li>Payment was cash on delivery — no payment gateway needed at launch</li>
+        <li>The owner managed orders alone — the admin view had to be simple enough to use mid-service</li>
+      </ul>
+    </section>
+
+    <section>
+      <p class="eyebrow rv">Information architecture</p>
+      <h2 class="rv">Structure before <span class="acc">screens</span>.</h2>
+      <p class="lede rv">The menu had four natural groupings: daily specials, combos, single plates and drinks. Card
+        sorting with five regular customers confirmed these were the right buckets. Navigation built around how
+        customers think about food, not how the kitchen organises its stock.</p>
+      <div class="g2 rv">
+        <div class="card glass">
+          <h3>Home screen</h3>
+          <p>Daily specials prominently featured. Category navigation below. Reorder strip for returning customers above
+            the fold.</p>
+        </div>
+        <div class="card glass">
+          <h3>Menu browsing</h3>
+          <p>Filtered by category. Item cards show name, price, a real photo and an add-to-order tap. No sub-menus, no
+            friction.</p>
+        </div>
+        <div class="card glass">
+          <h3>Order summary</h3>
+          <p>Running total visible at all times. Edit quantity inline. No checkout — order goes straight to the kitchen
+            on confirm.</p>
+        </div>
+        <div class="card glass">
+          <h3>Order confirmation</h3>
+          <p>Estimated time, order reference, option to share via WhatsApp or copy the reference. Closes the loop
+            customers expect.</p>
+        </div>
+        <div class="card glass">
+          <h3>Owner admin</h3>
+          <p>Incoming orders with status toggles (Received → Preparing → Ready). Menu manager: add, edit, hide items
+            without touching code.</p>
+        </div>
+        <div class="card glass">
+          <h3>Reorder shortcut</h3>
+          <p>Last three orders surfaced on the home screen for logged-in customers. One tap to repeat the whole basket.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow rv">UX design</p>
+      <h2 class="rv">Flows that work on a <span class="acc">busy day</span>.</h2>
+      <p class="lede rv">The most important user journey: land on the app, find a meal, add it, confirm the order — in
+        under 60 seconds on a 3G connection. Every screen was tested against that constraint before it was built.</p>
+      <div class="steps rv">
+        <div class="step">
+          <h3>The 60-second rule</h3>
+          <p>Every journey had to fit a number: land, find a meal, into the basket, order confirmed — under a minute on
+            3G. Six flows were mapped against that clock (browse, order, reorder, search, tracking and the admin side),
+            and the owner walked each one before a single screen was drawn.</p>
+        </div>
+        <div class="step">
+          <h3>Screens that survive a kitchen</h3>
+          <p>Wireframes started from one question: can this be tapped with a floury hand at 1pm? Minimum 44×44px on
+            everything interactive, big labels, no tiny steppers. Paper first, then Figma.</p>
+        </div>
+        <div class="step">
+          <h3>Tested with real regulars</h3>
+          <p>Three of the owner's actual customers clicked through the order flow. The order summary earned one
+            redesign — quantity editing was unclear, so it was rebuilt around it. Fixed before build, not after launch.</p>
+        </div>
+        <div class="step">
+          <h3>Built to be read, not decoded</h3>
+          <p>WCAG AA contrast throughout, descriptive alt text on every dish photo, and status always shown with colour
+            plus text plus icon — nothing colour-only.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow rv">Visual design</p>
+      <h2 class="rv">Warm, fast and <span class="acc">unmistakably food</span>.</h2>
+      <p class="lede rv">The visual language needed to feel appetising on a small screen without heavy images slowing
+        the app down. Warm oranges and deep browns referencing township street food, with real food photography provided
+        by the owner.</p>
+      <figure class="rv">
+        <img src="../../projects/lulamile/foodiezone-flow.png"
+          alt="FoodieZone design flow — wireframe to high fidelity screens showing the ordering journey" loading="lazy"
+          decoding="async" />
+        <figcaption>From wireframe to high fidelity — the order flow across home, menu and confirmation screens.
+        </figcaption>
+      </figure>
+      <div class="g2 rv">
+        <div class="card glass">
+          <h3>Colour system</h3>
+          <p>Primary orange #E07B39 for CTAs and highlights. Deep brown #2D1A0E as the hero dark tone. Off-white #FAF6F1
+            for backgrounds — warm and food-adjacent without being garish.</p>
+        </div>
+        <div class="card glass">
+          <h3>Typography</h3>
+          <p>Inter for body and UI. Clash Grotesk for headings and prices — large, legible price display was a
+            deliberate choice to reduce "how much?" messages to the owner.</p>
+        </div>
+        <div class="card glass">
+          <h3>Food photography</h3>
+          <p>Real photos of real dishes, taken by the owner on a phone. Cropped to consistent 4:3 aspect ratio,
+            compressed to under 80KB per image for low-data performance.</p>
+        </div>
+        <div class="card glass">
+          <h3>Dark mode</h3>
+          <p>Full dark mode implemented — a deliberate choice for a product used in low-light environments like evening
+            orders and indoor kitchens.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow rv">Build</p>
+      <h2 class="rv">Offline-first, <span class="acc">installable, fast</span>.</h2>
+      <p class="lede rv">Built as a Progressive Web App: service worker for offline caching, Web App Manifest for
+        install-to-homescreen, and a performance budget of under 3 seconds first load on a 3G connection. Hosted on
+        GitHub Pages — zero monthly cost for the owner.</p>
+      <div class="g2 rv">
+        <div class="card glass">
+          <h3>Service worker</h3>
+          <p>Stale-while-revalidate caching strategy — the app works fully offline and updates in the background when
+            connection returns. Menu items cached after first load.</p>
+        </div>
+        <div class="card glass">
+          <h3>Install prompt</h3>
+          <p>Custom install banner shown after the second visit. Explains what "Add to Home Screen" means in plain
+            language. Dismissable without nagging.</p>
+        </div>
+        <div class="card glass">
+          <h3>Performance</h3>
+          <p>Lighthouse score 94/100 on mobile. Images served in WebP with PNG fallbacks. Critical CSS inlined to
+            eliminate render-blocking.</p>
+        </div>
+        <div class="card glass">
+          <h3>Menu CMS</h3>
+          <p>Owner updates menu via a simple admin interface — no code, no deployment. Changes appear in the live app
+            within 30 seconds of saving.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow rv">Outcomes</p>
+      <h2 class="rv">Orders in the app, <span class="acc">not in WhatsApp</span>.</h2>
+      <div class="kpis rv">
+        <div class="kpi"><b>100%</b><span>of orders now placed through the PWA — zero WhatsApp order messages</span>
+        </div>
+        <div class="kpi"><b>94</b><span>Lighthouse performance score on mobile (3G simulation)</span></div>
+        <div class="kpi"><b>↑ 3×</b><span>average order value — customers browsed and added more when they could see the
+            full menu</span></div>
+        <div class="kpi"><b>Zero</b><span>missed orders since launch — every order has a reference number and
+            timestamp</span></div>
+      </div>
+      <p class="note rv">"Orders used to come through messages all day. Now customers order themselves, reorder in a
+        tap, and I change the menu from my phone. It just works." — Owner, FoodieZone</p>
+    </section>
+
+  </main>
+
+  <div class="cta-block">
+    <div class="wrap">
+      <h2>Need a PWA that actually gets used?</h2>
+      <p class="lede" style="margin:0 auto">Research through to a live, installable product — one pair of hands, end to
+        end.</p>
+      <a class="cta-main" href="../../contact/">Start a conversation</a>
+      <a class="cta-ghost" href="../../product-design-strategy/">See more product work</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <span>© 2026 LulaMile-HalfMachine · Johannesburg, South Africa</span>
+      <span>FoodieZone case study · content protected</span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var els = document.querySelectorAll('.rv');
+      if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+      }, { threshold: 0.08 });
+      els.forEach(function (e) { io.observe(e); });
+    })();
+    document.querySelectorAll('button,a').forEach(function (el) {
+      if ((el.textContent || '').trim() === '← Back' || (el.textContent || '').trim() === 'Back') {
+        el.addEventListener('click', function (e) { e.preventDefault(); if (window.history.length > 1) window.history.back(); else window.location.href = '../../'; });
+      }
+    });
+  </script>
+</body>
+
+</html>

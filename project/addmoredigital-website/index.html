@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <script src="../../lulamile/base-path-fix.js?v=2"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    (function () { try { var d = document.documentElement, c = d.classList; c.remove('light', 'dark'); var e = localStorage.getItem('theme'); if (e) { c.add(e || '') } else { c.add('light'); } if (e === 'light' || e === 'dark' || !e) d.style.colorScheme = e || 'light' } catch (t) { } })();
+  </script>
+  <link rel="icon" href="../../favicon.webp?v=2" type="image/webp" />
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@200,300,400,500,600,700&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <title>AddmoreDigital — Website Design, CRM &amp; SEO | LulaMile-HalfMachine</title>
+  <meta name="description"
+    content="Case study: CRM implementation, SEO strategy and website design for AddmoreDigital — turning agency work into a proposal pipeline that closes." />
+  <meta name="author" content="LulaMile-HalfMachine" />
+  <link rel="canonical"
+    href="https://lulamilemkhungela.github.io/website-template/project/addmoredigital-website/" />
+  <meta name="robots"
+    content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1, noai, noimageai" />
+  <meta property="og:title" content="AddmoreDigital — Website Design, CRM &amp; SEO" />
+  <meta property="og:description"
+    content="CRM, SEO and website design for a digital agency — proposals arrived with context, scramble stopped." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url"
+    content="https://lulamilemkhungela.github.io/website-template/project/addmoredigital-website/" />
+  <meta property="og:image"
+    content="https://lulamilemkhungela.github.io/website-template/projects/lulamile/addmoredigital-cover.png" />
+  <meta property="og:locale" content="en_ZA" />
+  <meta property="og:site_name" content="LulaMile-HalfMachine Portfolio" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AddmoreDigital — Website Design, CRM &amp; SEO" />
+  <meta name="twitter:image"
+    content="https://lulamilemkhungela.github.io/website-template/projects/lulamile/addmoredigital-cover.png" />
+
+  <style>
+    :root {
+      --background: 260 42% 96%;
+      --foreground: 255 45% 12%;
+      --card: 260 35% 94%;
+      --muted-foreground: 255 20% 38%;
+      --border: 255 25% 86%;
+      --hero-accent: 24 95% 48%;
+    }
+
+    .dark {
+      --background: 255 45% 12%;
+      --foreground: 260 42% 96%;
+      --card: 255 40% 16%;
+      --muted-foreground: 260 20% 78%;
+      --border: 255 30% 24%;
+      --hero-accent: 30 100% 60%;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px
+    }
+
+    a {
+      color: inherit
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: hsl(var(--background)/.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid hsl(var(--border)/.6)
+    }
+
+    .topbar .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      gap: 16px
+    }
+
+    .topbar a {
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mainnav {
+      display: flex;
+      align-items: center;
+      gap: 26px
+    }
+
+    .mainnav a {
+      font-size: 14px;
+      font-weight: 500;
+      color: hsl(var(--foreground));
+      transition: color .2s ease;
+      text-decoration: none;
+    }
+
+    .mainnav a:hover {
+      color: hsl(var(--hero-accent))
+    }
+
+    .mainnav a.pill {
+      padding: 9px 18px;
+      border-radius: 999px;
+      background: hsl(var(--hero-accent));
+      color: #fff;
+      font-weight: 700
+    }
+
+    .drop {
+      position: relative
+    }
+
+    .drop summary {
+      list-style: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .drop summary::-webkit-details-marker {
+      display: none
+    }
+
+    .drop summary:after {
+      content: "▾";
+      font-size: 11px;
+      color: hsl(var(--muted-foreground))
+    }
+
+    .drop .menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 240px;
+      background: hsl(var(--card));
+      border: 1px solid hsl(var(--border));
+      border-radius: 16px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      box-shadow: 0 18px 44px -18px hsl(var(--foreground)/.35)
+    }
+
+    .drop .menu a {
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .drop .menu a:hover {
+      background: hsl(var(--background)/.7);
+      color: hsl(var(--hero-accent))
+    }
+
+    @media (max-width:860px) {
+
+      .mainnav a:not(.pill),
+      .drop {
+        display: none
+      }
+    }
+
+    .hero {
+      padding: 84px 0 40px
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: hsl(var(--hero-accent));
+      margin-bottom: 18px
+    }
+
+    h1 {
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-size: clamp(32px, 5.5vw, 60px);
+      line-height: 1.06;
+      font-weight: 700;
+      letter-spacing: -.02em;
+      max-width: 18ch
+    }
+
+    .sub {
+      margin-top: 20px;
+      font-size: clamp(15px, 2vw, 19px);
+      color: hsl(var(--muted-foreground));
+      max-width: 60ch
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1px;
+      background: hsl(var(--border)/.7);
+      border: 1px solid hsl(var(--border)/.7);
+      border-radius: 18px;
+      overflow: hidden;
+      margin-top: 40px
+    }
+
+    .meta div {
+      background: hsl(var(--card));
+      padding: 16px 18px
+    }
+
+    .meta dt {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: hsl(var(--muted-foreground));
+      margin-bottom: 5px
+    }
+
+    .meta dd {
+      font-size: 13px;
+      font-weight: 600
+    }
+
+    figure {
+      margin: 32px 0
+    }
+
+    figure img {
+      width: 100%;
+      border-radius: 20px;
+      border: 1px solid hsl(var(--border)/.7);
+      display: block;
+      transition: transform .5s ease, box-shadow .5s ease
+    }
+
+    figure img:hover {
+      transform: scale(1.012);
+      box-shadow: 0 24px 60px -24px hsl(var(--foreground)/.35)
+    }
+
+    figcaption {
+      margin-top: 10px;
+      font-size: 13px;
+      color: hsl(var(--muted-foreground));
+      text-align: center
+    }
+
+    section {
+      padding: 52px 0;
+      border-top: 1px solid hsl(var(--border)/.6)
+    }
+
+    h2 {
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-size: clamp(24px, 3.5vw, 38px);
+      font-weight: 700;
+      letter-spacing: -.015em;
+      line-height: 1.12;
+      margin-bottom: 16px
+    }
+
+    h2 .accent {
+      color: hsl(var(--hero-accent))
+    }
+
+    p+p {
+      margin-top: 14px
+    }
+
+    .lede {
+      font-size: clamp(15px, 1.8vw, 18px);
+      color: hsl(var(--muted-foreground));
+      max-width: 68ch
+    }
+
+    ul {
+      margin: 16px 0 0 2px;
+      list-style: none
+    }
+
+    li {
+      position: relative;
+      padding-left: 26px;
+      margin-top: 10px;
+      max-width: 78ch
+    }
+
+    li:before {
+      content: "";
+      position: absolute;
+      left: 2px;
+      top: .62em;
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      background: hsl(var(--hero-accent));
+      transform: rotate(45deg)
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 24px
+    }
+
+    .card {
+      background: hsl(var(--card)/.58);
+      -webkit-backdrop-filter: blur(14px) saturate(1.4);
+      backdrop-filter: blur(14px) saturate(1.4);
+      border: 1px solid hsl(var(--border)/.7);
+      border-radius: 18px;
+      padding: 22px
+    }
+
+    .card h3 {
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-size: 17px;
+      margin-bottom: 8px
+    }
+
+    .card p {
+      font-size: 13px;
+      color: hsl(var(--muted-foreground))
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 13px;
+      margin-top: 24px;
+      counter-reset: st
+    }
+
+    .step {
+      border: 1px solid hsl(var(--border)/.7);
+      border-radius: 16px;
+      padding: 18px;
+      background: hsl(var(--card)/.58);
+      -webkit-backdrop-filter: blur(14px) saturate(1.4);
+      backdrop-filter: blur(14px) saturate(1.4);
+      position: relative
+    }
+
+    .step:before {
+      counter-increment: st;
+      content: "0" counter(st);
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      color: hsl(var(--hero-accent));
+      display: block;
+      margin-bottom: 8px
+    }
+    /* canonical website-design process numbering (01, 02, 04, 05) */
+    .steps .step:nth-child(3)::before {
+      counter-increment: st 2
+    }
+
+
+    .step h3 {
+      font-size: 14px;
+      margin-bottom: 5px
+    }
+
+    .step p {
+      font-size: 13px;
+      color: hsl(var(--muted-foreground))
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+      gap: 13px;
+      margin-top: 24px
+    }
+
+    .kpi {
+      border: 1px solid hsl(var(--border)/.7);
+      border-radius: 16px;
+      padding: 18px;
+      background: hsl(var(--card)/.58);
+      -webkit-backdrop-filter: blur(14px) saturate(1.4);
+      backdrop-filter: blur(14px) saturate(1.4)
+    }
+
+    .kpi b {
+      display: block;
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-size: 26px;
+      color: hsl(var(--hero-accent));
+      letter-spacing: -.02em
+    }
+
+    .kpi span {
+      font-size: 12px;
+      color: hsl(var(--muted-foreground))
+    }
+
+    .note {
+      margin-top: 16px;
+      font-size: 13px;
+      color: hsl(var(--muted-foreground));
+      border-left: 3px solid hsl(var(--hero-accent));
+      padding: 6px 0 6px 14px
+    }
+
+    .cta {
+      padding: 70px 0 90px;
+      text-align: center
+    }
+
+    .cta .btn {
+      display: inline-block;
+      margin-top: 22px;
+      padding: 15px 28px;
+      border-radius: 999px;
+      background: hsl(var(--hero-accent));
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 15px;
+      transition: transform .25s ease, box-shadow .25s ease
+    }
+
+    .cta .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 34px -12px hsl(var(--hero-accent)/.7)
+    }
+
+    .cta .ghost {
+      display: inline-block;
+      margin: 22px 0 0 14px;
+      padding: 15px 24px;
+      border-radius: 999px;
+      border: 1px solid hsl(var(--border));
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      color: hsl(var(--muted-foreground))
+    }
+
+    footer {
+      border-top: 1px solid hsl(var(--border)/.6);
+      padding: 26px 0;
+      font-size: 13px;
+      color: hsl(var(--muted-foreground))
+    }
+
+    footer .wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between
+    }
+
+    .rv {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity .7s ease, transform .7s ease
+    }
+
+    .rv.in {
+      opacity: 1;
+      transform: none
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      .rv {
+        opacity: 1;
+        transform: none;
+        transition: none
+      }
+
+      html {
+        scroll-behavior: auto
+      }
+    }
+
+    .live-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 22px;
+      padding: 12px 24px;
+      border-radius: 999px;
+      background: hsl(var(--hero-accent));
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      transition: transform .25s ease
+    }
+
+    .live-btn:hover {
+      transform: translateY(-2px)
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="wrap">
+      <a href="../../">
+        <span
+          style="width:36px;height:36px;border-radius:50%;overflow:hidden;border:2px solid hsl(var(--hero-accent)/.35);display:inline-block">
+          <img src="../../lulamile/meew.jpeg" alt="LulaMile-HalfMachine"
+            style="width:100%;height:100%;object-fit:cover;display:block" />
+        </span>
+        <span style="display:flex;flex-direction:column;line-height:1.2">
+          <span style="font-size:14px;font-weight:600">LulaMile-HalfMachine</span>
+          <span style="font-size:11px;font-weight:400;color:hsl(var(--muted-foreground))">Johannesburg, Anywhere
+            Remote</span>
+        </span>
+      </a>
+      <nav class="mainnav" aria-label="Site">
+        <a href="../../">Home</a>
+        <a href="../../services/">Services</a>
+        <details class="drop">
+          <summary>Expertise &amp; Works</summary>
+          <div class="menu">
+            <a href="../../product-design-strategy/">Product Design &amp; Strategy</a>
+            <a href="../../brand-strategy-and-growth/">Brand Strategy &amp; Growth</a>
+            <a href="../../website-design-conversion/" style="color:hsl(var(--hero-accent));font-weight:700">Website
+              Design &amp; Conversion</a>
+            <a href="../../frontend-development/">Frontend Development</a>
+            <a href="../../microfinance-impact-consulting/">Microfinance &amp; Impact</a>
+          </div>
+        </details>
+        <a href="../../about/">About</a>
+        <a class="pill" href="../../contact/">Book a Call</a>
+      </nav>
+    </div>
+  </div>
+
+  <header class="hero wrap">
+    <p class="eyebrow rv">Case study · CRM · SEO · Website Design · 2024</p>
+    <h1 class="rv">AddmoreDigital — the agency site that works as hard as the agency.</h1>
+    <p class="sub rv">They had the work, they just couldn't present it. A restructured portfolio site, targeted SEO and
+      a CRM pipeline changed that: proposals stopped being a scramble and enquiries started arriving with context.</p>
+    <dl class="meta rv">
+      <div>
+        <dt>Role</dt>
+        <dd>Web Designer &amp; CRM Lead</dd>
+      </div>
+      <div>
+        <dt>Scope</dt>
+        <dd>CRM · SEO · Web Design</dd>
+      </div>
+      <div>
+        <dt>Industry</dt>
+        <dd>Digital Agency</dd>
+      </div>
+      <div>
+        <dt>Year</dt>
+        <dd>2024</dd>
+      </div>
+      <div>
+        <dt>Deliverables</dt>
+        <dd>Website + CRM + SEO</dd>
+      </div>
+      <div>
+        <dt>Status</dt>
+        <dd>Live</dd>
+      </div>
+    </dl>
+    <a class="live-btn rv" href="https://addmoredigital.co.za/" target="_blank" rel="noopener noreferrer">Visit the live
+      website ↗</a>
+  </header>
+
+  <main class="wrap">
+    <figure class="rv">
+      <img src="https://v1.screenshot.11ty.dev/https%3A%2F%2Faddmoredigital.co.za%2F/opengraph/"
+        alt="AddmoreDigital website — live landing page of the redesigned agency site" loading="eager"
+        fetchpriority="high" onerror="this.onerror=null;this.src='../../projects/lulamile/addmoredigital-cover.png'"
+        style="width:100%;border-radius:20px;border:1px solid hsl(var(--border)/.7);display:block" />
+      <figcaption>The redesigned AddmoreDigital site — live at <a href="https://addmoredigital.co.za/" target="_blank"
+          rel="noopener noreferrer" style="color:hsl(var(--hero-accent));font-weight:600;">addmoredigital.co.za ↗</a>
+      </figcaption>
+    </figure>
+
+    <section>
+      <p class="eyebrow rv">The brief</p>
+      <h2 class="rv">Portfolio-rich. <span class="accent">Web-presence-poor.</span></h2>
+      <p class="lede rv">AddmoreDigital had delivered strong work across branding, social and web for several South
+        African businesses. The problem: their own site didn't show any of it. A generic agency template, no portfolio
+        structure, and a contact form that delivered name-and-email with zero context.</p>
+      <p class="rv">The brief: restructure around the portfolio, get the site ranking, and build a pipeline so enquiries
+        arrive ready for a proposal conversation — not a discovery call from scratch every time.</p>
+    </section>
+
+    <section>
+      <p class="eyebrow rv">The challenge</p>
+      <h2 class="rv">Every agency looks the <span class="accent">same online</span>.</h2>
+      <ul class="rv">
+        <li>Generic service list: "branding, social media, web design" — the same words on five hundred agency sites.
+        </li>
+        <li>Invisible portfolio: work existed but was buried in a disorganised gallery with no context or results.</li>
+        <li>No discovery SEO: the agency ranked for its own name only. Nothing for the service keywords its clients
+          search.</li>
+        <li>Manual proposal process: every enquiry required an in-person discovery call before a brief could be written.
+        </li>
+        <li>No follow-up: leads went cold in a shared inbox with no ownership or timeline.</li>
+      </ul>
+    </section>
+
+    <section>
+      <p class="eyebrow rv">How we got there</p>
+      <h2 class="rv">Work first, words second, <span class="accent">pipeline underneath</span>.</h2>
+      <div class="steps rv">
+        <div class="step">
+          <h3>01 · Discovery</h3>
+          <p>One interview, zero assumptions. Every page of the old site was audited, the agency's own body of work pulled
+            back into the open, and shortlisted to the ten pieces worth framing properly. The enquiry path — search,
+            service, brief — was mapped on paper before layout started.</p>
+        </div>
+        <div class="step">
+          <h3>02 · Structure</h3>
+          <p>Service-first, always: each service got its own page, the portfolio sat underneath, and every project page
+            answers brief, execution and result. The company story moved to about — the navigation now does the selling.</p>
+        </div>
+        <div class="step">
+          <h3>04 · Build</h3>
+          <p>Portfolio cards bold enough to carry the work, copy written to rank, everything semantic and SEO-tight.
+            HubSpot sat underneath each service line — pipeline, segmentation and follow-up sequences ready before launch.</p>
+        </div>
+        <div class="step">
+          <h3>05 · Launch</h3>
+          <p>Tested end to end: form, CRM, follow-up email — mobile first. GSC and GA4 live from day one, and from that
+            day the team updates its own portfolio without touching code.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow rv">The outcomes</p>
+      <h2 class="rv">Proposals that <span class="accent">write themselves</span>.</h2>
+      <div class="kpis rv">
+        <div class="kpi"><b>↑ 2.8×</b><span>organic sessions in first 60 days post-launch</span></div>
+        <div class="kpi"><b>↑ 54%</b><span>enquiry-to-proposal conversion — context in the CRM before the first
+            reply</span></div>
+        <div class="kpi"><b>0</b><span>cold discovery calls needed — every lead arrives pre-qualified</span></div>
+        <div class="kpi"><b>100%</b><span>portfolio visibility — every completed project now online with results</span>
+        </div>
+      </div>
+      <p class="note rv" style="margin-top:22px">"Proposals stopped being a scramble and enquiries started arriving with
+        context." — Founder, AddmoreDigital</p>
+    </section>
+
+    <div class="cta rv">
+      <h2>Agency work that sells itself?</h2>
+      <p class="lede" style="margin:0 auto;">I build the site, the SEO and the CRM together — so the first conversation
+        is about the brief, not the basics.</p>
+      <a class="btn" href="../../contact/">Start a conversation</a>
+      <a class="ghost" href="../../website-design-conversion/">See more website work</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© 2026 LulaMile-HalfMachine · Johannesburg, South Africa</span>
+      <span>AddmoreDigital case study · content protected, please ask before reuse</span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var els = document.querySelectorAll('.rv');
+      if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+      var io = new IntersectionObserver(function (entries) { entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }); }, { threshold: 0.1 });
+      els.forEach(function (e) { io.observe(e); });
+    })();
+  </script>
+</body>
+
+</html>

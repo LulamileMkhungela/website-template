@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 40" role="img" aria-label="LulaGazette">
+  <rect x="0" y="4" width="32" height="32" rx="8" fill="#0C68BE"/>
+  <path d="M8 14h16M8 20h13M8 26h15" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+  <circle cx="24" cy="27" r="3.2" fill="#E8F4FF"/>
+  <text x="42" y="27" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="18" font-weight="700" fill="#0B151F">Lula</text>
+  <text x="88" y="27" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="18" font-weight="600" fill="#0C68BE">Gazette</text>
+</svg>

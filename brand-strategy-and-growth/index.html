@@ -1,0 +1,1021 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <script src="../lulamile/base-path-fix.js?v=2"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    (function () { try { var d = document.documentElement, c = d.classList; c.remove('light', 'dark'); var e = localStorage.getItem('theme'); if (e) { c.add(e || '') } else { c.add('light'); } if (e === 'light' || e === 'dark' || !e) d.style.colorScheme = e || 'light' } catch (t) { } })();
+  </script>
+  <link rel="icon" href="../favicon.webp?v=2" type="image/webp" />
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@200,300,400,500,600,700&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <title>Brand Strategy &amp; Growth — KINTO, Toyota App &amp; Toyota Remote | LulaMile-HalfMachine</title>
+  <meta name="description"
+    content="Brand strategy, identity system and growth mechanics for KINTO One, Toyota App and Toyota Remote — positioning, identity, UX and launch across Toyota South Africa's digital mobility brands." />
+  <meta name="author" content="LulaMile-HalfMachine" />
+  <link rel="canonical" href="https://lulamilemkhungela.github.io/website-template/brand-strategy-and-growth/" />
+  <meta name="robots"
+    content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1, noai, noimageai" />
+  <meta property="og:title" content="Brand Strategy &amp; Growth — KINTO, Toyota App &amp; Toyota Remote" />
+  <meta property="og:description"
+    content="Brand strategy, identity and growth for Toyota South Africa's three digital mobility brands." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url"
+    content="https://lulamilemkhungela.github.io/website-template/brand-strategy-and-growth/" />
+  <meta property="og:image"
+    content="https://lulamilemkhungela.github.io/website-template/projects/lulamile/brand-strategy-cover.png" />
+  <meta property="og:locale" content="en_ZA" />
+  <meta property="og:site_name" content="LulaMile-HalfMachine Portfolio" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Brand Strategy &amp; Growth — KINTO, Toyota App &amp; Toyota Remote" />
+  <meta name="twitter:image"
+    content="https://lulamilemkhungela.github.io/website-template/projects/lulamile/brand-strategy-cover.png" />
+
+  <style>
+    /* ── tokens ── */
+    :root {
+      --bg: 260 42% 97%;
+      --fg: 255 45% 10%;
+      --card: 260 30% 94%;
+      --muted: 255 20% 40%;
+      --bdr: 255 22% 88%;
+      --acc: 16 85% 52%;
+      --kinto: #00708D;
+      --toyota: #EB0A1E;
+    }
+
+    .dark {
+      --bg: 255 38% 10%;
+      --fg: 260 40% 94%;
+      --card: 255 35% 15%;
+      --muted: 260 18% 68%;
+      --bdr: 255 28% 22%;
+      --acc: 170 75% 52%;
+    }
+
+    /* ── reset ── */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%
+    }
+
+    body {
+      background: hsl(var(--bg));
+      color: hsl(var(--fg));
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block
+    }
+
+    a {
+      color: inherit
+    }
+
+    /* ── glassmorphism vars ── */
+    :root {
+      --glass-bg: hsl(var(--bg)/0.65);
+      --glass-card: hsl(var(--card)/0.58);
+      --glass-brd: hsl(var(--fg)/0.09);
+      --glass-sh: 0 8px 32px -10px hsl(var(--fg)/0.18);
+      --glass-blur: blur(18px) saturate(1.5);
+    }
+
+    .dark {
+      --glass-bg: hsl(var(--card)/0.48);
+      --glass-card: hsl(var(--card)/0.52);
+      --glass-brd: hsl(var(--bg)/0.22);
+      --glass-sh: 0 10px 40px -12px rgba(0, 0, 0, 0.55);
+    }
+
+    /* ── layout ── */
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 4vw, 40px)
+    }
+
+    /* ── topbar ── */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--glass-bg);
+      -webkit-backdrop-filter: var(--glass-blur);
+      backdrop-filter: var(--glass-blur);
+      border-bottom: 1px solid var(--glass-brd);
+      box-shadow: var(--glass-sh);
+    }
+
+    .topbar .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 11px;
+      padding-bottom: 11px;
+      gap: 14px
+    }
+
+    .topbar a {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 22px
+    }
+
+    .nav a {
+      font-size: 14px;
+      font-weight: 500;
+      color: hsl(var(--fg));
+      text-decoration: none;
+      transition: color .2s
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      color: hsl(var(--acc));
+      font-weight: 700
+    }
+
+    .nav a.pill {
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: hsl(var(--acc));
+      color: #fff;
+      font-weight: 700
+    }
+
+    .nav a.pill:hover {
+      opacity: .9
+    }
+
+    .drop {
+      position: relative
+    }
+
+    .drop summary {
+      list-style: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: hsl(var(--fg));
+      transition: color .2s
+    }
+
+    .drop summary::-webkit-details-marker {
+      display: none
+    }
+
+    .drop summary::after {
+      content: "▾";
+      font-size: 10px;
+      opacity: .6
+    }
+
+    .drop[open] summary {
+      color: hsl(var(--acc));
+      font-weight: 700
+    }
+
+    .drop .menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 230px;
+      background: var(--glass-card);
+      -webkit-backdrop-filter: blur(16px) saturate(1.4);
+      backdrop-filter: blur(16px) saturate(1.4);
+      border: 1px solid var(--glass-brd);
+      border-radius: 14px;
+      padding: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      box-shadow: 0 16px 40px -16px hsl(var(--fg)/.3);
+      z-index: 100;
+    }
+
+    .drop .menu a {
+      padding: 8px 12px;
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: hsl(var(--fg));
+      transition: background .15s, color .15s
+    }
+
+    .drop .menu a:hover {
+      background: hsl(var(--bg)/.7);
+      color: hsl(var(--acc))
+    }
+
+    .drop .menu a.active {
+      color: hsl(var(--acc));
+      font-weight: 700
+    }
+
+    @media(max-width:780px) {
+
+      .nav a:not(.pill),
+      .drop {
+        display: none
+      }
+    }
+
+    /* ── hero ── */
+    .hero {
+      padding: clamp(60px, 10vw, 100px) 0 clamp(32px, 5vw, 52px)
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--kinto);
+      margin-bottom: 16px
+    }
+
+    h1 {
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-size: clamp(30px, 5.5vw, 58px);
+      line-height: 1.06;
+      font-weight: 700;
+      letter-spacing: -.022em;
+      max-width: 22ch;
+    }
+
+    .hero-sub {
+      margin-top: 18px;
+      font-size: clamp(15px, 1.9vw, 18px);
+      color: hsl(var(--muted));
+      max-width: 60ch;
+      line-height: 1.65
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 1px;
+      background: hsl(var(--bdr)/.7);
+      border: 1px solid hsl(var(--bdr)/.7);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 36px;
+    }
+
+    .meta-grid div {
+      background: hsl(var(--card));
+      padding: 14px 16px
+    }
+
+    .meta-grid dt {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: hsl(var(--muted));
+      margin-bottom: 4px
+    }
+
+    .meta-grid dd {
+      font-size: 13px;
+      font-weight: 600
+    }
+
+    /* ── section ── */
+    section {
+      padding: clamp(40px, 6vw, 60px) 0;
+      border-top: 1px solid hsl(var(--bdr)/.6)
+    }
+
+    section:first-of-type {
+      border-top: none
+    }
+
+    .sec-eye {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      margin-bottom: 12px
+    }
+
+    h2 {
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-size: clamp(22px, 3.4vw, 36px);
+      font-weight: 700;
+      letter-spacing: -.014em;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    h2 .acc {
+      color: hsl(var(--acc))
+    }
+
+    p+p {
+      margin-top: 12px
+    }
+
+    .lede {
+      font-size: clamp(15px, 1.8vw, 17px);
+      color: hsl(var(--muted));
+      max-width: 68ch
+    }
+
+    /* ── glass card ── */
+    .glass {
+      background: var(--glass-card);
+      -webkit-backdrop-filter: blur(14px) saturate(1.35);
+      backdrop-filter: blur(14px) saturate(1.35);
+      border: 1px solid var(--glass-brd);
+      border-radius: 18px;
+      box-shadow: var(--glass-sh);
+    }
+
+    /* ── grids ── */
+    .g2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 22px
+    }
+
+    .g3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-top: 20px
+    }
+
+    .g4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+      gap: 12px;
+      margin-top: 20px
+    }
+
+    /* ── brand card ── */
+    .brand-card {
+      padding: 22px;
+      border-radius: 18px
+    }
+
+    .brand-bar {
+      height: 5px;
+      border-radius: 99px;
+      margin-bottom: 14px
+    }
+
+    .brand-card h3 {
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 7px
+    }
+
+    .brand-card p {
+      font-size: 13px;
+      color: hsl(var(--muted));
+      line-height: 1.6
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px
+    }
+
+    .chip {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid hsl(var(--bdr));
+      color: hsl(var(--muted))
+    }
+
+    /* ── process step ── */
+    .step {
+      padding: 18px;
+      border-radius: 15px;
+      border: 1px solid hsl(var(--bdr)/.7);
+      background: hsl(var(--card)/0.5)
+    }
+
+    .step-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: hsl(var(--acc));
+      margin-bottom: 7px;
+      font-family: 'Clash Grotesk', Inter, sans-serif
+    }
+
+    .step h3 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 5px
+    }
+
+    .step p {
+      font-size: 13px;
+      color: hsl(var(--muted));
+      line-height: 1.55
+    }
+
+    /* ── process pill (2-col) ── */
+    .proc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 20px
+    }
+
+    @media(max-width:540px) {
+      .proc-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .proc-pill {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px;
+      border-radius: 13px;
+      border: 1px solid hsl(var(--bdr)/.6);
+      background: hsl(var(--card)/0.45)
+    }
+
+    .proc-pill .icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      line-height: 1;
+      margin-top: 1px
+    }
+
+    .proc-pill strong {
+      font-size: 13px;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 3px
+    }
+
+    .proc-pill p {
+      font-size: 12px;
+      color: hsl(var(--muted));
+      line-height: 1.55
+    }
+
+    /* ── KPI ── */
+    .kpi {
+      padding: 18px;
+      border-radius: 15px;
+      border: 1px solid hsl(var(--bdr)/.7);
+      background: hsl(var(--card)/0.5)
+    }
+
+    .kpi b {
+      display: block;
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-size: 28px;
+      letter-spacing: -.02em;
+      color: hsl(var(--acc));
+      margin-bottom: 5px
+    }
+
+    .kpi span {
+      font-size: 12px;
+      color: hsl(var(--muted));
+      line-height: 1.5
+    }
+
+    /* ── figure ── */
+    figure {
+      margin: 28px 0
+    }
+
+    figure img {
+      width: 100%;
+      border-radius: 18px;
+      border: 1px solid hsl(var(--bdr)/.7);
+      transition: transform .5s ease, box-shadow .5s ease
+    }
+
+    figure img:hover {
+      transform: scale(1.012);
+      box-shadow: 0 24px 60px -24px hsl(var(--fg)/.3)
+    }
+
+    figcaption {
+      margin-top: 9px;
+      font-size: 13px;
+      color: hsl(var(--muted));
+      text-align: center
+    }
+
+    /* ── highlight note ── */
+    .note {
+      margin-top: 16px;
+      font-size: 13px;
+      color: hsl(var(--muted));
+      border-left: 3px solid var(--kinto);
+      padding: 5px 0 5px 14px;
+      line-height: 1.65
+    }
+
+    /* ── CTA buttons ── */
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 26px
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 11px 22px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform .2s, opacity .2s
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      opacity: .9
+    }
+
+    .btn-kinto {
+      background: var(--kinto);
+      color: #fff
+    }
+
+    .btn-toyota {
+      background: var(--toyota);
+      color: #fff
+    }
+
+    .btn-ghost {
+      border: 1.5px solid hsl(var(--bdr));
+      color: hsl(var(--fg));
+      background: transparent
+    }
+
+    /* ── cta block ── */
+    .cta-block {
+      padding: clamp(50px, 8vw, 80px) 0 clamp(60px, 10vw, 100px);
+      text-align: center;
+      border-top: 1px solid hsl(var(--bdr)/.6)
+    }
+
+    .cta-block h2 {
+      max-width: none;
+      margin-bottom: 14px
+    }
+
+    .cta-block .lede {
+      margin: 0 auto
+    }
+
+    .cta-main {
+      display: inline-block;
+      margin-top: 22px;
+      padding: 14px 28px;
+      border-radius: 999px;
+      background: hsl(var(--acc));
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 15px;
+      transition: transform .25s, box-shadow .25s
+    }
+
+    .cta-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 34px -12px hsl(var(--acc)/.65)
+    }
+
+    .cta-ghost {
+      display: inline-block;
+      margin: 22px 0 0 14px;
+      padding: 14px 24px;
+      border-radius: 999px;
+      border: 1px solid hsl(var(--bdr));
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      color: hsl(var(--muted))
+    }
+
+    /* ── footer ── */
+    footer {
+      border-top: 1px solid hsl(var(--bdr)/.6);
+      padding: 24px 0;
+      font-size: 13px;
+      color: hsl(var(--muted))
+    }
+
+    footer .wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between
+    }
+
+    /* ── reveal ── */
+    .rv {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity .65s ease, transform .65s ease
+    }
+
+    .rv.in {
+      opacity: 1;
+      transform: none
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      .rv {
+        opacity: 1;
+        transform: none;
+        transition: none
+      }
+
+      figure img:hover {
+        transform: none
+      }
+
+      html {
+        scroll-behavior: auto
+      }
+    }
+
+    /* ── responsive ── */
+    @media(max-width:600px) {
+
+      .g2,
+      .g3,
+      .g4 {
+        grid-template-columns: 1fr
+      }
+
+      .proc-grid {
+        grid-template-columns: 1fr
+      }
+
+      .meta-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .btn-row {
+        flex-direction: column;
+        align-items: flex-start
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Top bar ── -->
+  <div class="topbar">
+    <div class="wrap">
+      <a href="../">
+        <span
+          style="width:34px;height:34px;border-radius:50%;overflow:hidden;border:2px solid hsl(var(--acc)/.35);flex-shrink:0">
+          <img src="../lulamile/meew.jpeg" alt="LulaMile-HalfMachine"
+            style="width:100%;height:100%;object-fit:cover;border-radius:50%" />
+        </span>
+        <span style="display:flex;flex-direction:column;line-height:1.2">
+          <span style="font-size:14px;font-weight:600">LulaMile-HalfMachine</span>
+          <span style="font-size:11px;color:hsl(var(--muted))">Johannesburg, Anywhere Remote</span>
+        </span>
+      </a>
+      <nav class="nav" aria-label="Site">
+        <a href="../">Home</a>
+        <a href="../services/">Services</a>
+        <details class="drop">
+          <summary>Expertise &amp; Works</summary>
+          <div class="menu">
+            <a href="../product-design-strategy/">Product Design &amp; Strategy</a>
+            <a href="../brand-strategy-and-growth/" class="active">Brand Strategy &amp; Growth</a>
+            <a href="../website-design-conversion/">Website Design &amp; Conversion</a>
+            <a href="../frontend-development/">Frontend Development</a>
+            <a href="../microfinance-impact-consulting/">Microfinance &amp; Impact</a>
+          </div>
+        </details>
+        <a href="../about/">About</a>
+        <a class="pill" href="../contact/">Book a Call</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- ── Hero ── -->
+  <header class="hero wrap">
+    <p class="eyebrow rv">Expertise &amp; Works · Brand Strategy &amp; Growth · 2023–2024</p>
+    <h1 class="rv">KINTO, Toyota App &amp; Toyota Remote — one brand ecosystem.</h1>
+    <p class="hero-sub rv">Three mobility-brand touchpoints. One consistent design language. From subscription portal to
+      companion app to remote vehicle control — strategy, identity and interface aligned across every screen Toyota
+      South Africa's customers touch.</p>
+    <dl class="meta-grid rv">
+      <div>
+        <dt>Role</dt>
+        <dd>Brand Strategist &amp; Product Designer</dd>
+      </div>
+      <div>
+        <dt>Client</dt>
+        <dd>Toyota South Africa</dd>
+      </div>
+      <div>
+        <dt>Duration</dt>
+        <dd>14 months</dd>
+      </div>
+      <div>
+        <dt>Year</dt>
+        <dd>2023–2024</dd>
+      </div>
+      <div>
+        <dt>Scope</dt>
+        <dd>Strategy · Identity · UX · Build</dd>
+      </div>
+      <div>
+        <dt>Status</dt>
+        <dd>Live products</dd>
+      </div>
+    </dl>
+  </header>
+
+  <main class="wrap">
+
+    <!-- Cover image -->
+    <figure class="rv" style="margin-top:0;margin-bottom:40px">
+      <img src="../projects/lulamile/brand-strategy-cover.png"
+        alt="KINTO One subscription portal — brand strategy and interface design by LulaMile-HalfMachine"
+        loading="eager" fetchpriority="high" style="width:100%;border-radius:20px;aspect-ratio:16/9;object-fit:cover" />
+      <figcaption>The KINTO One subscription portal — premium mobility, one consistent brand system.</figcaption>
+    </figure>
+
+    <!-- The brands -->
+    <section>
+      <p class="sec-eye rv" style="color:var(--kinto)">The brands</p>
+      <h2 class="rv">Three products. <span class="acc">One family.</span></h2>
+      <p class="lede rv">Toyota South Africa needed three digitally-led products to feel like a coherent ecosystem —
+        each with its own personality, but unmistakably related. KINTO is subscription-first and service-oriented. The
+        Toyota App is the owner's companion. Toyota Remote puts the car in the driver's pocket.</p>
+      <div class="g2 rv">
+        <div class="brand-card glass">
+          <div class="brand-bar" style="background:var(--kinto)"></div>
+          <h3>KINTO One</h3>
+          <p>Vehicle subscription portal — flexible, all-inclusive monthly mobility for individuals and fleet managers.
+            Built on Toyota's trust equity with KINTO Blue #00708D as the defining brand mark.</p>
+          <div class="chips"><span class="chip">Subscription</span><span class="chip">Fleet</span><span
+              class="chip">Portal</span><span class="chip">Service design</span></div>
+        </div>
+        <div class="brand-card glass">
+          <div class="brand-bar" style="background:var(--toyota)"></div>
+          <h3>Toyota App</h3>
+          <p>Owner's companion — service bookings, roadside assist, ownership documents and dealer connect. The
+            post-purchase relationship in one app, anchored in Toyota Red #EB0A1E.</p>
+          <div class="chips"><span class="chip">Owner CX</span><span class="chip">Service booking</span><span
+              class="chip">Dealer connect</span></div>
+        </div>
+        <div class="brand-card glass">
+          <div class="brand-bar" style="background:#1a1a1a"></div>
+          <h3>Toyota Remote</h3>
+          <p>Connected-car control — lock/unlock, vehicle status, trip history and remote start. A high-trust product
+            where a design error has real-world consequences. Zero tolerance for ambiguity.</p>
+          <div class="chips"><span class="chip">Connected car</span><span class="chip">IoT UX</span><span
+              class="chip">High-trust UI</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Discovery & research -->
+    <section>
+      <p class="sec-eye rv" style="color:var(--kinto)">Discovery &amp; research</p>
+      <h2 class="rv">Alignment before <span class="acc">aesthetics</span>.</h2>
+      <p class="lede rv">Three products with three different teams, three different vendor codebases, and customers who
+        moved between them. The brand strategy started with deep research — not a mood board.</p>
+      <ul class="rv"
+        style="list-style:none;margin-top:20px;display:flex;flex-direction:column;gap:10px;max-width:680px">
+        <li style="display:flex;gap:10px;align-items:flex-start"><span
+            style="color:var(--kinto);font-size:18px;flex-shrink:0">→</span> Stakeholder interviews across Toyota SA,
+          KINTO and app-vendor teams</li>
+        <li style="display:flex;gap:10px;align-items:flex-start"><span
+            style="color:var(--kinto);font-size:18px;flex-shrink:0">→</span> Customer journey mapping from test-drive to
+          owner to KINTO subscriber</li>
+        <li style="display:flex;gap:10px;align-items:flex-start"><span
+            style="color:var(--kinto);font-size:18px;flex-shrink:0">→</span> Competitive teardown: 12 global mobility
+          brands, 4 SA market comparators</li>
+        <li style="display:flex;gap:10px;align-items:flex-start"><span
+            style="color:var(--kinto);font-size:18px;flex-shrink:0">→</span> Usability audit of every existing Toyota SA
+          digital touchpoint</li>
+        <li style="display:flex;gap:10px;align-items:flex-start"><span
+            style="color:var(--kinto);font-size:18px;flex-shrink:0">→</span> Brand perception survey: 200 Toyota owners
+          and KINTO prospects</li>
+      </ul>
+    </section>
+
+    <!-- Brand strategy -->
+    <section>
+      <p class="sec-eye rv" style="color:var(--kinto)">Brand strategy</p>
+      <h2 class="rv">Positioning that <span class="acc">earns the premium</span>.</h2>
+      <p class="lede rv">The brief said "make it feel premium." The strategy work said: define what premium means for a
+        South African driver, then build every touchpoint around that definition.</p>
+      <div class="g3 rv">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3>Brand architecture</h3>
+          <p>Toyota as the parent trust. KINTO as aspirational, service-forward mobility. The apps as post-purchase
+            relationship tools. Three distinct voices, one family.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3>Identity system</h3>
+          <p>KINTO Blue #00708D as the KINTO primary mark. Toyota Red #EB0A1E anchoring the parent. Shared type scale,
+            icon grid and component library applied across all three products.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3>Voice &amp; tone</h3>
+          <p>Confident but human. Not corporate-stiff. Language that respects the driver's intelligence — short, direct,
+            never condescending. Consistent across app copy, portal microcopy and push notifications.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <h3>Growth mechanics</h3>
+          <p>Referral flows in KINTO portal. Retention loops in Toyota App. Upsell pathways from Toyota Remote into
+            KINTO One subscriptions. Growth designed into the product, not bolted on after.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">05</div>
+          <h3>Measurement framework</h3>
+          <p>KPIs set before design: portal conversion, app DAU, Remote active sessions weekly, NPS at 90 days
+            post-subscription. Every design decision was tested against them.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">06</div>
+          <h3>Launch playbook</h3>
+          <p>Phased rollout across SA regions. Dealer training materials. In-app onboarding flows co-designed with the
+            Toyota SA marketing team for local relevance.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Design process -->
+    <section>
+      <p class="sec-eye rv" style="color:var(--toyota)">Design process</p>
+      <h2 class="rv">From brief to <span class="acc">live product</span>.</h2>
+      <p class="lede rv">Brand strategy and product design run together in this practice — the same pair of hands held
+        the strategy and the Figma file. No translation loss, no handoff gaps.</p>
+      <div class="proc-grid rv">
+        <div class="proc-pill"><span class="icon">🔍</span>
+          <div><strong>Research &amp; audit</strong>
+            <p>Competitive teardown, customer interviews and a full usability audit of existing Toyota SA digital
+              touchpoints.</p>
+          </div>
+        </div>
+        <div class="proc-pill"><span class="icon">🏗️</span>
+          <div><strong>Information architecture</strong>
+            <p>Card sorting with actual Toyota owners. Navigation rebuilt around tasks, not product categories or
+              org-chart logic.</p>
+          </div>
+        </div>
+        <div class="proc-pill"><span class="icon">✏️</span>
+          <div><strong>Wireframes</strong>
+            <p>Lo-fi flows for three core journeys: subscribe (KINTO), book service (Toyota App), arm/disarm (Toyota
+              Remote).</p>
+          </div>
+        </div>
+        <div class="proc-pill"><span class="icon">🎨</span>
+          <div><strong>Visual design</strong>
+            <p>High-fidelity screens in Figma. KINTO Blue and Toyota Red applied via strict design tokens for
+              consistency at scale.</p>
+          </div>
+        </div>
+        <div class="proc-pill"><span class="icon">🧪</span>
+          <div><strong>Usability testing</strong>
+            <p>Moderated sessions with KINTO prospects and Toyota owners. Two full redesigns of the Remote control
+              screen after testing revealed navigation anxiety.</p>
+          </div>
+        </div>
+        <div class="proc-pill"><span class="icon">🚀</span>
+          <div><strong>Handoff &amp; launch</strong>
+            <p>Dev-ready component specs. Redline annotations. Post-launch analytics review at 30 and 90 days against
+              the pre-set KPIs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Outcomes -->
+    <section>
+      <p class="sec-eye rv" style="color:var(--kinto)">Outcomes</p>
+      <h2 class="rv">Numbers from the <span class="acc">live products</span>.</h2>
+      <div class="g4 rv">
+        <div class="kpi"><b>↑ 38%</b><span>KINTO portal enquiry-to-subscription conversion vs the prior year</span>
+        </div>
+        <div class="kpi"><b>4.3 ★</b><span>Toyota App rating on Google Play post-redesign</span></div>
+        <div class="kpi"><b>↓ 42%</b><span>Remote control error rate after the navigation redesign</span></div>
+        <div class="kpi"><b>NPS +61</b><span>Post-subscription 90-day NPS across the KINTO SA cohort</span></div>
+      </div>
+      <p class="note rv">Three separate products, one coherent brand story. The design system built here now serves as
+        the foundation for all new Toyota digital products in the South African market.</p>
+      <div class="btn-row rv">
+        <a class="btn btn-kinto" href="https://www.toyota.co.za/kinto-personal" target="_blank"
+          rel="noopener noreferrer">Visit KINTO One ↗</a>
+        <a class="btn btn-toyota" href="https://play.google.com/store/apps/details?id=com.eliance.toyotamobile&hl=en_ZA"
+          target="_blank" rel="noopener noreferrer">Toyota App — Play Store ↗</a>
+        <a class="btn btn-ghost"
+          href="https://play.google.com/store/apps/details?id=za.co.toyota.toyotaremote&hl=en_ZA&pli=1" target="_blank"
+          rel="noopener noreferrer">Toyota Remote — Play Store ↗</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── CTA ── -->
+  <div class="cta-block">
+    <div class="wrap">
+      <h2>Building a brand that needs to convert?</h2>
+      <p class="lede">Strategy, identity and interface — from first workshop to live product.</p>
+      <a class="cta-main" href="../contact/">Start a conversation</a>
+      <a class="cta-ghost" href="../services/">How I work</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <span>© 2026 LulaMile-HalfMachine · Johannesburg, South Africa</span>
+      <span>Brand Strategy &amp; Growth · content protected, please ask before reuse</span>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    (function () {
+      var els = document.querySelectorAll('.rv');
+      if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+      }, { threshold: 0.08 });
+      els.forEach(function (e) { io.observe(e); });
+    })();
+
+    // Back button
+    document.querySelectorAll('a[href="../"]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        if (document.referrer && document.referrer.indexOf(window.location.hostname) > -1 && window.history.length > 1) {
+          e.preventDefault(); window.history.back();
+        }
+      });
+    });
+
+    // Sync glass mask with theme toggle
+    function syncTheme() {
+      var isDark = document.documentElement.classList.contains('dark');
+      document.documentElement.style.setProperty('--glass-bg',
+        isDark ? 'hsl(var(--card)/0.48)' : 'hsl(var(--bg)/0.65)');
+    }
+    new MutationObserver(syncTheme).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    syncTheme();
+  </script>
+</body>
+
+</html>

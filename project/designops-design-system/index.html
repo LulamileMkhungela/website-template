@@ -1,0 +1,834 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <script src="../../lulamile/base-path-fix.js?v=2"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>(function () { try { var d = document.documentElement, c = d.classList; c.remove('light', 'dark'); var e = localStorage.getItem('theme'); if (e) { c.add(e || '') } else { c.add('light'); } if (e === 'light' || e === 'dark' || !e) d.style.colorScheme = e || 'light' } catch (t) { } })();</script>
+  <link rel="icon" href="../../favicon.webp?v=2" type="image/webp" />
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@200,300,400,500,600,700&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <title>DesignOps — One Design, Every Framework | LulaMile-HalfMachine</title>
+  <meta name="description"
+    content="Case study: DesignOps — a design-system pipeline: one design in Figma, shipped mechanically to fourteen frameworks through tokens JSON and Style Dictionary, with the interface and Storybook docs that make the pipeline usable." />
+  <meta name="author" content="LulaMile-HalfMachine" />
+  <link rel="canonical"
+    href="https://lulamilemkhungela.github.io/website-template/project/designops-design-system/" />
+  <meta name="robots" content="index, follow, noai, noimageai" />
+  <meta property="og:title" content="DesignOps — One Design, Every Framework" />
+  <meta property="og:description"
+    content="One design in Figma, shipped to every framework: Figma variables → tokens JSON → fourteen framework builds, with Storybook docs that make the pipeline usable." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url"
+    content="https://lulamilemkhungela.github.io/website-template/project/designops-design-system/" />
+  <meta property="og:image"
+    content="https://lulamilemkhungela.github.io/website-template/projects/lulamile/design-ops-cover.png" />
+  <meta property="og:locale" content="en_ZA" />
+  <meta property="og:site_name" content="LulaMile-HalfMachine Portfolio" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="DesignOps — Design System &amp; Component Library" />
+  <meta name="twitter:image"
+    content="https://lulamilemkhungela.github.io/website-template/projects/lulamile/design-ops-cover.png" />
+  <style>
+    :root {
+      --background: 262 25% 97%;
+      --foreground: 260 40% 10%;
+      --card: 262 20% 94%;
+      --muted-foreground: 260 16% 44%;
+      --border: 260 18% 87%;
+      --hero-accent: 260 80% 58%;
+    }
+
+    .dark {
+      --background: 260 35% 9%;
+      --foreground: 262 25% 93%;
+      --card: 260 30% 13%;
+      --muted-foreground: 262 14% 62%;
+      --border: 260 24% 19%;
+      --hero-accent: 258 85% 68%;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block
+    }
+
+    a {
+      color: inherit
+    }
+
+    :root {
+      --glass-bg: hsl(var(--background)/0.7);
+      --glass-card: hsl(var(--card)/0.6);
+      --glass-brd: hsl(var(--foreground)/0.09);
+      --glass-sh: 0 8px 30px -10px hsl(var(--foreground)/0.16);
+    }
+
+    .dark {
+      --glass-bg: hsl(var(--card)/0.5);
+      --glass-brd: hsl(var(--background)/0.22);
+    }
+
+    .glass {
+      background: var(--glass-card);
+      -webkit-backdrop-filter: blur(14px) saturate(1.35);
+      backdrop-filter: blur(14px) saturate(1.35);
+      border: 1px solid var(--glass-brd);
+      box-shadow: var(--glass-sh);
+    }
+
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 4vw, 36px)
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--glass-bg);
+      -webkit-backdrop-filter: blur(18px) saturate(1.5);
+      backdrop-filter: blur(18px) saturate(1.5);
+      border-bottom: 1px solid var(--glass-brd);
+      box-shadow: var(--glass-sh);
+    }
+
+    .topbar .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 11px;
+      padding-bottom: 11px;
+      gap: 12px
+    }
+
+    .topbar a {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 22px
+    }
+
+    .nav a {
+      font-size: 14px;
+      font-weight: 500;
+      color: hsl(var(--foreground));
+      text-decoration: none;
+      transition: color .18s
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      color: hsl(var(--hero-accent));
+      font-weight: 700
+    }
+
+    .nav a.pill {
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: hsl(var(--hero-accent));
+      color: #fff;
+      font-weight: 700
+    }
+
+    .drop {
+      position: relative
+    }
+
+    .drop summary {
+      list-style: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: hsl(var(--foreground))
+    }
+
+    .drop summary::-webkit-details-marker {
+      display: none
+    }
+
+    .drop summary::after {
+      content: "▾";
+      font-size: 10px;
+      opacity: .55
+    }
+
+    .drop .menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 220px;
+      background: var(--glass-card);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-brd);
+      border-radius: 13px;
+      padding: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      box-shadow: 0 16px 40px -14px hsl(var(--foreground)/.28);
+      z-index: 100;
+    }
+
+    .drop .menu a {
+      padding: 8px 12px;
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: hsl(var(--foreground));
+      transition: background .15s, color .15s
+    }
+
+    .drop .menu a:hover,
+    .drop .menu a.active {
+      background: hsl(var(--background)/.7);
+      color: hsl(var(--hero-accent));
+      font-weight: 700
+    }
+
+    @media(max-width:780px) {
+
+      .nav a:not(.pill),
+      .drop {
+        display: none
+      }
+    }
+
+    .hero {
+      padding: clamp(56px, 9vw, 96px) 0 clamp(28px, 4vw, 44px)
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: hsl(var(--hero-accent));
+      margin-bottom: 15px
+    }
+
+    h1 {
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-size: clamp(28px, 5vw, 58px);
+      line-height: 1.06;
+      font-weight: 700;
+      letter-spacing: -.022em;
+      max-width: 22ch
+    }
+
+    .sub {
+      margin-top: 17px;
+      font-size: clamp(15px, 1.8vw, 18px);
+      color: hsl(var(--muted-foreground));
+      max-width: 60ch;
+      line-height: 1.65
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1px;
+      background: hsl(var(--border)/.7);
+      border: 1px solid hsl(var(--border)/.7);
+      border-radius: 15px;
+      overflow: hidden;
+      margin-top: 32px
+    }
+
+    .meta div {
+      background: hsl(var(--card));
+      padding: 13px 16px
+    }
+
+    .meta dt {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: hsl(var(--muted-foreground));
+      margin-bottom: 4px
+    }
+
+    .meta dd {
+      font-size: 13px;
+      font-weight: 600
+    }
+
+    .gh-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      padding: 11px 22px;
+      border-radius: 999px;
+      border: 1.5px solid hsl(var(--border));
+      color: hsl(var(--foreground));
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      transition: transform .2s, border-color .2s
+    }
+
+    .gh-btn:hover {
+      transform: translateY(-2px);
+      border-color: hsl(var(--hero-accent));
+      color: hsl(var(--hero-accent))
+    }
+
+    figure {
+      margin: clamp(24px, 4vw, 36px) 0
+    }
+
+    figure img {
+      width: 100%;
+      border-radius: 18px;
+      border: 1px solid hsl(var(--border)/.7);
+      transition: transform .5s ease, box-shadow .5s ease
+    }
+
+    figure img:hover {
+      transform: scale(1.012);
+      box-shadow: 0 24px 56px -22px hsl(var(--foreground)/.28)
+    }
+
+    figcaption {
+      margin-top: 9px;
+      font-size: 13px;
+      color: hsl(var(--muted-foreground));
+      text-align: center
+    }
+
+    section {
+      padding: clamp(36px, 5.5vw, 56px) 0;
+      border-top: 1px solid hsl(var(--border)/.6)
+    }
+
+    h2 {
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-size: clamp(22px, 3.4vw, 38px);
+      font-weight: 700;
+      letter-spacing: -.015em;
+      line-height: 1.1;
+      margin-bottom: 16px
+    }
+
+    h2 .acc {
+      color: hsl(var(--hero-accent))
+    }
+
+    p+p {
+      margin-top: 12px
+    }
+
+    .lede {
+      font-size: clamp(14px, 1.8vw, 17px);
+      color: hsl(var(--muted-foreground));
+      max-width: 66ch
+    }
+
+    ul.bullets {
+      list-style: none;
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      max-width: 680px
+    }
+
+    ul.bullets li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 14px
+    }
+
+    ul.bullets li::before {
+      content: "→";
+      color: hsl(var(--hero-accent));
+      font-size: 16px;
+      flex-shrink: 0;
+      line-height: 1.4
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 13px;
+      margin-top: 20px;
+      counter-reset: st
+    }
+
+    .step {
+      border: 1px solid hsl(var(--border)/.7);
+      border-radius: 14px;
+      padding: 17px;
+      background: hsl(var(--card)/0.5)
+    }
+
+    .step::before {
+      counter-increment: st;
+      content: "0" counter(st);
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      color: hsl(var(--hero-accent));
+      display: block;
+      margin-bottom: 7px
+    }
+
+    .step h3 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 5px
+    }
+
+    .step p {
+      font-size: 13px;
+      color: hsl(var(--muted-foreground));
+      line-height: 1.55
+    }
+
+    .g2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 15px;
+      margin-top: 20px
+    }
+
+    .card {
+      padding: 20px;
+      border-radius: 15px;
+      border: 1px solid hsl(var(--border)/.7);
+      background: hsl(var(--card)/0.5)
+    }
+
+    .card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 7px
+    }
+
+    .card p {
+      font-size: 13px;
+      color: hsl(var(--muted-foreground));
+      line-height: 1.6
+    }
+
+    .token-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px
+    }
+
+    .token {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 11px;
+      border-radius: 999px;
+      border: 1px solid hsl(var(--border));
+      color: hsl(var(--muted-foreground));
+      font-family: monospace
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin-top: 20px
+    }
+
+    .kpi {
+      padding: 17px;
+      border-radius: 14px;
+      border: 1px solid hsl(var(--border)/.7);
+      background: hsl(var(--card)/0.5)
+    }
+
+    .kpi b {
+      display: block;
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-size: 28px;
+      color: hsl(var(--hero-accent));
+      letter-spacing: -.02em;
+      margin-bottom: 4px
+    }
+
+    .kpi span {
+      font-size: 12px;
+      color: hsl(var(--muted-foreground));
+      line-height: 1.5
+    }
+
+    .cta-block {
+      padding: clamp(48px, 7vw, 80px) 0 clamp(60px, 9vw, 100px);
+      text-align: center;
+      border-top: 1px solid hsl(var(--border)/.6)
+    }
+
+    .cta-main {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 13px 28px;
+      border-radius: 999px;
+      background: hsl(var(--hero-accent));
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 15px;
+      transition: transform .25s, box-shadow .25s
+    }
+
+    .cta-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px -10px hsl(var(--hero-accent)/.6)
+    }
+
+    .cta-ghost {
+      display: inline-block;
+      margin: 20px 0 0 12px;
+      padding: 13px 22px;
+      border-radius: 999px;
+      border: 1px solid hsl(var(--border));
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      color: hsl(var(--muted-foreground))
+    }
+
+    footer {
+      border-top: 1px solid hsl(var(--border)/.6);
+      padding: 22px 0;
+      font-size: 13px;
+      color: hsl(var(--muted-foreground))
+    }
+
+    footer .wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between
+    }
+
+    .rv {
+      opacity: 0;
+      transform: translateY(13px);
+      transition: opacity .6s ease, transform .6s ease
+    }
+
+    .rv.in {
+      opacity: 1;
+      transform: none
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      .rv {
+        opacity: 1;
+        transform: none;
+        transition: none
+      }
+
+      html {
+        scroll-behavior: auto
+      }
+    }
+
+    @media(max-width:580px) {
+      .meta {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .steps,
+      .g2,
+      .kpis {
+        grid-template-columns: 1fr
+      }
+
+      .cta-ghost {
+        display: block;
+        margin: 12px auto 0;
+        width: fit-content
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="wrap">
+      <a href="../../">
+        <span
+          style="width:33px;height:33px;border-radius:50%;overflow:hidden;border:2px solid hsl(var(--hero-accent)/.3);flex-shrink:0">
+          <img src="../../lulamile/meew.jpeg" alt="LulaMile-HalfMachine"
+            style="width:100%;height:100%;object-fit:cover" />
+        </span>
+        <span style="display:flex;flex-direction:column;line-height:1.2">
+          <span style="font-size:14px;font-weight:600">LulaMile-HalfMachine</span>
+          <span style="font-size:11px;color:hsl(var(--muted-foreground))">Johannesburg, Anywhere Remote</span>
+        </span>
+      </a>
+      <nav class="nav" aria-label="Site">
+        <a href="../../">Home</a>
+        <a href="../../services/">Services</a>
+        <details class="drop">
+          <summary>Expertise &amp; Works</summary>
+          <div class="menu">
+            <a href="../../product-design-strategy/">Product Design &amp; Strategy</a>
+            <a href="../../brand-strategy-and-growth/">Brand Strategy &amp; Growth</a>
+            <a href="../../website-design-conversion/">Website Design &amp; Conversion</a>
+            <a href="../../frontend-development/" class="active">Frontend Development</a>
+            <a href="../../microfinance-impact-consulting/">Microfinance &amp; Impact</a>
+          </div>
+        </details>
+        <a href="../../about/">About</a>
+        <a class="pill" href="../../contact/">Book a Call</a>
+      </nav>
+    </div>
+  </div>
+
+  <header class="hero wrap">
+    <p class="eyebrow rv">Case Study · Design System Engineering · Frontend</p>
+    <h1 class="rv">DesignOps — one design in Figma, shipped to every framework.</h1>
+    <p class="sub rv">DesignOps ends the design-vs-dev drift. Tokens and components are defined once — then shipped,
+      mechanically, to React, Vue, Angular, Svelte, Next, Nuxt, Remix, Astro, Ionic, MUI, Tailwind, React Native and
+      beyond. Devs reference the system and reuse; new components are requested, designed and shipped without leaving
+      it.</p>
+    <dl class="meta rv">
+      <div>
+        <dt>Role</dt>
+        <dd>Designer &amp; Engineer</dd>
+      </div>
+      <div>
+        <dt>Type</dt>
+        <dd>Design System Pipeline</dd>
+      </div>
+      <div>
+        <dt>Targets</dt>
+        <dd>14 frameworks</dd>
+      </div>
+      <div>
+        <dt>Stack</dt>
+        <dd>Figma · Style Dictionary · Storybook</dd>
+      </div>
+      <div>
+        <dt>Status</dt>
+        <dd>Live · Open source</dd>
+      </div>
+    </dl>
+    <a class="gh-btn rv lm-live-btn" href="https://lulamilemkhungela.github.io/design-ops/" target="_blank"
+      rel="noopener noreferrer">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M2 12h20" />
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+      </svg>
+      Open the live site ↗
+    </a>
+  </header>
+
+  <main class="wrap">
+
+    <figure class="rv" style="margin-top:0">
+      <img src="../../projects/lulamile/design-ops-cover.png"
+        alt="DesignOps design system — component library overview showing buttons, cards, inputs and token documentation"
+        loading="eager" fetchpriority="high" style="aspect-ratio:16/9;object-fit:cover;width:100%" />
+      <figcaption>The DesignOps component library — tokens, components and documentation that engineers ship from, not
+        around.</figcaption>
+    </figure>
+
+    <section>
+      <p class="eyebrow rv">The problem</p>
+      <h2 class="rv">Design handoffs that <span class="acc">break at build</span>.</h2>
+      <p class="lede rv">The gap between a Figma file and a production codebase is where most design intent dies.
+        Colours drift. Spacing becomes inconsistent. Buttons have five variations when there should be two. The designer
+        moves on to the next project and the system quietly diverges.</p>
+      <p class="rv">DesignOps was built to close that gap — a design system where the design tokens in Figma are the
+        same tokens in the CSS, and the component documentation is written for the engineer who will use it at 11pm on a
+        deadline, not the design director reviewing it in a presentation.</p>
+    </section>
+
+    <section>
+      <p class="eyebrow rv">The pipeline</p>
+      <h2 class="rv">Every component travels <span class="acc">all five stages</span>.</h2>
+      <p class="lede rv">DesignOps is not a file — it's a pipeline. One design in Figma enters at the top and exits as
+        fourteen framework builds plus living documentation, mechanically, every time tokens or components change. No
+        re-typing, no interpretation, no drift.</p>
+      <div class="steps rv">
+        <div class="step">
+          <h3>Figma Variables</h3>
+          <p>Tokens and auto-layout live in Figma as variables. Colour, spacing, radius and type are defined once —
+            the designer's screen is the pipeline's input, so a token change updates every component in one step.</p>
+        </div>
+        <div class="step">
+          <h3>Tokens JSON</h3>
+          <p>The versioned source of truth. 41 tokens in the pipeline, rebuilt to dist/ on every release — tokens
+            v3.0.0 today. Semver, diffs and rollbacks work because the tokens are code, not a spreadsheet.</p>
+        </div>
+        <div class="step">
+          <h3>Transform</h3>
+          <p>A Style Dictionary build turns the JSON into per-target output. The pipeline adapts per framework — e.g.
+            StyleSheet on mobile — so one schema generates every target with byte-identical intent.</p>
+        </div>
+        <div class="step">
+          <h3>Framework build</h3>
+          <p>Fourteen targets at once: React, Vue, Angular, Svelte, Next, Nuxt, Remix, Astro, Ionic, MUI, Tailwind,
+            React Native and beyond. A Button release ships to every framework in the same run.</p>
+        </div>
+        <div class="step">
+          <h3>Storybook</h3>
+          <p>Living documentation, generated with the builds. What it is, when to use it, when not to, prop table,
+            code example — written for the developer who will use it at 11pm on a deadline.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow rv">What's in the system</p>
+      <h2 class="rv">Tokens, components, <span class="acc">fourteen builds</span>.</h2>
+      <figure class="rv">
+        <img src="../../projects/lulamile/design-ops-flow.png"
+          alt="DesignOps token flow — primitive to semantic to component token hierarchy with CSS output" loading="lazy"
+          decoding="async" />
+        <figcaption>Token hierarchy: primitive values feed semantic names, which feed component tokens — one change at
+          the primitive level updates the whole system.</figcaption>
+      </figure>
+      <div class="g2 rv">
+        <div class="card glass">
+          <h3>41 tokens in the pipeline</h3>
+          <p>Colour, spacing, typography, border-radius, shadow and motion — defined in Figma variables, shipped as a
+            versioned tokens JSON (v3.0.0) and rebuilt to dist/ on every release.</p>
+          <div class="token-row"><span class="token">color.brand.primary</span><span class="token">space.4</span><span
+              class="token">radius.card</span><span class="token">tokens.json</span></div>
+        </div>
+        <div class="card glass">
+          <h3>8 components tracked</h3>
+          <p>Button, Card, Data Table, Badge and the core set — every component travels all five pipeline stages, with
+            design attached to the request: ask → design → ship.</p>
+          <div class="token-row"><span class="token">Button</span><span class="token">Card</span><span
+              class="token">Data Table</span><span class="token">Badge</span></div>
+        </div>
+        <div class="card glass">
+          <h3>14 framework targets</h3>
+          <p>React, Vue, Angular, Svelte, Next, Nuxt, Remix, Astro, Ionic, MUI, Tailwind, React Native and beyond — one
+            schema generates every framework, byte-identical intent.</p>
+          <div class="token-row"><span class="token">react</span><span class="token">vue</span><span
+              class="token">angular</span><span class="token">svelte</span><span class="token">+10</span></div>
+        </div>
+        <div class="card glass">
+          <h3>Three gateways in</h3>
+          <p>Install the packages for your stack, let the CLI wire everything automatically, or drop one CDN link for
+            prototypes and legacy builds.</p>
+          <div class="token-row"><span class="token">npm i @designops/tokens</span><span class="token">npx designops
+              init</span><span class="token">cdn.designops.dev</span></div>
+        </div>
+      </div>
+
+      <div class="rv"
+        style="margin-top:26px;padding:20px 22px;border-radius:16px;border:1px solid hsl(var(--border)/0.7);background:hsl(var(--card)/0.5);">
+        <p style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:hsl(var(--muted-foreground));margin-bottom:10px;">Quick
+          start — pick your gateway</p>
+        <pre
+          style="margin:0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;line-height:1.7;white-space:pre-wrap;color:hsl(var(--foreground));"><code># 1 · install the packages for your stack
+npm i @designops/tokens @designops/react      # or vue / angular / svelte / mui …
+
+# 2 · or let the CLI wire everything automatically
+npx designops init          # detects your framework, imports tokens, done
+
+# 3 · prototypes / legacy: one CDN link
+&lt;link rel="stylesheet" href="https://cdn.designops.dev/tokens@3/tokens.css"&gt;</code></pre>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow rv">Outcomes</p>
+      <h2 class="rv">One design, <span class="acc">zero drift</span>.</h2>
+      <p class="lede rv">The numbers the pipeline publishes on every run — design-vs-dev misalignment is a category of
+        problem that no longer exists on this system.</p>
+      <div class="kpis rv">
+        <div class="kpi"><b>41</b><span>tokens in the pipeline — versioned, rebuilt to dist/ on every release</span>
+        </div>
+        <div class="kpi"><b>8</b><span>components tracked — each travels all five stages, ask → design → ship</span>
+        </div>
+        <div class="kpi"><b>14</b><span>framework targets — generated at once from one schema, byte-identical intent
+        </span></div>
+        <div class="kpi"><b>0%</b><span>design drift tolerated — values ship as tokens, nobody re-types a pixel</span>
+        </div>
+      </div>
+      <p class="rv" style="margin-top:18px">And the pipeline stays honest: the activity feed shows real runs — Button
+        v2.1.0 shipped to all 14 targets, tokens v3.0.0 rebuilt, Card stories PR opened, Badge warning token corrected.
+        A system you can audit, not just admire.</p>
+    </section>
+
+  </main>
+
+  <div class="cta-block">
+    <div class="wrap">
+      <h2>Building a product that needs consistency at scale?</h2>
+      <p class="lede" style="margin:0 auto">Design tokens, Figma components and React — wired together so design and
+        engineering stay in sync.</p>
+      <a class="cta-main" href="../../contact/">Start a conversation</a>
+      <a class="cta-ghost" href="../../frontend-development/">See more frontend work</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <span>© 2026 LulaMile-HalfMachine · Johannesburg, South Africa</span>
+      <span>DesignOps case study · content protected</span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var els = document.querySelectorAll('.rv');
+      if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+      }, { threshold: 0.08 });
+      els.forEach(function (e) { io.observe(e); });
+    })();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,1530 @@
+// LulaMile-HalfMachine — site behaviour layer.
+// Contact details, brand marks, link handling, Lexark coming soon status,
+// live app redirects, case study links, midnight mode, back to top, greeting voice, and copy protection.
+// Editable content lives in lulamile/edits.js.
+(function () {
+  var CONFIG = {
+    newName: 'LulaMile-HalfMachine',
+    newEmail: 'mkhungela.l@gmail.com',
+    newPhone: '+27 83 719 5064',
+    newPhoneRaw: '+27837195064',
+    newCalendly: 'https://calendly.com/lulamile_m/meet-lulamile',
+    newResume: 'https://drive.google.com/file/d/1iNgauKhYevO53_D5daPcT5cM5wkpuYkP/view?usp=drive_link',
+    newLinkedIn: 'https://www.linkedin.com/in/lulamile-mkhungela/'
+  };
+
+  var EDITS = window.LM_EDITS || {};
+  var SET = EDITS.settings || {};
+  if (SET.name) CONFIG.newName = SET.name;
+  if (SET.email) CONFIG.newEmail = SET.email;
+  if (SET.phone) CONFIG.newPhone = SET.phone;
+  if (SET.phoneRaw) CONFIG.newPhoneRaw = SET.phoneRaw;
+  if (SET.calendly) CONFIG.newCalendly = SET.calendly;
+  if (SET.resume) CONFIG.newResume = SET.resume;
+  if (SET.linkedin) CONFIG.newLinkedIn = SET.linkedin;
+  CONFIG.location = SET.location || 'Johannesburg, Anywhere Remote';
+
+  var basePath = './lulamile/';
+  try {
+    var scripts = document.querySelectorAll('script[src*="patch.js"]');
+    var thisScript = scripts[scripts.length - 1];
+    if (thisScript && thisScript.getAttribute('src')) {
+      basePath = thisScript.getAttribute('src').split('?')[0].replace('patch.js', '');
+    }
+  } catch (e) {}
+
+  var newBrands = ['dpsa.png', 'nerdma.png', 'addmore.png', 'toyota.png', 'voda.png', 'intelle.png',
+                   'sasol.png', 'novelmed.png', 'uluntu.png', 'ioco.png', 'takeda.png', 'shaper.png'];
+  var profilePic = basePath + 'meew.jpeg';
+
+  var GH_BASE = '';
+  try { GH_BASE = window.__GH_BASE__ || ''; } catch (e) {}
+  function stripBase(href) {
+    if (GH_BASE && href === GH_BASE) return '/';
+    if (GH_BASE && href.indexOf(GH_BASE + '/') === 0) return href.slice(GH_BASE.length);
+    return href;
+  }
+
+  // Live apps that are DIRECT REDIRECTS (no case study details)
+  var DIRECT_REDIRECT_APPS = {
+    'kinto-one': 'https://www.toyota.co.za/kinto-personal',
+    'toyota-remote': 'https://play.google.com/store/apps/details?id=za.co.toyota.toyotaremote&hl=en_ZA&pli=1',
+    'toyota-app': 'https://play.google.com/store/apps/details?id=com.eliance.toyotamobile&hl=en_ZA',
+    'wandisplace-pwa': 'https://wandies.vercel.app/',
+    'sk-finds-pwa': 'https://skautos.vercel.app/'
+  };
+
+  // Projects that HAVE Case Studies and also have a live site or GitHub URL
+  // NOTE: 'foodiezone-pwa' is deliberately omitted from top hero injection
+  // so the first link on foodiezone is removed, keeping only the conclusion link!
+  var LIVE_STUDY_URLS = {
+    'africa-cuisine-pwa': { url: 'https://africa-cuisine-pro.vercel.app', label: 'Open live PWA' },
+    'nerdma-website': { url: 'https://www.nerdma.co.za', label: 'Visit live website' },
+    'addmoredigital-website': { url: 'https://addmoredigital.co.za/', label: 'Visit live website' },
+    'snb-website': { url: 'https://www.snbconsultancy.co.za', label: 'Visit live website' },
+    'designops-design-system': { url: 'https://github.com/LulamileMkhungela/design-ops', label: 'Open on GitHub' },
+    'lula-trustshield': { url: 'https://github.com/LulamileMkhungela/LulaUnifidMarket', label: 'Open on GitHub' }
+  };
+
+  // Ensure sliding logos are in their retrospective authentic brand colors
+  function ensureLogosColors() {
+    if (!document.getElementById('lm-logo-color-style')) {
+      var s = document.createElement('style');
+      s.id = 'lm-logo-color-style';
+      s.textContent =
+        '.lm-marquee-pill, [class*="animate-marquee"] .lm-marquee-pill {' +
+        '  background-color: #ffffff !important;' +
+        '  border: 1px solid rgba(0, 0, 0, 0.08) !important;' +
+        '  border-radius: 12px !important;' +
+        '  box-shadow: 0 1px 4px rgba(0,0,0,0.04) !important;' +
+        '}\n' +
+        '.animate-marquee-left img, .animate-marquee-right img, [class*="animate-marquee"] img, .lm-marquee-pill img {' +
+        '  filter: none !important;' +
+        '  opacity: 1 !important;' +
+        '  -webkit-filter: none !important;' +
+        '}';
+      document.head.appendChild(s);
+    }
+    document.querySelectorAll('.animate-marquee-left img, .animate-marquee-right img, [class*="animate-marquee"] img, .lm-marquee-pill img').forEach(function (img) {
+      img.style.filter = 'none';
+      img.style.opacity = '1';
+      img.style.webkitFilter = 'none';
+    });
+  }
+
+  // Open internal case studies in place, never in a new tab
+  // BUT leave external direct-redirect apps with target="_blank"
+  function fixInternalLinks() {
+    document.querySelectorAll('a[target="_blank"]').forEach(function (a) {
+      var href = stripBase(a.getAttribute('href') || '');
+      for (var id in DIRECT_REDIRECT_APPS) {
+        if (href.indexOf(id) > -1) return;
+      }
+      if (href.indexOf('/project/') === 0 ||
+          href.indexOf('/product-design') === 0 || href.indexOf('/website-design') === 0 ||
+          href.indexOf('/microfinance') === 0 || href.indexOf('/brand-strategy') === 0 ||
+          href.indexOf('/frontend-development') === 0 ||
+          href.indexOf('/services') === 0 || href.indexOf('/about') === 0 || href.indexOf('/contact') === 0) {
+        a.removeAttribute('target');
+        a.removeAttribute('rel');
+        a.style.cursor = 'pointer';
+      }
+    });
+  }
+
+  // Ensure direct-redirect cards go directly to their destination URLs
+  function flagRedirectCards() {
+    document.querySelectorAll('a[href]').forEach(function (card) {
+      var href = card.getAttribute('href') || '';
+      for (var id in DIRECT_REDIRECT_APPS) {
+        if (href.indexOf('/project/' + id) > -1 || href.indexOf('/graphic/' + id) > -1 || href === id) {
+          card.setAttribute('href', DIRECT_REDIRECT_APPS[id]);
+          card.setAttribute('target', '_blank');
+          card.setAttribute('rel', 'noopener noreferrer');
+          card.style.cursor = 'pointer';
+        }
+      }
+    });
+  }
+
+  // Lexark: say "Coming soon", disable product link, BUT keep case study details page!
+  // LulaGazette: the legal-search case study now lives as its own page under a
+  // new name. Old "Lexark" cards, routes and copy are relabelled and repointed.
+  var GAZETTE_URL = GH_BASE + '/project/lula-gazette/';
+
+  function relabelLexark() {
+    // Old case-study route -> new static case study page
+    if (window.location.pathname.indexOf('lexark') > -1 && window.location.pathname.indexOf('lula-gazette') === -1) {
+      window.location.replace(GAZETTE_URL);
+      return;
+    }
+
+    // Repoint every lexark link at the new case study
+    document.querySelectorAll('a[href*="lexark"]').forEach(function (a) {
+      var href = a.getAttribute('href') || '';
+      if (href.indexOf('lexark.org') > -1) return; // never touched: external live product
+      if (a.getAttribute('href') !== GAZETTE_URL) a.setAttribute('href', GAZETTE_URL);
+    });
+
+    // Rename visible wording (leaf text nodes only, so markup stays intact)
+    document.querySelectorAll('h1, h2, h3, h4, p, span, div, a, button').forEach(function (el) {
+      if ((el.textContent || '').indexOf('Lexark') === -1) return;
+      if (el.children && el.children.length) return; // not a leaf
+      var t = el.textContent;
+      t = t.replace(/Lexark Legal Search/g, 'LulaGazette — Legal Resource Search Engine');
+      t = t.replace(/Lexark/g, 'LulaGazette');
+      if (el.textContent !== t) el.textContent = t;
+    });
+
+    // The case study is live now: drop any leftover "coming soon" badges/CTAs.
+    // Hidden, never removed — removing React's own nodes breaks its reconciler.
+    document.querySelectorAll('.lm-available-badge, #lm-lexark-status').forEach(function (b) {
+      b.style.display = 'none';
+      b.setAttribute('data-lm-hidden', '1');
+    });
+    document.querySelectorAll('span').forEach(function (sub) {
+      var st = (sub.textContent || '').trim();
+      if (st === 'Coming soon · Case study') sub.textContent = 'View case study';
+    });
+  }
+
+  // Remove "What people say" and recommendations
+  // ---------------------------------------------------------------- balance
+  // The site must read as design AND build, end to end. These injections keep
+  // the homepage "Areas of work", the services clusters and the work intro
+  // honest about the front-end, integration and AI side of the practice.
+  function balanceOffering() {
+    if (document.getElementById('lm-area-frontend')) return;
+    var here = stripBase(window.location.pathname);
+    var onHome = (here === '/' || here === '/index.html');
+
+    // --- home: fifth "Areas of work" row, same anatomy as rows 01-04 ---
+    var lastRow = onHome ? document.querySelector('a[href*="/website-design-conversion"]') : null;
+    if (lastRow && lastRow.parentElement) {
+      var row = document.createElement('a');
+      row.id = 'lm-area-frontend';
+      row.className = 'relative block w-full lm-rv';
+      row.setAttribute('href', GH_BASE + '/frontend-development');
+      row.innerHTML =
+        '<div class="container mx-auto px-6 lg:px-20 max-w-6xl">' +
+          '<div class="flex items-center gap-6 lg:gap-12 py-7 lg:py-9">' +
+            '<div class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-xs font-black font-mono" style="color:hsl(var(--muted-foreground));border:1.5px solid hsl(var(--border));">05</div>' +
+            '<div class="flex-1 min-w-0"><div class="flex flex-col lg:flex-row lg:items-center lg:gap-6">' +
+              '<h3 class="font-display font-bold text-xl lg:text-2xl xl:text-3xl leading-tight tracking-tight text-foreground">Frontend Engineering &amp; AI Integration</h3>' +
+              '<p class="text-sm text-muted-foreground mt-1 lg:mt-0">The person who designs it builds it. Production front-end code — PWAs, web apps, dashboards — wired into your CRM, your APIs or your backend team’s systems, with AI worked in where it earns its keep: smart search, assistants, research at speed.</p>' +
+            '</div></div>' +
+            '<div class="hidden lg:block shrink-0 font-display font-black text-xs" style="color:hsl(var(--foreground)/0.1);letter-spacing:0.2em;">BUILD</div>' +
+            '<div class="hidden lg:block shrink-0 w-20 h-14 rounded-xl overflow-hidden border border-border/50"><img src="' + GH_BASE + '/projects/lulamile/lulagazette-hero.png" alt="Frontend engineering and AI integration — LulaGazette legal search interface" class="w-full h-full object-cover" loading="lazy" decoding="async"></div>' +
+            '<div class="shrink-0 w-9 h-9 rounded-full border flex items-center justify-center" style="border-color:hsl(var(--border));color:hsl(var(--muted-foreground));"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></div>' +
+          '</div>' +
+        '</div>';
+      lastRow.insertAdjacentElement('afterend', row);
+    }
+
+    // --- home: one line under "Selected Work" so the mix reads as range ---
+    var workH2 = null;
+    if (onHome) {
+      document.querySelectorAll('h2').forEach(function (h) {
+        if (!workH2 && (h.textContent || '').trim() === 'Selected Work') workH2 = h;
+      });
+    }
+    if (workH2 && !document.getElementById('lm-work-note')) {
+      var note = document.createElement('p');
+      note.id = 'lm-work-note';
+      note.className = 'text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl mt-4 lm-rv';
+      note.textContent = 'One owner from first sketch to shipped product: research, interface, front-end code, CRM and backend integration. Some of these lean design-heavy, some are live products people use daily — the mix is the point, not an accident.';
+      workH2.insertAdjacentElement('afterend', note);
+    }
+
+    // --- services: cluster E, same anatomy as clusters A-D ---
+    var clusterD = document.getElementById('cluster-d');
+    if (clusterD && !document.getElementById('cluster-e')) {
+      var sec = document.createElement('section');
+      sec.id = 'cluster-e';
+      sec.className = 'py-28 lg:py-36 scroll-mt-20 relative lm-rv';
+      sec.innerHTML =
+        '<div class="container mx-auto px-6 lg:px-20 max-w-6xl">' +
+          '<div class="mb-14">' +
+            '<div class="flex items-center gap-3 mb-5">' +
+              '<div class="w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold text-background" style="background-color:hsl(var(--hero-accent));">E</div>' +
+              '<span class="text-xs font-medium uppercase tracking-widest" style="color:hsl(var(--hero-accent));">Build &amp; Integrate</span>' +
+            '</div>' +
+            '<h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight max-w-2xl mb-5">Designed and built by the same pair of <span style="color:hsl(var(--hero-accent));">hands</span>.</h2>' +
+            '<div class="flex items-start gap-4 max-w-2xl">' +
+              '<div class="w-1 rounded-full shrink-0 mt-1.5 self-stretch min-h-10" style="background-color:hsl(var(--hero-accent));opacity:0.4;"></div>' +
+              '<p class="text-base sm:text-lg text-muted-foreground leading-relaxed">I don’t hand off a PDF and disappear. I write the front-end myself — PWAs, web apps, dashboards — and integrate cleanly with your CRM, your APIs, or your backend team’s systems. Backends aren’t mine to build; making yours talk fluently to a front end people love is.</p>' +
+            '</div>' +
+          '</div>' +
+          '<div class="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-10 lg:gap-14 items-start">' +
+            '<div class="space-y-3">' +
+              card('Front-End Builds & PWAs', 'Production React code, offline-first PWAs and dashboards that stay quick on real phones, real data and real networks.', ['React', 'PWA', 'Offline-first', 'Performance']) +
+              card('CRM & Backend Integration', 'Clean API contracts, webhooks, data mapping and CRM pipelines your team can maintain after I leave. I integrate with backends — I don’t pretend to be one.', ['APIs', 'Webhooks', 'CRM pipelines', 'Data mapping']) +
+              card('AI Search & Assistants', 'Retrieval, smart auto-complete and assistant interfaces designed to be verifiable — the LulaGazette school: no hallucinated answers, ever.', ['Retrieval', 'Prompt design', 'Evals', 'Human review']) +
+            '</div>' +
+            '<div class="space-y-4">' +
+              '<a class="block rounded-2xl overflow-hidden border border-border/60 lm-lift" href="' + GH_BASE + '/project/lula-gazette/">' +
+                '<img src="' + GH_BASE + '/projects/lulamile/lulagazette-search.png" alt="LulaGazette legal search results — AI-assisted retrieval interface" class="w-full object-cover" loading="lazy" decoding="async">' +
+              '</a>' +
+              '<div class="rounded-2xl border border-border/60 bg-card/50 p-5">' +
+                '<p class="text-sm text-muted-foreground leading-relaxed">See it in one case study: <a href="' + GH_BASE + '/project/lula-gazette/" style="color:hsl(var(--hero-accent));font-weight:600;text-decoration:none;">LulaGazette</a> — search engine, user app and admin dashboard, designed end to end and specified for build.</p>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      clusterD.insertAdjacentElement('afterend', sec);
+    }
+
+    function card(title, body, chips) {
+      return '<button type="button" class="group relative w-full text-left rounded-2xl border border-border bg-card overflow-hidden transition-all duration-300 lm-lift" style="cursor:default;">' +
+        '<div class="p-5 lg:p-6"><div class="flex items-start justify-between gap-4"><div class="flex-1 min-w-0">' +
+          '<h4 class="font-display text-base lg:text-lg font-semibold text-foreground leading-snug mb-1.5">' + title + '</h4>' +
+          '<p class="text-sm text-muted-foreground leading-relaxed mb-4">' + body + '</p>' +
+          '<div class="flex flex-wrap gap-1.5">' + chips.map(function (c) {
+            return '<span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-medium border border-border bg-secondary text-secondary-foreground">' + c + '</span>';
+          }).join('') + '</div>' +
+        '</div></div></div></button>';
+    }
+  }
+
+  // ------------------------------------------------------- contact + social
+  // Contact page: a real brief form that POSTs to Formspree (endpoint lives in
+  // edits.js -> settings.formspree) and lands in Lula's inbox.
+  function contactFormspree() {
+    var p = window.location.pathname;
+    if (p.indexOf('contact') === -1) return;
+    if (document.getElementById('lm-contact-form')) return;
+    var footer = document.querySelector('footer');
+    if (!footer) return;
+
+    var sec = document.createElement('section');
+    sec.id = 'lm-contact-form';
+    sec.className = 'py-20 lg:py-28 border-t lm-rv';
+    sec.style.borderColor = 'hsl(var(--border)/0.6)';
+    sec.innerHTML =
+      '<div class="container mx-auto px-6 lg:px-20 max-w-4xl">' +
+        '<p class="text-xs font-semibold uppercase tracking-widest mb-3" style="color:hsl(var(--hero-accent));">Send a brief</p>' +
+        '<h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight mb-4">Tell me what you’re building.</h2>' +
+        '<p class="text-base text-muted-foreground leading-relaxed max-w-2xl mb-8">A paragraph is plenty. I reply within one working day — usually with two or three questions and a first idea.</p>' +
+        '<form id="lm-brief-form" class="grid grid-cols-1 sm:grid-cols-2 gap-4" novalidate>' +
+          field('Your name', 'name', 'text', 'Naledi Dlamini', true) +
+          field('Email', 'email', 'email', 'you@company.co.za', true) +
+          field('Company (optional)', 'company', 'text', 'Company or practice', false) +
+          field('What do you need?', 'topic', 'text', 'Website, product design, PWA, CRM, AI search…', false) +
+          '<div class="sm:col-span-2">' + field('The brief', 'message', 'textarea', 'What exists today, what should exist in three months, and what is in the way.', true) + '</div>' +
+          '<div class="sm:col-span-2 flex flex-wrap items-center gap-4">' +
+            '<input type="submit" value="Send message" class="lm-send" />' +
+            '<span class="text-xs text-muted-foreground">Goes straight to my inbox via Formspree. No lists, no bots.</span>' +
+          '</div>' +
+          '<input type="hidden" name="_subject" value="Portfolio brief via the contact page" />' +
+          '<p class="lm-form-done sm:col-span-2" hidden style="color:hsl(var(--hero-accent));font-weight:600;">✅ Message sent — thank you. It has landed in my inbox; I’ll reply within one working day.</p>' +
+          '<p class="lm-form-fail sm:col-span-2" hidden style="color:hsl(var(--destructive, 0 62% 45%));font-weight:600;">The wire ate it, sorry. Email me directly: <a href="mailto:mkhungela.l@gmail.com" style="color:inherit;">mkhungela.l@gmail.com</a></p>' +
+        '</form>' +
+      '</div>';
+    footer.parentElement.insertBefore(sec, footer);
+
+    var form = sec.querySelector('#lm-brief-form');
+    var inputStyle = 'width:100%;background:hsl(var(--card));border:1px solid hsl(var(--border));border-radius:14px;padding:12px 16px;font-size:14px;color:hsl(var(--foreground));outline:none;transition:border-color .2s ease, box-shadow .2s ease;font-family:inherit;';
+    form.querySelectorAll('input,textarea').forEach(function (el) {
+      el.style.cssText += inputStyle;
+      el.addEventListener('focus', function () { el.style.borderColor = 'hsl(var(--hero-accent))'; el.style.boxShadow = '0 0 0 3px hsl(var(--hero-accent)/0.15)'; });
+      el.addEventListener('blur', function () { el.style.borderColor = 'hsl(var(--border))'; el.style.boxShadow = 'none'; });
+    });
+    var btn = form.querySelector('.lm-send');
+    btn.style.cssText = 'padding:13px 28px;border:none;border-radius:999px;background:hsl(var(--hero-accent));color:hsl(var(--background));font-weight:700;font-size:14px;cursor:pointer;transition:transform .2s ease, box-shadow .2s ease, opacity .2s ease;font-family:inherit;';
+    btn.addEventListener('mouseenter', function () { btn.style.transform = 'translateY(-2px)'; btn.style.boxShadow = '0 12px 28px -10px hsl(var(--hero-accent)/0.7)'; });
+    btn.addEventListener('mouseleave', function () { btn.style.transform = 'none'; btn.style.boxShadow = 'none'; });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var done = form.querySelector('.lm-form-done');
+      var fail = form.querySelector('.lm-form-fail');
+      var name = form.querySelector('[name="name"]');
+      var mail = form.querySelector('[name="email"]');
+      var msg = form.querySelector('[name="message"]');
+      fail.hidden = true;
+      if (!name.value.trim() || !mail.value.trim() || !/.+@.+\..+/.test(mail.value) || !msg.value.trim()) {
+        [name, mail, msg].forEach(function (el) {
+          if (!el.value.trim() || (el === mail && !/.+@.+\..+/.test(el.value))) el.style.borderColor = 'hsl(var(--hero-accent))';
+        });
+        return;
+      }
+      btn.disabled = true; btn.value = 'Sending…'; btn.style.opacity = '0.7';
+      fetch(SET.formspree || 'https://formspree.io/f/xykljwoq', {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' }
+      }).then(function (r) {
+        if (r.ok) { form.style.display = 'none'; done.hidden = false; }
+        else { btn.disabled = false; btn.value = 'Send message'; btn.style.opacity = '1'; fail.hidden = false; }
+      }).catch(function () { btn.disabled = false; btn.value = 'Send message'; btn.style.opacity = '1'; fail.hidden = false; });
+      return false;
+    });
+
+    function field(label, name, type, ph, required) {
+      var id = 'lm-f-' + name;
+      var lbl = '<label for="' + id + '" style="display:block;font-size:12px;font-weight:600;color:hsl(var(--muted-foreground));margin-bottom:6px;">' + label + (required ? ' *' : '') + '</label>';
+      if (type === 'textarea') {
+        return '<div>' + lbl + '<textarea id="' + id + '" name="' + name + '" rows="5" placeholder="' + ph + '"' + (required ? ' required' : '') + '></textarea></div>';
+      }
+      return '<div>' + lbl + '<input id="' + id + '" type="' + type + '" name="' + name + '" placeholder="' + ph + '"' + (required ? ' required' : '') + ' /></div>';
+    }
+  }
+
+  // ------------------------------------------------------------ contact fix
+  // The React contact form ships pointing at a dead backend (a Supabase edge
+  // function that was never wired to a real inbox), so "Send message" looked
+  // like it worked and delivered nothing. We intercept the submit in the
+  // CAPTURE phase — before React's own handler can run — and deliver the
+  // message to the Formspree endpoint in edits.js -> settings.formspree,
+  // which is linked to the real inbox. Success and failure are both reported
+  // inline; on failure a direct mailto is offered as the fallback.
+  function fixContactForm() {
+    var p = stripBase(window.location.pathname);
+    if (p.indexOf('contact') === -1) return;
+    if (document.getElementById('lm-cf-panel')) return;
+
+    // The main form is the one with the "Send message" button + captcha check.
+    var form = null;
+    var sendBtn = null;
+    document.querySelectorAll('form').forEach(function (f) {
+      var btn = f.querySelector('button[type="submit"], input[type="submit"]');
+      if (btn && (btn.textContent || btn.value || '').indexOf('Send message') > -1 && f.querySelector('#captcha')) {
+        form = f; sendBtn = btn;
+      }
+    });
+    if (!form || form.hasAttribute('data-lm-fixed')) return;
+    form.setAttribute('data-lm-fixed', '1');
+
+    // Inline status panel, inserted above the form. Hidden until used.
+    var panel = document.createElement('div');
+    panel.id = 'lm-cf-panel';
+    panel.style.cssText = 'display:none;margin-bottom:18px;padding:18px 20px;border-radius:16px;' +
+      'border:1px solid hsl(var(--hero-accent)/0.35);background:hsl(var(--hero-accent)/0.08);' +
+      'font-size:14px;line-height:1.6;';
+    form.parentElement.insertBefore(panel, form);
+
+    function showPanel(html, tone) {
+      panel.style.borderColor = tone === 'fail'
+        ? 'hsl(var(--destructive, 0 62% 45%) / 0.4)'
+        : 'hsl(var(--hero-accent)/0.35)';
+      panel.style.background = tone === 'fail'
+        ? 'hsl(var(--destructive, 0 62% 45%) / 0.08)'
+        : 'hsl(var(--hero-accent)/0.08)';
+      panel.innerHTML = html;
+      panel.style.display = 'block';
+    }
+    function resetPanel() {
+      panel.style.display = 'none';
+      panel.innerHTML = '';
+    }
+    function restoreButton() {
+      if (!sendBtn) return;
+      sendBtn.disabled = false;
+      if (sendBtn.textContent) sendBtn.textContent = 'Send message';
+    }
+
+    form.addEventListener('submit', function (e) {
+      // Capture phase + stopImmediatePropagation: React's onSubmit (the dead
+      // Supabase call) never sees this event.
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      resetPanel();
+
+      var nameEl = form.querySelector('#name');
+      var mailEl = form.querySelector('#email');
+      var msgEl = form.querySelector('#message');
+      var topicEl = form.querySelector('#lookingFor');
+      var name = nameEl ? nameEl.value.trim() : '';
+      var mail = mailEl ? mailEl.value.trim() : '';
+      var msg = msgEl ? msgEl.value.trim() : '';
+      var topic = topicEl ? (topicEl.value || topicEl.textContent || '').trim() : '';
+
+      if (!name || !mail || !msg) {
+        showPanel('Add your <strong>name</strong>, <strong>email</strong> and <strong>message</strong> first — then I’ll take it from there.', 'fail');
+        return;
+      }
+      if (!/.+@.+\..+/.test(mail)) {
+        showPanel('That email doesn’t look quite right — one more look, then send again.', 'fail');
+        return;
+      }
+
+      var fd = new FormData();
+      fd.append('name', name);
+      fd.append('email', mail);
+      if (topic) fd.append('looking for', topic);
+      fd.append('message', msg);
+      fd.append('_subject', 'Portfolio enquiry from ' + name);
+
+      if (sendBtn) { sendBtn.disabled = true; if (sendBtn.textContent) sendBtn.textContent = 'Sending…'; }
+      showPanel('Sending your message…', 'ok');
+
+      var endpoint = SET.formspree || 'https://formspree.io/f/xykljwoq';
+      fetch(endpoint, {
+        method: 'POST',
+        body: fd,
+        headers: { Accept: 'application/json' }
+      }).then(function (r) {
+        if (!r.ok) throw new Error('formspree-' + r.status);
+        form.style.display = 'none';
+        showPanel(
+          '✅ <strong>Message sent — thank you.</strong><br>' +
+          'It has landed in my inbox via Formspree. I’ll reply within one working day — usually much faster.' +
+          '<br><br><a href="mailto:' + CONFIG.newEmail + '" style="font-weight:600;color:hsl(var(--hero-accent));">Email me directly</a> if it’s urgent.',
+          'ok'
+        );
+        restoreButton();
+      }).catch(function () {
+        restoreButton();
+        showPanel(
+          'The wire ate it, sorry — but your message is ready to go straight to my inbox:<br><br>' +
+          '<a href="mailto:' + CONFIG.newEmail + '?subject=' + encodeURIComponent('Portfolio enquiry from ' + name) + '&body=' + encodeURIComponent(msg) + '" ' +
+          'style="display:inline-block;margin-top:6px;padding:10px 20px;border-radius:999px;background:hsl(var(--hero-accent));color:hsl(var(--background));font-weight:700;text-decoration:none;">Open in your email app → ' + CONFIG.newEmail + '</a>',
+          'fail'
+        );
+      });
+      return false;
+    }, true);
+  }
+
+  // LulaUnifidMarket / Lula TrustShield: honest "work in progress" status plus
+  // open design files (Figma) and the UX resource library (Notion).
+  function trustshieldStatus() {
+    var p = stripBase(window.location.pathname);
+    if (p.indexOf('lula-trustshield') > -1 && !document.getElementById('lm-trustshield-wip')) {
+      var h1 = document.querySelector('h1');
+      if (h1) {
+        var wrap = document.createElement('div');
+        wrap.id = 'lm-trustshield-wip';
+        wrap.style.cssText = 'display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 18px;';
+        wrap.innerHTML =
+          '<span style="display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;background:hsl(var(--hero-accent)/0.14);color:hsl(var(--hero-accent));font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;">' +
+            '<span style="width:8px;height:8px;border-radius:50%;background:currentColor;display:inline-block;"></span>Work in progress</span>' +
+          '<a href="' + (SET.trustshieldFigma || 'https://www.figma.com/design/z28iI0zJV1u1cL1wQ4HMrx/Lula-Fig-Studio?node-id=0-1&amp;t=nvDf0oI0q4B7eTvy-1') + '" target="_blank" rel="noopener noreferrer" style="padding:7px 14px;border-radius:999px;border:1px solid hsl(var(--border));font-size:12px;font-weight:600;color:hsl(var(--muted-foreground));text-decoration:none;">Design files — Figma ↗</a>' +
+          '<a href="' + (SET.trustshieldNotion || 'https://chartreuse-scale-c4a.notion.site/Lula-Creatives-UX-Resources-Bookmarks-1e2962b93ef1809dbe07c896db79ad65') + '" target="_blank" rel="noopener noreferrer" style="padding:7px 14px;border-radius:999px;border:1px solid hsl(var(--border));font-size:12px;font-weight:600;color:hsl(var(--muted-foreground));text-decoration:none;">UX resource library — Notion ↗</a>';
+        h1.parentElement.insertBefore(wrap, h1);
+      }
+    }
+    // "Work in progress" badge on its project card, wherever the card shows
+    document.querySelectorAll('a[href*="lula-trustshield"]').forEach(function (card) {
+      if (card.querySelector('.lm-wip-badge') || !card.querySelector('img')) return;
+      var b = document.createElement('span');
+      b.className = 'lm-wip-badge';
+      b.textContent = 'Work in progress';
+      b.style.cssText = 'position:absolute;top:20px;right:20px;z-index:20;background:hsl(var(--hero-accent));' +
+        'color:hsl(var(--background));font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;' +
+        'padding:7px 12px;border-radius:999px;box-shadow:0 4px 12px rgba(0,0,0,0.25);';
+      if (getComputedStyle(card).position === 'static') card.style.position = 'relative';
+      card.appendChild(b);
+    });
+  }
+
+  // Two identical LinkedIn buttons on the contact page: keep the first only.
+  function dedupeSocial() {
+    var seen = {};
+    document.querySelectorAll('a[href*="linkedin.com"]').forEach(function (a) {
+      var label = (a.textContent || '').trim();
+      if (label !== 'LinkedIn') return; // icon-only footer link stays
+      if (seen[label]) {
+        // Hide the duplicate instead of removing it: React still owns this
+        // node and would throw on its next commit if it disappeared.
+        a.style.display = 'none';
+        a.setAttribute('data-lm-hidden', '1');
+        return;
+      }
+      seen[label] = true;
+    });
+  }
+
+  // ---------------------------------------------------------------- perf
+  // Lazy-load everything below the fold, hint the font CDNs, once per page.
+  function perfPass() {
+    document.querySelectorAll('img').forEach(function (img) {
+      if (img.closest('header')) return;
+      if (!img.getAttribute('loading')) img.loading = 'lazy';
+      if (!img.getAttribute('decoding')) img.decoding = 'async';
+    });
+    if (!document.getElementById('lm-preconnect')) {
+      var hosts = ['https://fonts.googleapis.com', 'https://fonts.gstatic.com', 'https://api.fontshare.com', 'https://cdn.pixabay.com'];
+      var frag = document.createDocumentFragment();
+      hosts.forEach(function (h, i) {
+        var l = document.createElement('link');
+        l.rel = 'preconnect';
+        l.href = h;
+        if (i === 1) l.crossOrigin = 'anonymous';
+        frag.appendChild(l);
+      });
+      frag.appendChild(Object.assign(document.createElement('span'), { id: 'lm-preconnect-marker' }));
+      document.head.appendChild(frag);
+      document.head.lastChild.id = 'lm-preconnect';
+    }
+  }
+
+  // ---------------------------------------------------------------- motion
+  // A little life: scroll-reveal for injected blocks + hover lift on cards.
+  function animPass() {
+    if (document.getElementById('lm-anim-style')) return;
+    var s = document.createElement('style');
+    s.id = 'lm-anim-style';
+    s.textContent =
+      '.lm-rv{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease;}\n' +
+      '.lm-rv.in{opacity:1;transform:none;}\n' +
+      '.lm-lift{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;}\n' +
+      '.lm-lift:hover{transform:translateY(-3px);box-shadow:0 18px 40px -18px hsl(var(--foreground)/0.35);}\n' +
+      '@media (prefers-reduced-motion: reduce){.lm-rv{opacity:1;transform:none;transition:none}.lm-lift:hover{transform:none}}';
+    document.head.appendChild(s);
+    if (!('IntersectionObserver' in window)) {
+      document.querySelectorAll('.lm-rv').forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.lm-rv:not(.in)').forEach(function (el) { io.observe(el); });
+  }
+
+  // Retire the OLD homepage "Quiet confidence, spoken by others" carousel.
+  // The About page gets a proper "What people say" section instead —
+  // see injectAboutSections().
+  function removeTestimonials() {
+    document.querySelectorAll('section').forEach(function (sec) {
+      var txt = sec.textContent || '';
+      if (txt.indexOf('Quiet confidence') > -1) {
+        // Hidden, never removed — see checkMidnight() for why React nodes stay put.
+        sec.style.display = 'none';
+        sec.setAttribute('data-lm-hidden', '1');
+      }
+    });
+  }
+
+  // --------------------------------------------------------- about sections
+  // The About page: (1) a "What people say" testimonials section in place of
+  // the LinkedIn-recommendations marquee, and (2) a Certifications preview
+  // grid — Google UX + Project Management (Coursera), UX Fundamentals
+  // (Udemy), UX Training (JCSE), Grade 12 (Jeppe College), UX/UI Design and
+  // Software Development (LinkedIn Learning), Azure 900 (Women's Academy),
+  // Full Stack (FNB App of the Year + MTN Business App academies).
+  function injectAboutSections() {
+    var p = stripBase(window.location.pathname);
+    if (p.indexOf('about') === -1) return;
+    if (document.getElementById('lm-about-people')) return;
+    var linked = document.querySelector('section[aria-label="LinkedIn Recommendations"]');
+    if (!linked) return;
+    var anchor = linked.parentElement || linked;
+    var B = GH_BASE;
+    var imgBase = B + '/projects/lulamile/certs/';
+
+    var quotes = [
+      { role: 'Employee Experience Lead', org: 'HRIT · Vodacom', year: '2024',
+        text: 'Lulamile came in, listened properly to how people actually use the app, and rebuilt the navigation around that. The search and grouped sections changed the way staff talk about the platform — the "where do I find" questions mostly stopped.' },
+      { role: 'Founder', org: 'Digital Agency · AddmoreDigital', year: '2024',
+        text: 'We had the work, we just could not present it. Lulamile restructured the site around our portfolio and then set up the pipeline behind it. Proposals stopped being a scramble and enquiries started arriving with context.' },
+      { role: 'Managing Director', org: 'Technology Services · Nerdma', year: '2024',
+        text: 'Rare to find someone who can design a site this sharp and then think through the sales pipeline behind it. The site finally explains what we do, and the CRM means nothing gets answered from memory.' },
+      { role: 'Owner', org: 'Food Retail · FoodieZone', year: '2024',
+        text: 'Orders used to come through messages all day. Now customers order themselves, reorder in a tap, and I change the menu from my phone. It just works.' }
+    ];
+    var certList = [
+      { img: 'cert-ux-google.png', title: 'Google UX Design', sub: 'Professional Certificate · Coursera', year: '2023' },
+      { img: 'cert-pm-google.png', title: 'Google Project Management', sub: 'Professional Certificate · Coursera', year: '2023' },
+      { img: 'cert-ux-fundamentals-udemy.png', title: 'UX Fundamentals', sub: 'Course · Udemy', year: '2022' },
+      { img: 'cert-ux-jcse.png', title: 'UX Training', sub: 'Practical UX programme · JCSE', year: '2022' },
+      { img: 'cert-grade12-jeppe.png', title: 'National Senior Certificate', sub: 'Grade 12 · Jeppe College', year: '2019' },
+      { img: 'cert-uxui-linkedin.png', title: 'UX / UI Design', sub: 'Learning path · LinkedIn Learning', year: '2023' },
+      { img: 'cert-swdev-linkedin.png', title: 'Software Development', sub: 'Learning path · LinkedIn Learning', year: '2024' },
+      { img: 'cert-azure900.png', title: 'Azure 900 Fundamentals', sub: 'Cloud certification prep · Women’s Academy', year: '2024' },
+      { img: 'cert-fullstack-fnb.png', title: 'Full Stack Development', sub: 'App of the Year academy · FNB', year: '2025' },
+      { img: 'cert-fullstack-mtn.png', title: 'Full Stack Development', sub: 'Business App academy · MTN', year: '2025' }
+    ];
+
+    function initials(role) {
+      var words = role.replace(/[^A-Za-z ]/g, '').split(' ').filter(Boolean);
+      var i0 = words[0] ? words[0].charAt(0) : '';
+      var i1 = words.length > 1 ? words[words.length - 1].charAt(0) : (words[0] ? words[0].charAt(1) : '');
+      return (i0 + i1).toUpperCase();
+    }
+
+    var cardStyle = 'lm-glass-card rounded-2xl p-6 lg:p-7';
+
+    // ---- What people say
+    var people = document.createElement('div');
+    people.id = 'lm-about-people';
+    people.className = 'py-16 lg:py-24 border-t lm-rv';
+    people.style.borderColor = 'hsl(var(--border)/0.6)';
+    people.innerHTML =
+      '<div class="container mx-auto px-6 lg:px-20 max-w-6xl">' +
+        '<div class="flex items-center gap-3 mb-5">' +
+          '<span class="inline-flex items-center justify-center w-7 h-7 rounded-full text-[11px] font-bold" style="background:hsl(var(--hero-accent)/0.14);color:hsl(var(--hero-accent));">★</span>' +
+          '<p class="text-xs font-semibold uppercase tracking-widest" style="color:hsl(var(--hero-accent));">What people say</p>' +
+        '</div>' +
+        '<h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight mb-4 max-w-2xl">Kind words, <span style="color:hsl(var(--hero-accent));">real projects</span>.</h2>' +
+        '<p class="text-base text-muted-foreground leading-relaxed max-w-2xl mb-12">Testimonials from the clients, teams and owners I have designed and built with — in their own words.</p>' +
+        '<div class="grid grid-cols-1 md:grid-cols-2 gap-6">' +
+          quotes.map(function (t) {
+            return '<figure class="' + cardStyle + '">' +
+              '<div class="font-display text-4xl leading-none mb-3 select-none" style="color:hsl(var(--hero-accent)/0.5);">&ldquo;</div>' +
+              '<blockquote class="text-sm lg:text-[15px] text-foreground/90 leading-relaxed mb-6">' + t.text + '</blockquote>' +
+              '<figcaption class="flex items-center gap-3 pt-4" style="border-top:1px solid hsl(var(--border)/0.6);">' +
+                '<span class="flex items-center justify-center w-11 h-11 rounded-full text-xs font-black shrink-0" style="background:hsl(var(--hero-accent)/0.14);color:hsl(var(--hero-accent));">' + initials(t.role) + '</span>' +
+                '<span class="min-w-0">' +
+                  '<span class="block text-sm font-semibold text-foreground">' + t.role + '</span>' +
+                  '<span class="block text-xs text-muted-foreground">' + t.org + ' · ' + t.year + '</span>' +
+                '</span>' +
+              '</figcaption>' +
+            '</figure>';
+          }).join('') +
+        '</div>' +
+      '</div>';
+
+    // ---- Certifications preview
+    var certs = document.createElement('div');
+    certs.id = 'lm-about-certs';
+    certs.className = 'py-16 lg:py-24 border-t lm-rv';
+    certs.style.borderColor = 'hsl(var(--border)/0.6)';
+    certs.innerHTML =
+      '<style>.lm-cert-thumb{position:relative;background:linear-gradient(135deg,hsl(var(--muted)/0.55),hsl(var(--card)/0.35));}.lm-cert-thumb::before{content:"";position:absolute;inset:0;background-image:repeating-linear-gradient(135deg,hsl(var(--border)/0.35) 0 1px,transparent 1px 14px);}.lm-cert-thumb-missing::after{content:attr(data-initial);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:3.2rem;font-weight:700;color:hsl(var(--hero-accent)/0.45);}</style>' +
+      '<div class="container mx-auto px-6 lg:px-20 max-w-6xl">' +
+        '<div class="flex items-center gap-3 mb-5">' +
+          '<span class="inline-flex items-center justify-center w-7 h-7 rounded-full text-[11px] font-bold" style="background:hsl(var(--hero-accent)/0.14);color:hsl(var(--hero-accent));">✓</span>' +
+          '<p class="text-xs font-semibold uppercase tracking-widest" style="color:hsl(var(--hero-accent));">Certifications</p>' +
+        '</div>' +
+        '<h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight mb-4 max-w-2xl">The credentials behind the <span style="color:hsl(var(--hero-accent));">work</span>.</h2>' +
+        '<p class="text-base text-muted-foreground leading-relaxed max-w-2xl mb-12">A preview of the certificates that kept the craft sharp — UX, project management, cloud and full-stack build skills, from first certificate to last.</p>' +
+        '<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">' +
+          certList.map(function (c) {
+            return '<div class="lm-glass-card rounded-2xl overflow-hidden group">' +
+              '<div class="overflow-hidden lm-cert-thumb" data-initial="' + c.title.charAt(0) + '" style="aspect-ratio:16/10;">' +
+                '<img src="' + imgBase + c.img + '" alt="' + c.title + ' — certificate preview, ' + c.sub + '" loading="lazy" decoding="async" onerror="this.style.display=\'none\';this.parentNode.classList.add(\'lm-cert-thumb-missing\')" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />' +
+              '</div>' +
+              '<div class="p-5">' +
+                '<h3 class="font-display text-base lg:text-lg font-semibold text-foreground leading-snug">' + c.title + '</h3>' +
+                '<div class="flex items-center justify-between gap-3 mt-1.5">' +
+                  '<p class="text-xs text-muted-foreground">' + c.sub + '</p>' +
+                  '<span class="text-[11px] font-mono font-medium shrink-0" style="color:hsl(var(--hero-accent));">' + c.year + '</span>' +
+                '</div>' +
+              '</div>' +
+            '</div>';
+          }).join('') +
+        '</div>' +
+      '</div>';
+
+    anchor.insertAdjacentElement('beforebegin', certs);
+    anchor.insertAdjacentElement('beforebegin', people);
+    // Retire the LinkedIn-recommendations marquee it replaces.
+    linked.style.display = 'none';
+    linked.setAttribute('data-lm-hidden', '1');
+  }
+
+  // ------------------------------------------------------- glassmorphism
+  // Frosted-glass treatment, light AND dark. The header is always glass;
+  // .lm-glass-card opt-in elements (dropdowns, CTA cards, contact panels,
+  // about cards) are too. Uses the theme CSS variables, so dark mode gets its
+  // own darker, higher-contrast frost instead of the light-mode wash.
+  function glassPass() {
+    if (!document.getElementById('lm-glass-style')) {
+      var s = document.createElement('style');
+      s.id = 'lm-glass-style';
+      s.textContent =
+        ':root{' +
+        '  --lm-glass-bg:hsl(var(--background)/0.62);' +
+        '  --lm-glass-card:hsl(var(--card)/0.55);' +
+        '  --lm-glass-brd:hsl(var(--foreground)/0.10);' +
+        '  --lm-glass-sh:0 10px 40px -14px hsl(var(--foreground)/0.20);' +
+        '  --lm-glass-blur:blur(18px) saturate(1.45);' +
+        '}' +
+        '.dark{' +
+        '  --lm-glass-bg:hsl(var(--card)/0.44);' +
+        '  --lm-glass-card:hsl(var(--card)/0.50);' +
+        '  --lm-glass-brd:hsl(var(--background)/0.20);' +
+        '  --lm-glass-sh:0 12px 44px -14px rgba(0,0,0,0.55);' +
+        '  --lm-glass-blur:blur(18px) saturate(1.35);' +
+        '}' +
+        'header[class*="sticky"][class*="top-0"]{' +
+        '  background:var(--lm-glass-bg) !important;' +
+        '  -webkit-backdrop-filter:var(--lm-glass-blur);' +
+        '  backdrop-filter:var(--lm-glass-blur);' +
+        '  border-color:var(--lm-glass-brd) !important;' +
+        '  box-shadow:var(--lm-glass-sh);' +
+        '}' +
+        '.lm-glass-card{' +
+        '  background:var(--lm-glass-card) !important;' +
+        '  -webkit-backdrop-filter:blur(14px) saturate(1.3);' +
+        '  backdrop-filter:blur(14px) saturate(1.3);' +
+        '  border:1px solid var(--lm-glass-brd) !important;' +
+        '  box-shadow:var(--lm-glass-sh);' +
+        '}';
+      document.head.appendChild(s);
+    }
+    // Opt-in targets (idempotent: class only, no rewrites).
+    // Expertise dropdown + any already-blurred overlay.
+    document.querySelectorAll('header .absolute.top-full, .backdrop-blur-md, .backdrop-blur-sm').forEach(function (el) {
+      el.classList.add('lm-glass-card');
+    });
+    // Services: the "Let's talk" / "See this in action" CTA cards.
+    if (stripBase(window.location.pathname).indexOf('services') > -1) {
+      document.querySelectorAll('a[href*="calendly.com"]').forEach(function (a) {
+        var t = a.textContent || '';
+        if (t.indexOf("Let's talk") > -1 || t.indexOf('See this in action') > -1) a.classList.add('lm-glass-card');
+      });
+    }
+    // Contact: the main React form + the injected brief form.
+    if (stripBase(window.location.pathname).indexOf('contact') > -1) {
+      var cf = document.querySelector('form[data-lm-fixed]');
+      if (cf) cf.classList.add('lm-glass-card');
+      var bf = document.getElementById('lm-brief-form');
+      if (bf) bf.parentElement && bf.parentElement.classList.add('lm-glass-card');
+    }
+  }
+
+  // --------------------------------------------- services: "Let's talk" gap
+  // On the services page the 2x2 CTA grid (with the "Let's talk" card) sat in
+  // a tall padded section, leaving a visible blank band before "How I work".
+  // Trim that bottom padding and the next section's top padding so the two
+  // read as one continuous page.
+  function tightenServicesCta() {
+    var p = stripBase(window.location.pathname);
+    if (p.indexOf('services') === -1) return;
+    var label = null;
+    document.querySelectorAll('p').forEach(function (el) {
+      if (!label && (el.textContent || '').trim() === "Let's talk") label = el;
+    });
+    if (!label) return;
+    var sec = label.closest('section');
+    if (!sec || sec.hasAttribute('data-lm-tight')) return;
+    sec.setAttribute('data-lm-tight', '1');
+    sec.style.paddingBottom = '0px';
+    var sib = sec.nextElementSibling;
+    var hops = 0;
+    while (sib && hops < 4) {
+      if (sib.tagName === 'SECTION' || (sib.textContent || '').indexOf('How I work') > -1) {
+        sib.style.paddingTop = (window.innerWidth < 1024 ? '28px' : '44px');
+        break;
+      }
+      sib = sib.nextElementSibling; hops++;
+    }
+  }
+  function fixBackButton() {
+    document.querySelectorAll('button, a').forEach(function (btn) {
+      var txt = (btn.textContent || '').trim();
+      if (txt === 'Back' || txt === '← Back') {
+        btn.onclick = function (e) {
+          e.preventDefault();
+          if (window.history && window.history.length > 1 && document.referrer && document.referrer.indexOf(window.location.host) !== -1) {
+            window.history.back();
+          } else {
+            window.location.href = (GH_BASE || '') + '/';
+          }
+        };
+      }
+    });
+  }
+
+  // Ensure favicon is always Lulamile's picture
+  function ensureFavicon() {
+    var favUrl = (GH_BASE || '') + '/favicon.webp?v=2';
+    document.querySelectorAll('link[rel*="icon"]').forEach(function (link) {
+      var href = link.getAttribute('href') || '';
+      if (href.indexOf('favicon') > -1 && href !== favUrl) {
+        link.setAttribute('href', favUrl);
+        link.setAttribute('type', 'image/webp');
+      }
+    });
+  }
+
+  // Case study header live links for live apps and websites
+  function enhanceCaseStudyLiveLinks() {
+    var path = window.location.pathname;
+
+    // Make sure FoodieZone has NO top hero live button
+    if (path.indexOf('foodiezone') > -1) {
+      var fzTop = document.getElementById('lm-live-btn-foodiezone-pwa');
+      if (fzTop) { fzTop.style.display = 'none'; fzTop.setAttribute('data-lm-hidden', '1'); }
+      // Hide any top hero link pointing to foodiezone live site
+      var hero = document.querySelector('main section:first-of-type, main section:nth-of-type(2)');
+      if (hero) {
+        hero.querySelectorAll('a[href*="foodiezone"]').forEach(function (a) {
+          if (a.textContent.indexOf('live') > -1 || a.textContent.indexOf('Open') > -1) {
+            a.style.display = 'none';
+            a.setAttribute('data-lm-hidden', '1');
+          }
+        });
+      }
+      return;
+    }
+
+    for (var id in LIVE_STUDY_URLS) {
+      if (path.indexOf(id) > -1) {
+        var info = LIVE_STUDY_URLS[id];
+        var heading = document.querySelector('h1');
+        if (heading && !document.getElementById('lm-live-btn-' + id)) {
+          var container = heading.parentElement;
+          if (container && !container.querySelector('.lm-live-app-btn')) {
+            var row = document.createElement('div');
+            row.id = 'lm-live-btn-' + id;
+            row.className = 'lm-live-app-btn';
+            row.style.cssText = 'margin-top:24px;display:flex;flex-wrap:wrap;align-items:center;gap:16px;';
+            row.innerHTML = '<a href="' + info.url + '" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:999px;background:hsl(var(--primary));color:hsl(var(--primary-foreground));font-size:14px;font-weight:600;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.15);">' +
+              info.label + ' <span style="font-size:16px">↗</span></a>' +
+              '<a href="' + info.url + '" target="_blank" rel="noopener noreferrer" style="font-family:monospace;font-size:12px;color:hsl(var(--muted-foreground));text-decoration:underline;">' +
+              info.url.replace(/^https?:\/\//, '').replace(/\/$/, '') + '</a>';
+            container.appendChild(row);
+          }
+        }
+      }
+    }
+  }
+
+  // Render comprehensive Industries on Services page
+  function renderServicesIndustries() {
+    var p = window.location.pathname;
+    if (p.indexOf('services') === -1) return;
+    if (document.getElementById('lm-services-industries')) return;
+
+    var faq = document.getElementById('services-faq') || document.querySelector('section[id*="faq"]') || document.querySelector('footer');
+    if (!faq) return;
+
+    var sec = document.createElement('section');
+    sec.id = 'lm-services-industries';
+    sec.className = 'py-20 lg:py-28 border-t border-border scroll-mt-20';
+    sec.innerHTML =
+      '<div class="container mx-auto px-6 lg:px-20 max-w-6xl">' +
+        '<div class="mb-12 lg:mb-16">' +
+          '<p class="text-xs font-semibold uppercase tracking-widest mb-3" style="color:hsl(var(--hero-accent));">Sector Experience</p>' +
+          '<h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight max-w-2xl">' +
+            'Industries with direct delivery experience.' +
+          '</h2>' +
+          '<p class="text-muted-foreground text-base lg:text-lg mt-4 max-w-2xl leading-relaxed">' +
+            'Working digital products, brand platforms, and operational systems shipped across South Africa.' +
+          '</p>' +
+        '</div>' +
+        '<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">' +
+          '<div class="p-6 rounded-2xl border border-border/70 bg-card/40 backdrop-blur-sm">' +
+            '<div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-xl" style="background:hsl(var(--hero-accent)/0.12);color:hsl(var(--hero-accent));">🚗</div>' +
+            '<h3 class="font-display text-xl font-semibold mb-2">Automotive & Mobility</h3>' +
+            '<p class="text-sm text-muted-foreground leading-relaxed mb-3">Subscription portals, connected car companion apps, and verified vehicle discovery.</p>' +
+            '<div class="text-xs font-mono font-medium opacity-80" style="color:hsl(var(--hero-accent));">Toyota · KINTO One · SkFinds</div>' +
+          '</div>' +
+          '<div class="p-6 rounded-2xl border border-border/70 bg-card/40 backdrop-blur-sm">' +
+            '<div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-xl" style="background:hsl(var(--hero-accent)/0.12);color:hsl(var(--hero-accent));">📶</div>' +
+            '<h3 class="font-display text-xl font-semibold mb-2">Telecoms & Enterprise IT</h3>' +
+            '<p class="text-sm text-muted-foreground leading-relaxed mb-3">Employee engagement platforms, internal search architectures, and enterprise tooling.</p>' +
+            '<div class="text-xs font-mono font-medium opacity-80" style="color:hsl(var(--hero-accent));">Vodacom HRIT · iOCO · DPSA</div>' +
+          '</div>' +
+          '<div class="p-6 rounded-2xl border border-border/70 bg-card/40 backdrop-blur-sm">' +
+            '<div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-xl" style="background:hsl(var(--hero-accent)/0.12);color:hsl(var(--hero-accent));">🍔</div>' +
+            '<h3 class="font-display text-xl font-semibold mb-2">Food, Hospitality & QSR</h3>' +
+            '<p class="text-sm text-muted-foreground leading-relaxed mb-3">Low-data mobile ordering PWAs, digital menus, kitchen operational flows, and culinary landmarks.</p>' +
+            '<div class="text-xs font-mono font-medium opacity-80" style="color:hsl(var(--hero-accent));">FoodieZone Soweto · Wandie\'s Place · Africa Cuisine</div>' +
+          '</div>' +
+          '<div class="p-6 rounded-2xl border border-border/70 bg-card/40 backdrop-blur-sm">' +
+            '<div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-xl" style="background:hsl(var(--hero-accent)/0.12);color:hsl(var(--hero-accent));">⚖️</div>' +
+            '<h3 class="font-display text-xl font-semibold mb-2">Legal Tech & Search</h3>' +
+            '<p class="text-sm text-muted-foreground leading-relaxed mb-3">Case law indexing, precedent discovery, and intelligent legal research interfaces.</p>' +
+            '<div class="text-xs font-mono font-medium opacity-80" style="color:hsl(var(--hero-accent));">LulaGazette</div>' +
+          '</div>' +
+          '<div class="p-6 rounded-2xl border border-border/70 bg-card/40 backdrop-blur-sm">' +
+            '<div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-xl" style="background:hsl(var(--hero-accent)/0.12);color:hsl(var(--hero-accent));">🩺</div>' +
+            '<h3 class="font-display text-xl font-semibold mb-2">Healthcare & Pharma</h3>' +
+            '<p class="text-sm text-muted-foreground leading-relaxed mb-3">Digital health workflows, patient education tools, and medical communications.</p>' +
+            '<div class="text-xs font-mono font-medium opacity-80" style="color:hsl(var(--hero-accent));">Takeda · Novelmed</div>' +
+          '</div>' +
+          '<div class="p-6 rounded-2xl border border-border/70 bg-card/40 backdrop-blur-sm">' +
+            '<div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-xl" style="background:hsl(var(--hero-accent)/0.12);color:hsl(var(--hero-accent));">⚡</div>' +
+            '<h3 class="font-display text-xl font-semibold mb-2">Energy & Industrial</h3>' +
+            '<p class="text-sm text-muted-foreground leading-relaxed mb-3">Corporate systems, operational dashboards, and industrial brand touchpoints.</p>' +
+            '<div class="text-xs font-mono font-medium opacity-80" style="color:hsl(var(--hero-accent));">Sasol</div>' +
+          '</div>' +
+          '<div class="p-6 rounded-2xl border border-border/70 bg-card/40 backdrop-blur-sm">' +
+            '<div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-xl" style="background:hsl(var(--hero-accent)/0.12);color:hsl(var(--hero-accent));">🏛️</div>' +
+            '<h3 class="font-display text-xl font-semibold mb-2">Civic Tech & Public Sector</h3>' +
+            '<p class="text-sm text-muted-foreground leading-relaxed mb-3">Public governance portals, community platforms, and citizen-facing services.</p>' +
+            '<div class="text-xs font-mono font-medium opacity-80" style="color:hsl(var(--hero-accent));">DPSA · Uluntu</div>' +
+          '</div>' +
+          '<div class="p-6 rounded-2xl border border-border/70 bg-card/40 backdrop-blur-sm">' +
+            '<div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-xl" style="background:hsl(var(--hero-accent)/0.12);color:hsl(var(--hero-accent));">💼</div>' +
+            '<h3 class="font-display text-xl font-semibold mb-2">Professional Services & B2B</h3>' +
+            '<p class="text-sm text-muted-foreground leading-relaxed mb-3">High-converting agency and consulting sites, proposal workflows, and CRM pipeline automation.</p>' +
+            '<div class="text-xs font-mono font-medium opacity-80" style="color:hsl(var(--hero-accent));">SnB Consultancy · Nerdma · AddmoreDigital</div>' +
+          '</div>' +
+          '<div class="p-6 rounded-2xl border border-border/70 bg-card/40 backdrop-blur-sm">' +
+            '<div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-xl" style="background:hsl(var(--hero-accent)/0.12);color:hsl(var(--hero-accent));">🛡️</div>' +
+            '<h3 class="font-display text-xl font-semibold mb-2">Asset Verification & Escrow</h3>' +
+            '<p class="text-sm text-muted-foreground leading-relaxed mb-3">Escrow locks, proof-of-funds verification, and fraud prevention for high-value peer transactions.</p>' +
+            '<div class="text-xs font-mono font-medium opacity-80" style="color:hsl(var(--hero-accent));">Lula TrustShield (LulaUnifidMarket)</div>' +
+          '</div>' +
+          '<div class="p-6 rounded-2xl border border-border/70 bg-card/40 backdrop-blur-sm">' +
+            '<div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-xl" style="background:hsl(var(--hero-accent)/0.12);color:hsl(var(--hero-accent));">🖥️</div>' +
+            '<h3 class="font-display text-xl font-semibold mb-2">ICT Services & Digital Transformation</h3>' +
+            '<p class="text-sm text-muted-foreground leading-relaxed mb-3">Enterprise ICT advisory, managed-service rollouts, automation and workforce-solution platforms for transformation programmes.</p>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+
+    // Sector cards stay sector-level: no company names on them.
+    sec.querySelectorAll('.text-xs.font-mono').forEach(function (d) { d.remove(); });
+
+    // After ICT Services: Software Development + two more critical sectors.
+    var ictCard = null;
+    sec.querySelectorAll('h3').forEach(function (h) {
+      if ((h.textContent || '').indexOf('ICT Services') > -1 && ictCard === null) ictCard = h.closest('.p-6.rounded-2xl');
+    });
+    if (ictCard) {
+      var extra = [
+        { icon: '🧩', h: 'Software Development',
+          p: 'Product-grade software designed and built end to end — PWAs, web apps and dashboards, with the CRM and API integrations that keep them alive after launch.' },
+        { icon: '🏦', h: 'Financial Services & Fintech',
+          p: 'Customer apps, onboarding flows and reporting for banking and financial-services teams — built for regulated, high-trust, high-volume environments.' },
+        { icon: '🚚', h: 'Logistics, Supply Chain & Fleet',
+          p: 'Fleet visibility, dispatch workflows and operations tooling for supply chains that cannot afford downtime or guesswork.' }
+      ];
+      // reverse so afterend insertions land in the intended order
+      extra.slice().reverse().forEach(function (x) {
+        var html =
+          '<div class="p-6 rounded-2xl border border-border/70 bg-card/40 backdrop-blur-sm">' +
+            '<div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-xl" style="background:hsl(var(--hero-accent)/0.12);color:hsl(var(--hero-accent));">' + x.icon + '</div>' +
+            '<h3 class="font-display text-xl font-semibold mb-2">' + x.h + '</h3>' +
+            '<p class="text-sm text-muted-foreground leading-relaxed mb-3">' + x.p + '</p>' +
+          '</div>';
+        ictCard.insertAdjacentHTML('afterend', html);
+      });
+    }
+
+    faq.parentElement.insertBefore(sec, faq);
+  }
+
+  // Back to Top floating button — positioned DIRECTLY ABOVE the song/music icon
+  function initBackToTop() {
+    if (document.getElementById('lm-back-to-top')) return;
+    var btn = document.createElement('button');
+    btn.id = 'lm-back-to-top';
+    btn.setAttribute('aria-label', 'Back to top');
+    btn.setAttribute('title', 'Back to top');
+    btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>';
+
+    // Desktop: music icon is at bottom: 24px (h: 44px). Button sits at bottom: 80px (24 + 44 + 12).
+    // Mobile: music icon is at bottom: 5.5rem / 88px (h: 44px). Button sits at bottom: 144px (88 + 44 + 12).
+    btn.style.cssText = 'position:fixed;right:24px;bottom:80px;width:44px;height:44px;border-radius:50%;' +
+      'display:flex;align-items:center;justify-content:center;z-index:65;' +
+      'background:hsl(var(--foreground)/0.9);color:hsl(var(--background));' +
+      'border:1px solid hsl(var(--border)/0.5);box-shadow:0 4px 20px -4px hsl(var(--foreground)/0.35);' +
+      'backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);' +
+      'cursor:pointer;opacity:0;pointer-events:none;transform:translateY(8px) scale(0.95);' +
+      'transition:opacity 0.25s ease, transform 0.25s ease, background-color 0.2s ease, color 0.2s ease;';
+
+    if (!document.getElementById('lm-btt-style')) {
+      var s = document.createElement('style');
+      s.id = 'lm-btt-style';
+      s.textContent =
+        '@media (max-width: 639px) { #lm-back-to-top { bottom: 144px !important; right: 24px !important; } }\n' +
+        '#lm-back-to-top:hover { transform: translateY(0) scale(1.08) !important; opacity: 1 !important; background: hsl(var(--hero-accent)) !important; color: #000 !important; }';
+      document.head.appendChild(s);
+    }
+
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    function updateBTT() {
+      var top = window.pageYOffset || document.documentElement.scrollTop || 0;
+      if (top > 120) {
+        btn.style.opacity = '1';
+        btn.style.pointerEvents = 'auto';
+        btn.style.transform = 'translateY(0) scale(1)';
+      } else {
+        btn.style.opacity = '0';
+        btn.style.pointerEvents = 'none';
+        btn.style.transform = 'translateY(8px) scale(0.95)';
+      }
+    }
+
+    window.addEventListener('scroll', updateBTT, { passive: true });
+    document.body.appendChild(btn);
+    updateBTT();
+  }
+
+  // Greeting-once gate.
+  //
+  // The welcome greeting is heard ONCE — on the visitor's first load of the
+  // site. It wraps speechSynthesis.speak BEFORE the React bundle's intro timer
+  // fires (classic scripts run ahead of module scripts), so:
+  //   1. first-ever visit -> the first utterance that actually starts speaking
+  //      locks the flag in localStorage; every later greeting (bundle retry,
+  //      in-app navigation back home) is swallowed silently;
+  //   2. returning visits -> every greeting utterance is swallowed instantly.
+  // Mute entirely: edits.js -> settings.greetingVoice = false
+  (function installGreetingOnce() {
+    if (!('speechSynthesis' in window)) return;
+    var KEY = 'lmGreeted';
+    var muted = false;
+    try { muted = (localStorage.getItem(KEY) === '1'); } catch (e) {}
+    window.__LM_GREET_MUTED__ = function () { return muted; };
+    window.__LM_GREET_LOCK__ = function () {
+      if (muted) return;
+      muted = true;
+      try { localStorage.setItem(KEY, '1'); } catch (e) {}
+    };
+    var synth = window.speechSynthesis;
+    var realSpeak = synth.speak.bind(synth);
+    synth.speak = function (u) {
+      if (muted) {
+        // Already greeted (previous visit or earlier this one): stay silent.
+        try { synth.cancel(); } catch (e) {}
+        window.__GREETING_SPOKEN__ = true;
+        return;
+      }
+      var origStart = u && u.onstart;
+      try {
+        u.onstart = function () {
+          window.__LM_GREET_LOCK__();
+          if (typeof origStart === 'function') { try { origStart.apply(this, arguments); } catch (e) {} }
+        };
+      } catch (e) {}
+      return realSpeak(u);
+    };
+  })();
+
+  // Greeting voice.
+  //
+  // The visitor hears "Good morning / afternoon / evening. Welcome." ONCE — on
+  // the first load of the site (see installGreetingOnce above). The code below
+  // is the fallback that makes sure that one greeting actually happens: the
+  // bundle's intro may be blocked by autoplay policy, so we re-arm on the
+  // visitor's first click / tap / key press of that first visit.
+  //
+  // Two traps this code exists to avoid:
+  //
+  // 1. The React bundle's intro screen also speaks a greeting 250ms after it
+  //    mounts and sets window.__GREETING_SPOKEN__ = TRUE at that moment — before
+  //    any audio actually starts. patch.js used to treat that flag as "already
+  //    greeted", so when Chrome blocked the cold autoplay call (no user gesture
+  //    yet) the gesture fallback was disarmed and the site stayed silent for the
+  //    whole page view. Here we adopt the bundle's audio only if it is really
+  //    playing, and the fallback stays armed until the greeting is truly heard.
+  // 2. Browsers refuse speech until the visitor interacts (Chrome/Safari autoplay
+  //    policy). Nothing can bypass that; the answer is to speak on the visitor's
+  //    first click / tap / key press of that page view. Scroll is not a valid
+  //    activation for audio, which is why it is not in the list below.
+  //
+  // Mute: lulamile/edits.js -> settings.greetingVoice = false
+  (function initGreetingVoice() {
+    var spoken = false;     // audio for THIS homepage view actually started
+    var pending = false;    // a speak() call is in flight right now
+    var lastPath = null;
+
+    function pathOf() {
+      try { return stripBase(window.location.pathname) || '/'; } catch (e) { return '/'; }
+    }
+    function isHome() {
+      var p = pathOf();
+      return p === '/' || p === '' || p === '/index.html';
+    }
+    function muted() { return SET.greetingVoice === false; }
+    function gateMuted() {
+      try { return !!(window.__LM_GREET_MUTED__ && window.__LM_GREET_MUTED__()); } catch (e) { return false; }
+    }
+
+    function getGreeting() {
+      var h = new Date().getHours();
+      var w = (h >= 5 && h < 12) ? "Good Morning" :
+              (h >= 12 && h < 17) ? "Good Afternoon" :
+              (h >= 17 && h < 21) ? "Good Evening" :
+              (h === 0 || h === 1) ? "It's Midnight" :
+              (h < 5) ? "Still Awake?" : "Good Night";
+      return w + ". Welcome.";
+    }
+
+    function markSpoken() { pending = false; spoken = true; window.__GREETING_SPOKEN__ = true; }
+
+    // Is the bundle's own greeting already making sound? ('speaking' = audible,
+    // 'pending' = queued but not started yet.)
+    function bundleSpeech() {
+      try {
+        if (!window.speechSynthesis) return 'none';
+        if (window.speechSynthesis.speaking) return 'speaking';
+        if (window.speechSynthesis.pending) return 'pending';
+      } catch (e) {}
+      return 'none';
+    }
+
+    function speak() {
+      if (muted() || gateMuted() || spoken || pending || !isHome()) return;
+      if (!('speechSynthesis' in window)) return;
+
+      var state = bundleSpeech();
+      if (state === 'speaking') { markSpoken(); return; }   // audible already — never double up
+      if (state === 'pending') {                            // queued: check again shortly
+        pending = true;
+        setTimeout(function () { pending = false; speak(); }, 1200);
+        return;
+      }
+
+      try {
+        // Clear any stuck queue first (Chrome speech bug after a blocked call).
+        window.speechSynthesis.cancel();
+        var u = new SpeechSynthesisUtterance(getGreeting());
+        u.rate = 0.9;
+        u.pitch = 1.05;
+        u.volume = 1.0;
+        var voices = window.speechSynthesis.getVoices() || [];
+        for (var i = 0; i < voices.length; i++) {
+          if (voices[i].lang && voices[i].lang.indexOf('en') === 0) { u.voice = voices[i]; break; }
+        }
+        // spoken only flips when the browser ACTUALLY starts the audio; a
+        // blocked attempt ("not-allowed") leaves the fallback armed.
+        pending = true;
+        u.onstart = markSpoken;
+        u.onend = markSpoken;
+        u.onerror = function () { pending = false; };
+        window.speechSynthesis.speak(u);
+        // Safety: if the browser neither starts nor errors, allow a retry.
+        setTimeout(function () { if (!spoken) pending = false; }, 2500);
+      } catch (e) { pending = false; }
+    }
+
+    // Arriving on the homepage: greet. Called on page load and on every in-app
+    // navigation into "/", so a return to the homepage always speaks.
+    function arrive() {
+      if (muted() || !isHome()) return;
+      spoken = false;
+      pending = false;
+      speak();
+      setTimeout(speak, 900);    // voices / autoplay state may settle late
+      setTimeout(speak, 2200);
+    }
+
+    // First attempts wait for the bundle's intro greeting to have had its turn,
+    // so we adopt that audio instead of talking over it.
+    setTimeout(speak, 900);
+    setTimeout(speak, 2200);
+    setTimeout(speak, 4000);
+
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.onvoiceschanged = function () { speak(); };
+    }
+
+    // Fallback: first REAL user activation (click / tap / key press). These
+    // listeners stay for the life of the document, because they must also serve
+    // each later arrival at the homepage.
+    var events = ['click', 'pointerup', 'touchend', 'keydown'];
+    function onGesture() { speak(); }
+    events.forEach(function (ev) { window.addEventListener(ev, onGesture, { capture: true, passive: true }); });
+
+    // In-app (SPA) route changes: patch.js already re-runs on React's DOM
+    // mutations, but the URL can also change on its own via history back/forward.
+    window.addEventListener('popstate', function () { checkArrival(); });
+    // Back/forward-cache restore of the homepage counts as an arrival too.
+    window.addEventListener('pageshow', function (e) { if (e && e.persisted && isHome()) arrive(); });
+
+    function checkArrival() {
+      var here = pathOf();
+      var home = isHome();
+      // Only a CHANGE into the homepage counts — staying there must not replay.
+      if (home && lastPath !== null && lastPath !== here) arrive();
+      lastPath = here;
+    }
+    checkArrival();
+    window.__LM_GREETING_CHECK__ = checkArrival;   // run by patch() on route changes
+  })();
+
+  // Midnight Mode easter egg.
+  //
+  // CRITICAL: never rewrite or clear a node this React app owns. The old
+  // version did `el.innerHTML = ''` on the hero meta line, which deletes text
+  // nodes React is still tracking. React's next commit then throws
+  // "NotFoundError: removeChild ... not a child of this node", re-renders the
+  // tree, the MutationObserver below sees those mutations and runs patch()
+  // again — and the two fight each other forever. The main thread pins at
+  // 100%, so the intro overlay never lifts: "loading forever", every visit
+  // between 23:00 and 01:59 local time.
+  //
+  // The joke now lives in its own element appended to <body>, outside #root,
+  // where React never looks. Purely additive, idempotent, safe on any route.
+  function checkMidnight() {
+    var h = new Date().getHours();
+    var isMidnight = (h === 0 || h === 1 || h === 23);
+    if (!isMidnight) return;
+    if (document.getElementById('lm-midnight-egg')) return;
+
+    var egg = document.createElement('div');
+    egg.id = 'lm-midnight-egg';
+    egg.setAttribute('data-lm-injected', '1');
+    egg.style.cssText = 'text-align:center;padding:14px 16px;font-size:12px;color:hsl(var(--hero-accent));' +
+      'font-family:monospace;border-top:1px dashed hsl(var(--border));opacity:0.85;position:relative;z-index:5;';
+    egg.textContent = '🌙 Midnight Mode · Lula is probably pushing pixels in the dark. Go get some sleep! (Or book a call)';
+    document.body.appendChild(egg);
+  }
+
+  // ---------------------------------------------------------------- protection
+  // Visitors can read the site but not select or copy the wording.
+  function protectContent() {
+    if (SET.copyProtection === false) return;
+    if (document.getElementById('lm-protect-style')) return;
+
+    var style = document.createElement('style');
+    style.id = 'lm-protect-style';
+    style.textContent =
+      'body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;' +
+      '-webkit-touch-callout:none;}' +
+      'input,textarea,select,[contenteditable="true"]{-webkit-user-select:text;user-select:text;}' +
+      'img{-webkit-user-drag:none;user-drag:none;}';
+    document.head.appendChild(style);
+
+    if (!document.getElementById('lm-layout-style')) {
+      var layout = document.createElement('style');
+      layout.id = 'lm-layout-style';
+      layout.textContent = 'html,body{overflow-x:hidden;overflow-x:clip;}';
+      document.head.appendChild(layout);
+    }
+
+    var allowed = function (el) {
+      if (!el || !el.tagName) return false;
+      var t = el.tagName.toUpperCase();
+      return t === 'INPUT' || t === 'TEXTAREA' || t === 'SELECT' || el.isContentEditable;
+    };
+
+    document.addEventListener('copy', function (e) {
+      if (allowed(e.target)) return;
+      e.preventDefault();
+    }, true);
+
+    document.addEventListener('cut', function (e) {
+      if (allowed(e.target)) return;
+      e.preventDefault();
+    }, true);
+
+    document.addEventListener('contextmenu', function (e) {
+      if (allowed(e.target)) return;
+      e.preventDefault();
+    }, true);
+
+    document.addEventListener('selectstart', function (e) {
+      if (allowed(e.target)) return;
+      e.preventDefault();
+    }, true);
+
+    document.addEventListener('dragstart', function (e) {
+      if (e.target && e.target.tagName === 'IMG') e.preventDefault();
+    }, true);
+
+    document.addEventListener('keydown', function (e) {
+      if (!(e.ctrlKey || e.metaKey)) return;
+      var k = (e.key || '').toLowerCase();
+      if (allowed(e.target)) return;
+      if (k === 'c' || k === 'x' || k === 'a') {
+        e.preventDefault();
+      }
+    }, true);
+  }
+
+  // Figma / resource archive cards open the real tools in a new tab
+  function flagExternalCards() {
+    document.querySelectorAll('a[href^="https://www.figma.com"], a[href*="portfolio.github.io/projects.html"]').forEach(function (card) {
+      card.setAttribute('target', '_blank');
+      card.setAttribute('rel', 'noopener noreferrer');
+      if (!card.querySelector('img')) return;
+      if (getComputedStyle(card).position === 'static') card.style.position = 'relative';
+      if (card.querySelector('.lm-ext-badge')) return;
+      var badge = document.createElement('span');
+      badge.className = 'lm-ext-badge';
+      badge.textContent = 'Opens externally';
+      badge.style.cssText = 'position:absolute;top:20px;right:20px;z-index:20;background:hsl(var(--hero-accent));' +
+        'color:hsl(var(--background));font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;' +
+        'padding:7px 12px;border-radius:999px;';
+      card.appendChild(badge);
+    });
+  }
+
+  // ------------------------------------------------------------ your edits
+  function applyEdits() {
+    if (!EDITS) return;
+    try {
+      // Text rules retry on every patch pass until they match: React renders
+      // route content after the first pass, so a one-shot run would miss it.
+      (EDITS.text || []).forEach(function (rule) {
+        if (!rule || !rule.find || rule.__done) { return; }
+        var hit = false;
+        document.querySelectorAll('h1,h2,h3,h4,p,span,li,div,a,button').forEach(function (el) {
+          if (el.children.length) return;
+          var v = el.textContent;
+          if (v && v.indexOf(rule.find) > -1) { el.textContent = v.split(rule.find).join(rule.replace); hit = true; }
+        });
+        if (hit) rule.__done = true;
+      });
+      var imgs = EDITS.images || [];
+      if (imgs.length) {
+        document.querySelectorAll('img').forEach(function (im) {
+          var src = im.getAttribute('src') || '';
+          imgs.forEach(function (rule) {
+            if (rule && rule.find && src.indexOf(rule.find) > -1) {
+              im.setAttribute('src', src.split(rule.find).join(rule.replace));
+            }
+          });
+        });
+      }
+      var links = EDITS.links || [];
+      if (links.length) {
+        document.querySelectorAll('a[href]').forEach(function (a) {
+          var href = a.getAttribute('href') || '';
+          links.forEach(function (rule) {
+            if (rule && rule.find && href.indexOf(rule.find) > -1) {
+              a.setAttribute('href', href.split(rule.find).join(rule.replace));
+            }
+          });
+        });
+      }
+    } catch (e) {}
+  }
+
+  function replaceTextNode(node) {
+    if (!node || node.nodeType !== 3) return;
+    var v = node.nodeValue;
+    if (!v || !v.trim()) return;
+    var o = v;
+    if (v.indexOf('Anywhere Remote') > -1 && v.indexOf(CONFIG.location) === -1) {
+      v = v.replace(/[A-Za-z ]+, Anywhere Remote/g, CONFIG.location);
+    }
+    if (o !== v) node.nodeValue = v;
+  }
+
+  function patch() {
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    var nodes = [], n;
+    while ((n = walker.nextNode())) nodes.push(n);
+    nodes.forEach(replaceTextNode);
+
+    document.querySelectorAll('a[href*="calendly.com"]').forEach(function (a) {
+      if (a.getAttribute('href').indexOf(CONFIG.newCalendly) === -1) a.href = CONFIG.newCalendly;
+    });
+    document.querySelectorAll('a[href*="drive.google.com"]').forEach(function (a) {
+      if (a.getAttribute('href').indexOf('1iNgauKhYevO53') === -1) a.href = CONFIG.newResume;
+    });
+    document.querySelectorAll('a[href*="linkedin.com"]').forEach(function (a) {
+      if (a.getAttribute('href').indexOf('lulamile-mkhungela') === -1) a.href = CONFIG.newLinkedIn;
+    });
+    document.querySelectorAll('a[href^="mailto:"]').forEach(function (a) {
+      if (a.getAttribute('href') !== 'mailto:' + CONFIG.newEmail) {
+        a.setAttribute('href', 'mailto:' + CONFIG.newEmail);
+        if (a.textContent.indexOf('@') > -1) a.textContent = CONFIG.newEmail;
+      }
+    });
+    document.querySelectorAll('a[href^="tel:"]').forEach(function (a) {
+      if (a.getAttribute('href') !== 'tel:' + CONFIG.newPhoneRaw) {
+        a.setAttribute('href', 'tel:' + CONFIG.newPhoneRaw);
+        if (a.textContent.indexOf('+') > -1) a.textContent = CONFIG.newPhone;
+      }
+    });
+
+    // Profile photo
+    document.querySelectorAll('img').forEach(function (img) {
+      var src = img.getAttribute('src') || '';
+      var isProfileSlot =
+        img.hasAttribute('data-lm-portrait') ||
+        /(^|\/)about\.[a-z]+$/i.test(src) ||
+        /meew\.jpe?g$/i.test(src) ||
+        /profile|portrait|headshot/i.test(img.getAttribute('alt') || '');
+      if (!isProfileSlot) return;
+      if (src !== profilePic) img.setAttribute('src', profilePic);
+      if (img.getAttribute('srcset')) img.removeAttribute('srcset');
+    });
+
+    // Client marks
+    document.querySelectorAll('img[data-lm-brand], img[src*="-logo.svg"], img[src*="worked-with"]').forEach(function (img, i) {
+      img.src = basePath + newBrands[i % newBrands.length];
+      img.style.filter = 'none';
+      img.style.background = '#fff';
+      img.style.padding = '4px 8px';
+      img.style.borderRadius = '6px';
+      img.style.height = '32px';
+      img.style.objectFit = 'contain';
+    });
+
+    ensureLogosColors();
+    fixInternalLinks();
+    flagRedirectCards();
+    applyEdits();
+    relabelLexark();
+    flagExternalCards();
+    removeTestimonials();
+    fixBackButton();
+    ensureFavicon();
+    enhanceCaseStudyLiveLinks();
+    renderServicesIndustries();
+    balanceOffering();
+    trustshieldStatus();
+    contactFormspree();
+    fixContactForm();
+    injectAboutSections();
+    glassPass();
+    tightenServicesCta();
+    dedupeSocial();
+    perfPass();
+    animPass();
+    initBackToTop();
+    checkMidnight();
+  }
+
+  // One patch pass, never able to throw into the host page.
+  function runPass() {
+    try { ensureLogosColors(); } catch (e) {}
+    try { patch(); } catch (e) {}
+    try { initBackToTop(); } catch (e) {}
+    // In-app navigation into "/" must greet again. React Router changes the URL
+    // with pushState (no popstate event), so the DOM-mutation pass is what
+    // notices the visitor has arrived back on the homepage.
+    try { if (window.__LM_GREETING_CHECK__) window.__LM_GREETING_CHECK__(); } catch (e) {}
+  }
+
+  // Safety net: the intro overlay lives in the React bundle and clears itself
+  // after ~2.7s. If anything else ever stalls the main thread, this makes sure
+  // a visitor never stares at "loading forever" — after 12s the overlay is
+  // cleared and the page behind it is usable.
+  function loadingEscapeHatch() {
+    setTimeout(function () {
+      var ov = document.querySelector('[aria-label="Loading"]');
+      if (!ov) return;
+      ov.style.display = 'none';
+      ov.setAttribute('aria-hidden', 'true');
+      if (!document.getElementById('lm-loader-escape')) {
+        var s = document.createElement('style');
+        s.id = 'lm-loader-escape';
+        s.textContent = '[aria-label="Loading"]{display:none !important;}';
+        document.head.appendChild(s);
+      }
+    }, 12000);
+  }
+
+  function start() {
+    protectContent();
+    ensureLogosColors();
+    runPass();
+    loadingEscapeHatch();
+
+    // Re-patch when the React app renders new content (SPA route changes), but
+    // bounded three ways so this can never become an endless patch() loop:
+    //  1. one queued pass at a time, debounced;
+    //  2. the observer is disconnected while a pass runs, so patch()'s own DOM
+    //     writes do not schedule the next pass (that self-feeding loop is what
+    //     froze the page);
+    //  3. a circuit breaker: if the page mutates pathologically, patching backs
+    //     off for a while instead of pegging the CPU.
+    var quiet = null;
+    var passTimes = [];
+    var pausedUntil = 0;
+
+    var observer = new MutationObserver(function () {
+      if (quiet) return;
+      quiet = setTimeout(function () {
+        quiet = null;
+        var now = Date.now();
+        passTimes = passTimes.filter(function (t) { return now - t < 10000; });
+        if (now < pausedUntil) return;
+        if (passTimes.length > 30) {           // mutation storm — stand down
+          pausedUntil = now + 10000;
+          passTimes = [];
+          return;
+        }
+        passTimes.push(now);
+        observer.disconnect();
+        runPass();
+        observer.observe(document.body, { childList: true, subtree: true });
+      }, 200);
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    [150, 400, 900, 1800, 3200].forEach(function (t) {
+      setTimeout(function () {
+        observer.disconnect();
+        runPass();
+        observer.observe(document.body, { childList: true, subtree: true });
+      }, t);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
+  }
+})();

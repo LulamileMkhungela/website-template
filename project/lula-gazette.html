@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="../lulamile/base-path-fix.js?v=2"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function(){try{var d=document.documentElement,c=d.classList;c.remove('light','dark');var e=localStorage.getItem('theme');if(e){c.add(e||'')}else{c.add('light');}if(e==='light'||e==='dark'||!e)d.style.colorScheme=e||'light'}catch(t){}})();
+    </script>
+    <link rel="icon" href="../favicon.webp?v=2" type="image/webp" />
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@200,300,400,500,600,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <title>LulaGazette — Pan-African Legal Intelligence &amp; Official Gazettes | LulaMile-HalfMachine</title>
+    <meta name="description" content="Case study: LulaGazette — Pan-African legal intelligence: official gazettes, acts of parliament, apex court precedents, court rules and live data harvesters across all 54 sovereign African countries. Live on the web." />
+    <meta name="author" content="LulaMile-HalfMachine" />
+    <meta name="keywords" content="LulaGazette, Pan-African legal intelligence, official gazettes, legal search engine UX, African case law, lawtech SaaS design, product designer Johannesburg" />
+    <link rel="canonical" href="https://lulamilemkhungela.github.io/website-template/project/lula-gazette/" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1, noai, noimageai" />
+
+    <meta property="og:title" content="LulaGazette — Pan-African Legal Intelligence &amp; Official Gazettes" />
+    <meta property="og:description" content="Official gazettes, acts, apex court precedents, court rules and live data harvesters — across all 54 sovereign African countries. Designed and built in Johannesburg, live on the web." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://lulamilemkhungela.github.io/website-template/project/lula-gazette/" />
+    <meta property="og:image" content="https://lulamilemkhungela.github.io/website-template/projects/lulamile/lulagazette-hero.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="675" />
+    <meta property="og:locale" content="en_ZA" />
+    <meta property="og:site_name" content="LulaMile-HalfMachine Portfolio" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="LulaGazette — Pan-African Legal Intelligence &amp; Official Gazettes" />
+    <meta name="twitter:description" content="Official gazettes, acts, cases and live scrapers across 54 African countries. Live on the web." />
+    <meta name="twitter:image" content="https://lulamilemkhungela.github.io/website-template/projects/lulamile/lulagazette-hero.png" />
+    <meta name="twitter:site" content="@lulamile_m" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "CreativeWork",
+        "name": "LulaGazette — Pan-African Legal Intelligence & Official Gazettes",
+        "author": { "@type": "Person", "name": "LulaMile-HalfMachine", "alternateName": "Lulamile Mkhungela" },
+        "dateCreated": "2025-02",
+        "genre": "Lawtech / Civic Tech",
+        "about": "Pan-African legal intelligence platform: official gazettes, acts, apex court precedents, court rules and live data harvesters across 54 African countries",
+        "image": "https://lulamilemkhungela.github.io/website-template/projects/lulamile/lulagazette-hero.png",
+        "url": "https://lulamilemkhungela.github.io/website-template/project/lula-gazette/",
+        "sameAs": "https://lulamilemkhungela.github.io/LulaGazette/index.html"
+      }
+    </script>
+
+    <style>
+      :root{
+        --background:260 42% 96%; --foreground:255 45% 12%; --card:260 35% 94%;
+        --muted-foreground:255 20% 38%; --border:255 25% 86%; --hero-accent:16 85% 55%;
+      }
+      .dark{
+        --background:255 45% 12%; --foreground:260 42% 96%; --card:255 40% 16%;
+        --muted-foreground:260 20% 78%; --border:255 30% 24%; --hero-accent:170 80% 55%;
+      }
+      *{box-sizing:border-box;margin:0;padding:0}
+      html{scroll-behavior:smooth}
+      body{
+        background:hsl(var(--background)); color:hsl(var(--foreground));
+        font-family:Inter,system-ui,-apple-system,sans-serif; font-size:16px; line-height:1.65;
+        -webkit-font-smoothing:antialiased;
+      }
+      .display{font-family:'Clash Grotesk',Inter,sans-serif}
+      .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+      a{color:inherit}
+      /* top bar — same shape as the main site header */
+      .topbar{position:sticky;top:0;z-index:50;background:hsl(var(--background)/.92);backdrop-filter:blur(14px);border-bottom:1px solid hsl(var(--border)/.6)}
+      .topbar .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:12px;padding-bottom:12px;gap:16px}
+      .topbar a{ text-decoration:none; font-size:14px; font-weight:600; display:inline-flex; align-items:center; gap:8px;}
+      .mainnav{display:flex;align-items:center;gap:26px}
+      .mainnav a{font-size:14px;font-weight:500;color:hsl(var(--foreground));transition:color .2s ease}
+      .mainnav a:hover{color:hsl(var(--hero-accent))}
+      .mainnav a.pill{padding:9px 18px;border-radius:999px;background:hsl(var(--hero-accent));color:hsl(var(--background));font-weight:700}
+      .drop{position:relative}
+      .drop summary{list-style:none;cursor:pointer;font-size:14px;font-weight:500;display:inline-flex;align-items:center;gap:6px}
+      .drop summary::-webkit-details-marker{display:none}
+      .drop summary:after{content:"▾";font-size:11px;color:hsl(var(--muted-foreground))}
+      .drop .menu{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);min-width:240px;background:hsl(var(--card)/.72);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);border:1px solid hsl(var(--border));border-radius:16px;padding:8px;display:flex;flex-direction:column;gap:2px;box-shadow:0 18px 44px -18px hsl(var(--foreground)/.35)}
+      .drop .menu a{padding:9px 12px;border-radius:10px;font-size:13px;font-weight:500}
+      .drop .menu a:hover{background:hsl(var(--background)/.7);color:hsl(var(--hero-accent))}
+      .drop[open] summary{color:hsl(var(--hero-accent))}
+      @media (max-width: 860px){ .mainnav a:not(.pill), .drop{display:none} }
+      /* hero */
+      .hero{padding:84px 0 40px}
+      .eyebrow{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:hsl(var(--hero-accent));margin-bottom:18px}
+      h1{font-family:'Clash Grotesk',Inter,sans-serif;font-size:clamp(34px,6vw,64px);line-height:1.05;font-weight:700;letter-spacing:-.02em;max-width:18ch}
+      .sub{margin-top:20px;font-size:clamp(16px,2.2vw,20px);color:hsl(var(--muted-foreground));max-width:66ch}
+      .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:hsl(var(--border)/.7);border:1px solid hsl(var(--border)/.7);border-radius:18px;overflow:hidden;margin-top:44px}
+      .meta div{background:hsl(var(--card)/.62);-webkit-backdrop-filter:blur(12px) saturate(1.3);backdrop-filter:blur(12px) saturate(1.3);padding:18px 20px}
+      .meta dt{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:hsl(var(--muted-foreground));margin-bottom:6px}
+      .meta dd{font-size:14px;font-weight:600}
+      .note{margin-top:18px;font-size:13px;color:hsl(var(--muted-foreground));border-left:3px solid hsl(var(--hero-accent));padding:6px 0 6px 14px}
+      .livebtn{display:inline-flex;align-items:center;gap:9px;margin-top:22px;padding:13px 26px;border-radius:999px;background:hsl(var(--hero-accent));color:hsl(var(--background));text-decoration:none;font-weight:700;font-size:15px;transition:transform .25s ease,box-shadow .25s ease}
+      .livebtn:hover{transform:translateY(-2px);box-shadow:0 14px 34px -12px hsl(var(--hero-accent)/.7)}
+      .livebtn .dot{width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 0 0 4px hsl(var(--hero-accent)/.25)}
+      .ghostbtn{display:inline-block;margin-left:14px;padding:11px 22px;border-radius:999px;border:1px solid hsl(var(--border));background:hsl(var(--card)/.58);-webkit-backdrop-filter:blur(10px) saturate(1.3);backdrop-filter:blur(10px) saturate(1.3);text-decoration:none;font-weight:600;font-size:14px;color:hsl(var(--foreground));transition:transform .25s ease,box-shadow .25s ease}
+      .ghostbtn:hover{transform:translateY(-2px);box-shadow:0 10px 26px -12px hsl(var(--hero-accent)/.5)}
+      /* figures */
+      figure{margin:34px 0}
+      figure img{width:100%;border-radius:20px;border:1px solid hsl(var(--border)/.7);display:block;transition:transform .5s ease, box-shadow .5s ease}
+      figure img:hover{transform:scale(1.012);box-shadow:0 24px 60px -24px hsl(var(--foreground)/.35)}
+      figcaption{margin-top:10px;font-size:13px;color:hsl(var(--muted-foreground));text-align:center}
+      .live-hero{position:relative;margin-top:0}
+      .live-hero .hero-frame{position:relative;border-radius:20px;overflow:hidden;border:1px solid hsl(var(--border)/.7);background:#f6f8fb}
+      .live-hero .hero-frame img.bg{width:100%;display:block;border-radius:0;border:none;transition:none}
+      .live-hero .hero-frame img.logo{position:absolute;top:22px;left:26px;width:clamp(140px,24%,240px);height:auto;border:none;border-radius:0;transition:none}
+      .live-hero .hero-frame:hover img{transform:none;box-shadow:none}
+      /* category icon cards (real site icons) */
+      .catgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:26px}
+      .cat{background:hsl(var(--card)/.58);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);border:1px solid hsl(var(--border)/.7);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:10px}
+      .cat img{width:44px;height:44px;display:block}
+      .cat h3{font-family:'Clash Grotesk',Inter,sans-serif;font-size:16px;margin:0}
+      .cat p{font-size:13.5px;color:hsl(var(--muted-foreground));margin:0}
+      /* sections */
+      section{padding:52px 0;border-top:1px solid hsl(var(--border)/.6)}
+      h2{font-family:'Clash Grotesk',Inter,sans-serif;font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-.015em;line-height:1.12;margin-bottom:18px}
+      h2 .accent{color:hsl(var(--hero-accent))}
+      p+p{margin-top:14px}
+      .lede{font-size:clamp(16px,2vw,19px);color:hsl(var(--muted-foreground));max-width:70ch}
+      ul{margin:16px 0 0 2px;list-style:none}
+      li{position:relative;padding-left:26px;margin-top:10px;max-width:78ch}
+      li:before{content:"";position:absolute;left:2px;top:.62em;width:8px;height:8px;border-radius:2px;background:hsl(var(--hero-accent));transform:rotate(45deg)}
+      .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:26px}
+      .card{background:hsl(var(--card)/.58);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);border:1px solid hsl(var(--border)/.7);border-radius:18px;padding:22px}
+      .card h3{font-family:'Clash Grotesk',Inter,sans-serif;font-size:18px;margin-bottom:8px}
+      .card p{font-size:14px;color:hsl(var(--muted-foreground))}
+      /* process strip */
+      .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:26px;counter-reset:st}
+      .step{border:1px solid hsl(var(--border)/.7);border-radius:16px;padding:18px;background:hsl(var(--card)/.58);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);position:relative;overflow:hidden}
+      .step:before{counter-increment:st;content:"0" counter(st);font-family:'Clash Grotesk',Inter,sans-serif;font-weight:700;font-size:13px;color:hsl(var(--hero-accent));display:block;margin-bottom:8px}
+      .step h3{font-size:15px;margin-bottom:6px}
+      .step p{font-size:13px;color:hsl(var(--muted-foreground))}
+      /* kpi */
+      .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-top:26px}
+      .kpi{border:1px solid hsl(var(--border)/.7);border-radius:16px;padding:18px;background:hsl(var(--card)/.58);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4)}
+      .kpi b{display:block;font-family:'Clash Grotesk',Inter,sans-serif;font-size:26px;color:hsl(var(--hero-accent));letter-spacing:-.02em}
+      .kpi span{font-size:12.5px;color:hsl(var(--muted-foreground))}
+      /* cta */
+      .cta{padding:70px 0 90px;text-align:center}
+      .cta .btn{display:inline-block;margin-top:22px;padding:15px 30px;border-radius:999px;background:hsl(var(--hero-accent));color:hsl(var(--background));text-decoration:none;font-weight:700;font-size:15px;transition:transform .25s ease, box-shadow .25s ease}
+      .cta .btn:hover{transform:translateY(-2px);box-shadow:0 14px 34px -12px hsl(var(--hero-accent)/.7)}
+      .cta .ghost{display:inline-block;margin:22px 0 0 14px;padding:15px 26px;border-radius:999px;border:1px solid hsl(var(--border));text-decoration:none;font-weight:600;font-size:15px;color:hsl(var(--muted-foreground))}
+      footer{border-top:1px solid hsl(var(--border)/.6);padding:26px 0;font-size:13px;color:hsl(var(--muted-foreground));background:hsl(var(--background)/.65);-webkit-backdrop-filter:blur(14px) saturate(1.3);backdrop-filter:blur(14px) saturate(1.3)}
+      footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
+      /* reveal animation */
+      .rv{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+      .rv.in{opacity:1;transform:none}
+      @media (prefers-reduced-motion: reduce){ .rv{opacity:1;transform:none;transition:none} figure img:hover{transform:none} html{scroll-behavior:auto} }
+    </style>
+  </head>
+  <body>
+    <div class="topbar">
+      <div class="wrap">
+        <a href="../" style="gap:10px">
+          <span style="width:36px;height:36px;border-radius:50%;overflow:hidden;border:2px solid hsl(var(--hero-accent)/.35);display:inline-block">
+            <img src="../lulamile/meew.jpeg" alt="LulaMile-HalfMachine" style="width:100%;height:100%;object-fit:cover;border-radius:0;display:block" />
+          </span>
+          <span style="display:flex;flex-direction:column;line-height:1.2">
+            <span style="font-size:14px;font-weight:600">LulaMile-HalfMachine</span>
+            <span style="font-size:11px;font-weight:400;color:hsl(var(--muted-foreground))">Johannesburg, Anywhere Remote</span>
+          </span>
+        </a>
+        <nav class="mainnav" aria-label="Site">
+          <a href="../">Home</a>
+          <a href="../services/">Services</a>
+          <details class="drop">
+            <summary>Expertise &amp; Works</summary>
+            <div class="menu">
+              <a href="../product-design-strategy/">Product Design &amp; Strategy</a>
+              <a href="../brand-strategy-and-growth/">Brand Strategy &amp; Growth</a>
+              <a href="../website-design-conversion/">Website Design &amp; Conversion</a>
+              <a href="../frontend-development/">Frontend Development</a>
+              <a href="../microfinance-impact-consulting/">Microfinance &amp; Impact</a>
+              <a href="lula-gazette/" style="color:hsl(var(--hero-accent));font-weight:700">LulaGazette case study</a>
+              <a href="service-waze/">ServiceWaze case study</a>
+            </div>
+          </details>
+          <a href="../about/">About</a>
+          <a class="pill" href="../contact/">Book a Call</a>
+        </nav>
+      </div>
+    </div>
+
+    <header class="hero wrap">
+      <p class="eyebrow rv">Case study · Lawtech / Civic Tech · 2025</p>
+      <h1 class="rv">LulaGazette: Pan-African legal intelligence &amp; official gazettes.</h1>
+      <p class="sub rv">Official gazettes, acts of parliament, apex court precedents, court rules and live data
+        harvesters — across all 54 sovereign African countries. A legal library a citizen can search before they
+        sign up, and a workspace a practitioner can run a matter from.</p>
+      <dl class="meta rv">
+        <div><dt>Role</dt><dd>Designer &amp; Builder</dd></div>
+        <div><dt>Industry</dt><dd>Lawtech / Civic Tech</dd></div>
+        <div><dt>Coverage</dt><dd>54 African countries</dd></div>
+        <div><dt>Stack</dt><dd>React · live scrapers</dd></div>
+        <div><dt>Built</dt><dd>Johannesburg, 2025</dd></div>
+        <div><dt>Status</dt><dd>Live</dd></div>
+      </dl>
+      <p class="note rv">LulaGazette is live — the library, the 54-country board and the harvester are running.
+        Open the site, pick a country and search.</p>
+      <p class="rv lm-live-btn" style="margin-top:22px">
+        <a class="livebtn" href="https://lulamilemkhungela.github.io/LulaGazette/index.html" target="_blank" rel="noopener noreferrer"><span class="dot"></span>Open the live site&nbsp;&nbsp;↗</a>
+        <a class="ghostbtn" href="https://github.com/LulamileMkhungela/LulaGazette" target="_blank" rel="noopener noreferrer">Code on GitHub</a>
+      </p>
+    </header>
+
+    <main class="wrap">
+      <figure class="live-hero rv">
+        <div class="hero-frame">
+          <img class="bg" src="../projects/lulamile/lulagazette/landing-bg.png" alt="LulaGazette live site hero — landing background of the Pan-African legal intelligence platform" loading="eager" fetchpriority="high" />
+          <img class="logo" src="../projects/lulamile/lulagazette/logo.png" alt="LulaGazette wordmark" />
+        </div>
+        <figcaption>The live hero, unaltered — the landing background and wordmark straight from
+          lulamilemkhungela.github.io/LulaGazette.</figcaption>
+      </figure>
+
+      <section id="the-product">
+        <p class="eyebrow rv">The product</p>
+        <h2 class="rv">A legal library for <span class="accent">54 countries</span>.</h2>
+        <p class="lede rv">LulaGazette aggregates and serves documented legal resources — official gazettes, acts of
+          parliament, apex court precedents, court forms, court rules and regulations — at the speed a working
+          practitioner actually needs them. Pan-African is the headline, not a footnote: every country in Africa has
+          its own row on the board.</p>
+        <p class="rv">The audience is deliberately broad — citizens with a specific problem, lawyers preparing a
+          matter, students and institutions doing research. So the interface has to carry deep, citable content
+          without ever feeling like a database front end, and it has to answer in the jurisdiction the user is
+          standing in.</p>
+        <div class="catgrid rv">
+          <div class="cat">
+            <img src="../projects/lulamile/lulagazette/icon-law.svg" alt="" aria-hidden="true" />
+            <h3>Acts &amp; All Laws</h3>
+            <p>Acts of parliament across jurisdictions — from the South African Constitution to CAMA 2020 in Nigeria — each with a plain-language summary and a one-tap copy citation.</p>
+          </div>
+          <div class="cat">
+            <img src="../projects/lulamile/lulagazette/icon-cases.svg" alt="" aria-hidden="true" />
+            <h3>Cases</h3>
+            <p>Apex court precedents with real citations — KESC 42, Supreme Court of Nigeria, Constitutional Court of SA — the authority a matter actually runs on.</p>
+          </div>
+          <div class="cat">
+            <img src="../projects/lulamile/lulagazette/icon-institution.svg" alt="" aria-hidden="true" />
+            <h3>Court Forms</h3>
+            <p>The forms a matter starts with, filed against the right institution — no more hunting court websites one by one.</p>
+          </div>
+          <div class="cat">
+            <img src="../projects/lulamile/lulagazette/icon-reg.svg" alt="" aria-hidden="true" />
+            <h3>Court Rules &amp; Regulations</h3>
+            <p>Procedural rules and regulations that decide how a matter moves, kept current as the gazettes update them.</p>
+          </div>
+          <div class="cat">
+            <img src="../projects/lulamile/lulagazette/icon-search.svg" alt="" aria-hidden="true" style="width:34px;height:34px" />
+            <h3>Smart search</h3>
+            <p>One field from centre screen. Category chips — Acts, Cases, Court Forms, Court Rules, Regulations, All Laws — narrow the corpus; guests can search before they register.</p>
+          </div>
+          <div class="cat">
+            <img src="../projects/lulamile/lulagazette/icon-institution.svg" alt="" aria-hidden="true" />
+            <h3>Live harvester &amp; scraper</h3>
+            <p>Automated data pulling connecting AfricanLII, SAFLII, Kenya Law, LawNigeria, GhanaLII and official gazette printers — one pull, the latest notices.</p>
+          </div>
+        </div>
+        <p class="rv" style="margin-top:18px">The decision I'm proudest of: the library is open first. Anyone can
+          search, read a summary, open the document and copy the citation — the sign-in is there for full gazettes,
+          matter notes and the live scrapers, not for gating a search box.</p>
+      </section>
+
+      <section id="the-challenge">
+        <p class="eyebrow rv">The challenge</p>
+        <h2 class="rv">Good law, <span class="accent">fragmented access</span>.</h2>
+        <p class="lede rv">Africa's legal information is scattered across 54 sovereign jurisdictions — each with its
+          own gazette, its own apex court, its own digitisation gaps. Global legal research tools are
+          Western-focused, subscription-heavy and thin on the authority that matters on a continent: the
+          Constitutional Court of SA, the Supreme Court of Kenya, the Supreme Court of Nigeria.</p>
+        <ul class="rv">
+          <li>Official gazettes, statutes and judgments live on a dozen different platforms — AfricanLII, SAFLII,
+            Kenya Law, LawNigeria, GhanaLII — and most of them don't play well together.</li>
+          <li>Citizens with a real problem (an unfair dismissal, an eviction, a debt review) have no front door to the
+            law that applies to their country.</li>
+          <li>Practitioners in smaller firms and solo practices carry the worst of it — outdated information, missed
+            precedents, hours burned on retrieval instead of analysis.</li>
+          <li>Every citation had to be verifiable: in law, one hallucinated reference ends a career, not just a
+            product demo.</li>
+          <li>And the content had to keep moving — gazettes don't stop publishing just because a product launched.</li>
+        </ul>
+      </section>
+
+      <section id="the-goal">
+        <p class="eyebrow rv">The goal</p>
+        <h2 class="rv">Coverage you can <span class="accent">defend</span>.</h2>
+        <p class="lede rv">The bar was set before pixels: be the reference a lawyer opens when the question is
+          "which country, which court, which document" — and stay current without a manual curation team in the
+          loop.</p>
+        <div class="kpis rv">
+          <div class="kpi"><b>54</b><span>sovereign African jurisdictions on the board — gazette, apex court, legal system per country</span></div>
+          <div class="kpi"><b>22</b><span>African legal sources wired into the live harvester</span></div>
+          <div class="kpi"><b>6</b><span>content categories — acts, cases, court forms, court rules, regulations, all laws</span></div>
+          <div class="kpi"><b>4</b><span>verified practitioner profiles for instant test access — SA, Kenya, Nigeria, Ghana</span></div>
+          <div class="kpi"><b>1</b><span>pull button to bring the latest gazette notices and statutory updates in</span></div>
+          <div class="kpi"><b>0</b><span>paywalls between a visitor and their first answer</span></div>
+        </div>
+      </section>
+
+      <section id="the-solution">
+        <p class="eyebrow rv">The solution</p>
+        <h2 class="rv">Ship the <span class="accent">shortest path</span> to a correct answer.</h2>
+        <ul class="rv">
+          <li>A Pan-African legal library: curated and harvested records across jurisdictions, each with summary,
+            citation and a document view that shows the official gazette and statute text alongside the legal
+            context.</li>
+          <li>A live multi-source puller: the harvester connects AfricanLII, SAFLII, Kenya Law, LawNigeria, GhanaLII
+            and official gazette printers, so the corpus grows on a schedule instead of by hand.</li>
+          <li>A 54-country board: select any sovereign country to inspect its apex court, official gazette and
+            national legal system, and filter the whole library to that jurisdiction.</li>
+          <li>Three gateways at the end of the journey: step-by-step guides for everyday citizens (unfair dismissal,
+            tenant eviction, consumer rights, debt review, POPIA), a lawyer matter workspace (pleading starters,
+            court procedure maps, authority bundles, matter notes stored on device), and a system walkthrough for
+            integrations, data feeds and institutional access.</li>
+          <li>Sign-in that knows where you are: full gazettes, matter notes and live scrapers across all 54 countries
+            behind an account that carries your jurisdiction — with verified practitioner profiles to test instantly.</li>
+        </ul>
+      </section>
+
+      <section id="the-process">
+        <p class="eyebrow rv">The process</p>
+        <h2 class="rv">How it <span class="accent">actually</span> went.</h2>
+        <div class="steps rv">
+          <div class="step"><h3>Listen</h3><p>Practitioner interviews and a teardown of every African legal database I could reach. The complaints repeated: cost, gaps, dead links, slow search.</p></div>
+          <div class="step"><h3>Structure</h3><p>Information architecture first — 54 jurisdictions, six content categories, gazette and apex-court metadata per country. Coverage is the product; the schema had to carry it.</p></div>
+          <div class="step"><h3>Prototype</h3><p>Guest-first search flows tested with candidates and practitioners. The results card went through a full redesign — summary first, citation one tap away.</p></div>
+          <div class="step"><h3>Build</h3><p>React front end in Johannesburg, live scrapers behind it. The harvester's source list grew from five to twenty-two as each pull exposed the next gap.</p></div>
+          <div class="step"><h3>Keep it alive</h3><p>Gazettes keep publishing after launch, so the scraper is a product feature with its own monitoring — not a one-time import.</p></div>
+        </div>
+      </section>
+
+      <section id="the-results">
+        <p class="eyebrow rv">Where it stands</p>
+        <h2 class="rv">Live, and <span class="accent">still pulling</span>.</h2>
+        <p class="lede rv">LulaGazette is live on the web — the honest status, straight from the product:</p>
+        <ul class="rv">
+          <li>The harvester is active: the latest official gazette notices and statutory updates land through the
+            multi-source puller, across 22 wired sources.</li>
+          <li>All 54 sovereign jurisdictions are on the board with their gazette and apex court — and the library
+            filters by country as well as category.</li>
+          <li>Verified practitioner profiles (SA, Kenya, Nigeria, Ghana) let a visitor test the full product in
+            seconds, no registration hunt.</li>
+          <li>Coverage is the runway: new countries, more court forms and institutional data feeds are the growth
+            path, built on the same schema.</li>
+        </ul>
+        <p class="note rv" style="margin-top:22px">Open the live site — pick a country, run a search, pull the latest
+          gazette. That's the product, not a demo of the product.</p>
+      </section>
+
+      <section id="takeaways">
+        <p class="eyebrow rv">Key takeaways</p>
+        <h2 class="rv">What I'd tell the next team.</h2>
+        <div class="grid2 rv">
+          <div class="card"><h3>Coverage is the moat</h3><p>In a fragmented market, "we have all 54" beats "we're better at five". The country board does the selling.</p></div>
+          <div class="card"><h3>Accuracy is the brand</h3><p>Every record carries a real citation and the source text. In law, verifiability is a design requirement, not a feature.</p></div>
+          <div class="card"><h3>Scrape honestly</h3><p>The harvester says what it pulled and when. Stating the source (and the gap) costs trust nothing and buys a lot.</p></div>
+          <div class="card"><h3>Open the search box first</h3><p>Guests who can search before they sign up come back to register. Utility first, account later.</p></div>
+          <div class="card"><h3>Meet the citizen where they are</h3><p>"Unfair dismissal" and "eviction" are the real search queries. Citizen guides are the onboarding.</p></div>
+          <div class="card"><h3>A scraper is a product</h3><p>It has monitoring, failure states and a release cycle. Design for it like any other surface.</p></div>
+        </div>
+      </section>
+
+      <div class="cta rv">
+        <h2>Building something coverage-heavy or research-driven?</h2>
+        <p class="lede" style="margin:0 auto">I design and build: strategy, interface, front-end code, data
+          pipelines — one pair of hands, end to end.</p>
+        <a class="btn" href="../contact/">Start a conversation</a>
+        <a class="ghost" href="../services/">See how I work</a>
+      </div>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <span>© 2026 LulaMile-HalfMachine · Johannesburg, South Africa</span>
+        <span>LulaGazette case study · content protected, please ask before reuse</span>
+      </div>
+    </footer>
+
+    <script>
+      // gentle scroll reveals
+      (function () {
+        var els = document.querySelectorAll('.rv');
+        if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+        }, { threshold: 0.12 });
+        els.forEach(function (e) { io.observe(e); });
+      })();
+    </script>
+  </body>
+</html>

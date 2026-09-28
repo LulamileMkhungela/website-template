@@ -1,0 +1,143 @@
+/* ------------------------------------------------------------------ *
+ * LulaFind design tokens
+ * Palette rationale - colours that speak to what this app addresses:
+ *   deep night navy  -> trust, seriousness, night-time searches
+ *   beacon amber     -> hope, visibility, "look here"
+ *   ubuntu emerald   -> safety, found, community, ubuntu
+ *   signal crimson   -> urgency, missing, danger
+ *   marigold         -> KhumbulEkhaya warmth, "come home"
+ * ------------------------------------------------------------------ */
+
+:root {
+  /* Capacitor 8 injects --safe-area-inset-*. env() is the iOS fallback. */
+  --lf-safe-top: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
+  --lf-safe-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
+  --lf-safe-left: var(--safe-area-inset-left, env(safe-area-inset-left, 0px));
+  --lf-safe-right: var(--safe-area-inset-right, env(safe-area-inset-right, 0px));
+  --ion-safe-area-top: var(--lf-safe-top);
+  --ion-safe-area-bottom: var(--lf-safe-bottom);
+  --ion-safe-area-left: var(--lf-safe-left);
+  --ion-safe-area-right: var(--lf-safe-right);
+  --keyboard-offset: 0px;
+
+  --lf-night: #0a1024;
+  --lf-night-2: #111a36;
+  --lf-beacon: #f2b233;
+  --lf-ubuntu: #2fa36b;
+  --lf-signal: #e4573d;
+  --lf-marigold: #e8913a;
+  --lf-ink: #eaf0ff;
+
+  --lf-radius: 22px;
+  --lf-radius-sm: 14px;
+  --lf-gap: 16px;
+  --lf-shadow: 0 1px 0 rgba(255,255,255,.05) inset, 0 18px 40px rgba(0,0,0,.28);
+  --lf-maxw: 680px;
+  --lf-tabbar-h: 60px;
+
+  --ion-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --ion-color-primary: #f2b233;
+  --ion-color-primary-rgb: 242, 178, 51;
+  --ion-color-primary-contrast: #1a1200;
+  --ion-color-primary-contrast-rgb: 26, 18, 0;
+  --ion-color-primary-shade: #d59d2d;
+  --ion-color-primary-tint: #f3ba47;
+
+  --ion-color-secondary: #2fa36b;
+  --ion-color-secondary-rgb: 47, 163, 107;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #298f5e;
+  --ion-color-secondary-tint: #44ac7a;
+
+  --ion-color-danger: #e4573d;
+  --ion-color-danger-rgb: 228, 87, 61;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #c94c35;
+  --ion-color-danger-tint: #e76850;
+
+  --ion-color-success: #2fa36b;
+  --ion-color-success-rgb: 47, 163, 107;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #298f5e;
+  --ion-color-success-tint: #44ac7a;
+
+  --ion-color-warning: #e8913a;
+  --ion-color-warning-rgb: 232, 145, 58;
+  --ion-color-warning-contrast: #1a1200;
+  --ion-color-warning-contrast-rgb: 26, 18, 0;
+  --ion-color-warning-shade: #cc8033;
+  --ion-color-warning-tint: #ea9c4e;
+
+  --ion-color-medium: #8f9ab8;
+  --ion-color-medium-rgb: 143, 154, 184;
+  --ion-color-medium-contrast: #0a1024;
+  --ion-color-medium-contrast-rgb: 10, 16, 36;
+  --ion-color-medium-shade: #7e88a2;
+  --ion-color-medium-tint: #9aa4c0;
+
+  --ion-color-light: #eaf0ff;
+  --ion-color-light-rgb: 234, 240, 255;
+  --ion-color-light-contrast: #0a1024;
+  --ion-color-light-contrast-rgb: 10, 16, 36;
+  --ion-color-light-shade: #ced3e0;
+  --ion-color-light-tint: #ecf2ff;
+}
+
+/* Facebook Light Theme by Default */
+:root {
+  --ion-background-color: #f0f2f5;
+  --ion-background-color-rgb: 240, 242, 245;
+  --ion-text-color: #050505;
+  --ion-text-color-rgb: 5, 5, 5;
+  --ion-color-step-50: #f7f8fa;
+  --ion-color-step-100: #e4e6eb;
+  --ion-color-step-150: #dadde1;
+  --ion-color-step-200: #ced0d4;
+  --ion-color-step-250: #bcc0c4;
+  --ion-color-step-300: #65676b;
+  --ion-color-step-350: #4b4c4f;
+  --ion-color-step-400: #333334;
+  --lf-card: #ffffff;
+  --lf-card-2: #f0f2f5;
+  --lf-line: #ced0d4;
+  --lf-muted: #65676b;
+  --lf-toolbar: #ffffff;
+  --lf-tabbar: #ffffff;
+  --lf-ink: #050505;
+  --lf-beacon: #1877f2;
+  --lf-night: #f0f2f5;
+  --lf-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+
+  --lf-fb-blue: #1877f2;
+  --lf-snap-yellow: #fffc00;
+  --lf-snap-blue: #0fb2ff;
+}
+
+/* Optional Dark mode (Settings -> Appearance). */
+:root.lf-dark {
+  --ion-background-color: #0a1024;
+  --ion-background-color-rgb: 10, 16, 36;
+  --ion-text-color: #eaf0ff;
+  --ion-text-color-rgb: 234, 240, 255;
+  --ion-color-step-50: #151b30;
+  --ion-color-step-100: #1e2438;
+  --ion-color-step-150: #272d40;
+  --ion-color-step-200: #303648;
+  --ion-color-step-250: #393f50;
+  --ion-color-step-300: #424858;
+  --ion-color-step-350: #4b5160;
+  --ion-color-step-400: #545a68;
+  --lf-card: #141c38;
+  --lf-card-2: #1a2444;
+  --lf-line: rgba(234, 240, 255, .08);
+  --lf-muted: #9aa6c4;
+  --lf-toolbar: rgba(13, 20, 40, .92);
+  --lf-tabbar: rgba(12, 18, 38, .92);
+  --lf-ink: #eaf0ff;
+  --lf-night: #0a1024;
+  --lf-shadow: 0 1px 0 rgba(255,255,255,.05) inset, 0 18px 40px rgba(0,0,0,.28);
+}

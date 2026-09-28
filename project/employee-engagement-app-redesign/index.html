@@ -1,0 +1,849 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <script src="../../lulamile/base-path-fix.js?v=2"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>(function () { try { var d = document.documentElement, c = d.classList; c.remove('light', 'dark'); var e = localStorage.getItem('theme'); if (e) { c.add(e || '') } else { c.add('light'); } if (e === 'light' || e === 'dark' || !e) d.style.colorScheme = e || 'light' } catch (t) { } })();</script>
+  <link rel="icon" href="../../favicon.webp?v=2" type="image/webp" />
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@200,300,400,500,600,700&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <title>Employee Engagement App Redesign — Vodacom HRIT | LulaMile-HalfMachine</title>
+  <meta name="description"
+    content="Case study: app redesign for the Vodacom HRIT employee engagement platform — rebuilt navigation, search and information architecture to fix feature discoverability." />
+  <meta name="author" content="LulaMile-HalfMachine" />
+  <link rel="canonical"
+    href="https://lulamilemkhungela.github.io/website-template/project/employee-engagement-app-redesign/" />
+  <meta name="robots" content="index, follow, noai, noimageai" />
+  <meta property="og:title" content="Employee Engagement App Redesign — Vodacom HRIT" />
+  <meta property="og:description"
+    content="App redesign: rebuilt navigation, search and IA for the Vodacom employee engagement platform — turning a tile wall into a product staff can navigate." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url"
+    content="https://lulamilemkhungela.github.io/website-template/project/employee-engagement-app-redesign/" />
+  <meta property="og:image"
+    content="https://lulamilemkhungela.github.io/website-template/projects/lulamile/engage-cover.png" />
+  <meta property="og:locale" content="en_ZA" />
+  <meta property="og:site_name" content="LulaMile-HalfMachine Portfolio" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Employee Engagement App Redesign — Vodacom HRIT" />
+  <meta name="twitter:image"
+    content="https://lulamilemkhungela.github.io/website-template/projects/lulamile/engage-cover.png" />
+  <style>
+    :root {
+      --background: 222 30% 97%;
+      --foreground: 222 45% 10%;
+      --card: 222 24% 94%;
+      --muted-foreground: 222 18% 44%;
+      --border: 222 20% 87%;
+      --hero-accent: 230 85% 52%;
+    }
+
+    .dark {
+      --background: 222 38% 9%;
+      --foreground: 222 30% 93%;
+      --card: 222 32% 13%;
+      --muted-foreground: 222 16% 62%;
+      --border: 222 26% 19%;
+      --hero-accent: 220 90% 62%;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block
+    }
+
+    a {
+      color: inherit
+    }
+
+    :root {
+      --glass-bg: hsl(var(--background)/0.7);
+      --glass-card: hsl(var(--card)/0.6);
+      --glass-brd: hsl(var(--foreground)/0.09);
+      --glass-sh: 0 8px 30px -10px hsl(var(--foreground)/0.16);
+    }
+
+    .dark {
+      --glass-bg: hsl(var(--card)/0.5);
+      --glass-brd: hsl(var(--background)/0.22);
+    }
+
+    .glass {
+      background: var(--glass-card);
+      -webkit-backdrop-filter: blur(14px) saturate(1.35);
+      backdrop-filter: blur(14px) saturate(1.35);
+      border: 1px solid var(--glass-brd);
+      box-shadow: var(--glass-sh);
+    }
+
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 4vw, 36px)
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--glass-bg);
+      -webkit-backdrop-filter: blur(18px) saturate(1.5);
+      backdrop-filter: blur(18px) saturate(1.5);
+      border-bottom: 1px solid var(--glass-brd);
+      box-shadow: var(--glass-sh);
+    }
+
+    .topbar .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 11px;
+      padding-bottom: 11px;
+      gap: 12px
+    }
+
+    .topbar a {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 22px
+    }
+
+    .nav a {
+      font-size: 14px;
+      font-weight: 500;
+      color: hsl(var(--foreground));
+      text-decoration: none;
+      transition: color .18s
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      color: hsl(var(--hero-accent));
+      font-weight: 700
+    }
+
+    .nav a.pill {
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: hsl(var(--hero-accent));
+      color: #fff;
+      font-weight: 700
+    }
+
+    .drop {
+      position: relative
+    }
+
+    .drop summary {
+      list-style: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: hsl(var(--foreground))
+    }
+
+    .drop summary::-webkit-details-marker {
+      display: none
+    }
+
+    .drop summary::after {
+      content: "▾";
+      font-size: 10px;
+      opacity: .55
+    }
+
+    .drop .menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 220px;
+      background: var(--glass-card);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-brd);
+      border-radius: 13px;
+      padding: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      box-shadow: 0 16px 40px -14px hsl(var(--foreground)/.28);
+      z-index: 100;
+    }
+
+    .drop .menu a {
+      padding: 8px 12px;
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: hsl(var(--foreground));
+      transition: background .15s, color .15s
+    }
+
+    .drop .menu a:hover,
+    .drop .menu a.active {
+      background: hsl(var(--background)/.7);
+      color: hsl(var(--hero-accent));
+      font-weight: 700
+    }
+
+    @media(max-width:780px) {
+
+      .nav a:not(.pill),
+      .drop {
+        display: none
+      }
+    }
+
+    .hero {
+      padding: clamp(56px, 9vw, 96px) 0 clamp(28px, 4vw, 44px)
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: hsl(var(--hero-accent));
+      margin-bottom: 15px
+    }
+
+    h1 {
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-size: clamp(28px, 5vw, 58px);
+      line-height: 1.06;
+      font-weight: 700;
+      letter-spacing: -.022em;
+      max-width: 22ch
+    }
+
+    .sub {
+      margin-top: 17px;
+      font-size: clamp(15px, 1.8vw, 18px);
+      color: hsl(var(--muted-foreground));
+      max-width: 60ch;
+      line-height: 1.65
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1px;
+      background: hsl(var(--border)/.7);
+      border: 1px solid hsl(var(--border)/.7);
+      border-radius: 15px;
+      overflow: hidden;
+      margin-top: 32px
+    }
+
+    .meta div {
+      background: hsl(var(--card));
+      padding: 13px 16px
+    }
+
+    .meta dt {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: hsl(var(--muted-foreground));
+      margin-bottom: 4px
+    }
+
+    .meta dd {
+      font-size: 13px;
+      font-weight: 600
+    }
+
+    .nda-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      padding: 9px 18px;
+      border-radius: 999px;
+      background: hsl(var(--foreground)/0.08);
+      border: 1px solid hsl(var(--border));
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: hsl(var(--muted-foreground))
+    }
+
+    figure {
+      margin: clamp(24px, 4vw, 36px) 0
+    }
+
+    figure img {
+      width: 100%;
+      border-radius: 18px;
+      border: 1px solid hsl(var(--border)/.7);
+      transition: transform .5s ease, box-shadow .5s ease
+    }
+
+    figure img:hover {
+      transform: scale(1.012);
+      box-shadow: 0 24px 56px -22px hsl(var(--foreground)/.28)
+    }
+
+    figcaption {
+      margin-top: 9px;
+      font-size: 13px;
+      color: hsl(var(--muted-foreground));
+      text-align: center
+    }
+
+    section {
+      padding: clamp(36px, 5.5vw, 56px) 0;
+      border-top: 1px solid hsl(var(--border)/.6)
+    }
+
+    h2 {
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-size: clamp(22px, 3.4vw, 38px);
+      font-weight: 700;
+      letter-spacing: -.015em;
+      line-height: 1.1;
+      margin-bottom: 16px
+    }
+
+    h2 .acc {
+      color: hsl(var(--hero-accent))
+    }
+
+    p+p {
+      margin-top: 12px
+    }
+
+    .lede {
+      font-size: clamp(14px, 1.8vw, 17px);
+      color: hsl(var(--muted-foreground));
+      max-width: 66ch
+    }
+
+    ul.bullets {
+      list-style: none;
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      max-width: 680px
+    }
+
+    ul.bullets li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 14px
+    }
+
+    ul.bullets li::before {
+      content: "→";
+      color: hsl(var(--hero-accent));
+      font-size: 16px;
+      flex-shrink: 0;
+      line-height: 1.4
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 13px;
+      margin-top: 20px;
+      counter-reset: st
+    }
+
+    .step {
+      border: 1px solid hsl(var(--border)/.7);
+      border-radius: 14px;
+      padding: 17px;
+      background: hsl(var(--card)/0.5)
+    }
+
+    .step::before {
+      counter-increment: st;
+      content: "0" counter(st);
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      color: hsl(var(--hero-accent));
+      display: block;
+      margin-bottom: 7px
+    }
+
+    .step h3 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 5px
+    }
+
+    .step p {
+      font-size: 13px;
+      color: hsl(var(--muted-foreground));
+      line-height: 1.55
+    }
+
+    .g2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 15px;
+      margin-top: 20px
+    }
+
+    .card {
+      padding: 20px;
+      border-radius: 15px;
+      border: 1px solid hsl(var(--border)/.7);
+      background: hsl(var(--card)/0.5)
+    }
+
+    .card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 7px
+    }
+
+    .card p {
+      font-size: 13px;
+      color: hsl(var(--muted-foreground));
+      line-height: 1.6
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin-top: 20px
+    }
+
+    .kpi {
+      padding: 17px;
+      border-radius: 14px;
+      border: 1px solid hsl(var(--border)/.7);
+      background: hsl(var(--card)/0.5)
+    }
+
+    .kpi b {
+      display: block;
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-size: 28px;
+      color: hsl(var(--hero-accent));
+      letter-spacing: -.02em;
+      margin-bottom: 4px
+    }
+
+    .kpi span {
+      font-size: 12px;
+      color: hsl(var(--muted-foreground));
+      line-height: 1.5
+    }
+
+    .note {
+      margin-top: 16px;
+      font-size: 13px;
+      color: hsl(var(--muted-foreground));
+      border-left: 3px solid hsl(var(--hero-accent));
+      padding: 5px 0 5px 13px;
+      line-height: 1.65;
+      font-style: italic
+    }
+
+    .cta-block {
+      padding: clamp(48px, 7vw, 80px) 0 clamp(60px, 9vw, 100px);
+      text-align: center;
+      border-top: 1px solid hsl(var(--border)/.6)
+    }
+
+    .cta-main {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 13px 28px;
+      border-radius: 999px;
+      background: hsl(var(--hero-accent));
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 15px;
+      transition: transform .25s, box-shadow .25s
+    }
+
+    .cta-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px -10px hsl(var(--hero-accent)/.6)
+    }
+
+    .cta-ghost {
+      display: inline-block;
+      margin: 20px 0 0 12px;
+      padding: 13px 22px;
+      border-radius: 999px;
+      border: 1px solid hsl(var(--border));
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      color: hsl(var(--muted-foreground))
+    }
+
+    footer {
+      border-top: 1px solid hsl(var(--border)/.6);
+      padding: 22px 0;
+      font-size: 13px;
+      color: hsl(var(--muted-foreground))
+    }
+
+    footer .wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between
+    }
+
+    .rv {
+      opacity: 0;
+      transform: translateY(13px);
+      transition: opacity .6s ease, transform .6s ease
+    }
+
+    .rv.in {
+      opacity: 1;
+      transform: none
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      .rv {
+        opacity: 1;
+        transform: none;
+        transition: none
+      }
+
+      html {
+        scroll-behavior: auto
+      }
+    }
+
+    @media(max-width:580px) {
+      .meta {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .steps,
+      .g2,
+      .kpis {
+        grid-template-columns: 1fr
+      }
+
+      .cta-ghost {
+        display: block;
+        margin: 12px auto 0;
+        width: fit-content
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="wrap">
+      <a href="../../">
+        <span
+          style="width:33px;height:33px;border-radius:50%;overflow:hidden;border:2px solid hsl(var(--hero-accent)/.3);flex-shrink:0">
+          <img src="../../lulamile/meew.jpeg" alt="LulaMile-HalfMachine"
+            style="width:100%;height:100%;object-fit:cover" />
+        </span>
+        <span style="display:flex;flex-direction:column;line-height:1.2">
+          <span style="font-size:14px;font-weight:600">LulaMile-HalfMachine</span>
+          <span style="font-size:11px;color:hsl(var(--muted-foreground))">Johannesburg, Anywhere Remote</span>
+        </span>
+      </a>
+      <nav class="nav" aria-label="Site">
+        <a href="../../">Home</a>
+        <a href="../../services/">Services</a>
+        <details class="drop">
+          <summary>Expertise &amp; Works</summary>
+          <div class="menu">
+            <a href="../../product-design-strategy/" class="active">Product Design &amp; Strategy</a>
+            <a href="../../brand-strategy-and-growth/">Brand Strategy &amp; Growth</a>
+            <a href="../../website-design-conversion/">Website Design &amp; Conversion</a>
+            <a href="../../frontend-development/">Frontend Development</a>
+            <a href="../../microfinance-impact-consulting/">Microfinance &amp; Impact</a>
+          </div>
+        </details>
+        <a href="../../about/">About</a>
+        <a class="pill" href="../../contact/">Book a Call</a>
+      </nav>
+    </div>
+  </div>
+
+  <header class="hero wrap">
+    <p class="eyebrow rv">Case Study · App Redesign · 2024</p>
+    <h1 class="rv">Employee Engagement App Redesign — Vodacom HRIT.</h1>
+    <p class="sub rv">The app had features staff needed — they just couldn't find them. This redesign rebuilt the
+      navigation, introduced search, and grouped 40+ tiles into logical sections based on how employees actually think
+      about their work day, not how the org chart was drawn.</p>
+    <dl class="meta rv">
+      <div>
+        <dt>Role</dt>
+        <dd>Lead Product Designer</dd>
+      </div>
+      <div>
+        <dt>Type</dt>
+        <dd>App Redesign</dd>
+      </div>
+      <div>
+        <dt>Client</dt>
+        <dd>Vodacom HRIT</dd>
+      </div>
+      <div>
+        <dt>Year</dt>
+        <dd>2024</dd>
+      </div>
+      <div>
+        <dt>Scope</dt>
+        <dd>UX · IA · UI redesign</dd>
+      </div>
+      <div>
+        <dt>Status</dt>
+        <dd>Delivered</dd>
+      </div>
+    </dl>
+    <div class="nda-badge rv">
+      <span style="width:8px;height:8px;border-radius:50%;background:currentColor;flex-shrink:0"></span>
+      NDA — detailed screens and data are confidential
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <figure class="rv" style="margin-top:0">
+      <img src="../../projects/lulamile/engage-cover.png"
+        alt="Employee engagement app redesign — new navigation structure with grouped tile sections and search"
+        loading="eager" fetchpriority="high" style="aspect-ratio:16/9;object-fit:cover;width:100%"
+        onerror="this.src='https://masegomongale.co.za/portfolio/employee-engagement-app-redesign/cover.jpg'" />
+      <figcaption>Before and after: from an undifferentiated wall of tiles to grouped sections staff recognise
+        immediately.</figcaption>
+    </figure>
+
+    <section>
+      <p class="eyebrow rv">The problem</p>
+      <h2 class="rv">A wall of tiles with <span class="acc">no way to navigate</span>.</h2>
+      <p class="lede rv">The Vodacom HRIT employee engagement app is the single point of entry for staff benefits,
+        policies, wellbeing tools, company comms and HR services. Before this redesign, it opened on a scrolling page of
+        identical tiles — no categories, no search, no hierarchy.</p>
+      <p class="rv">Staff had to remember which tile led to which function. New joiners were lost on day one. The most
+        common support ticket: "Where do I find [feature]?" The answer was almost always: "Scroll until you see it."
+        That is not a product — it is a list.</p>
+      <ul class="bullets rv">
+        <li>40+ feature tiles with no visual grouping or categorical logic</li>
+        <li>No search — finding anything required prior knowledge of where it lived</li>
+        <li>No Favourites — frequently used features required the same hunt every time</li>
+        <li>Chatbot section buried — staff couldn't find the bots that were designed to answer common questions</li>
+        <li>Profile and personalisation invisible — account settings required navigating to a separate page staff didn't
+          know existed</li>
+      </ul>
+    </section>
+
+    <section>
+      <p class="eyebrow rv">Research &amp; discovery</p>
+      <h2 class="rv">What staff actually <span class="acc">needed to find</span>.</h2>
+      <p class="lede rv">Existing user feedback provided the starting point — the complaints were consistent and
+        specific. Combined with a review of similar employee apps (Microsoft Viva, Workday Mobile, ServiceNow) to
+        understand proven navigation patterns at scale.</p>
+      <div class="g2 rv">
+        <div class="card glass">
+          <h3>User feedback synthesis</h3>
+          <p>Collected existing support tickets and app feedback. Identified the top 12 features staff searched for most
+            — and couldn't find. These became the anchors for the new IA.</p>
+        </div>
+        <div class="card glass">
+          <h3>Card sorting</h3>
+          <p>Remote card sorting exercise with 15 employees across departments. Tiles grouped into five natural clusters
+            — confirmed the categories that mattered to staff, not to HR.</p>
+        </div>
+        <div class="card glass">
+          <h3>Competitive review</h3>
+          <p>Teardown of three enterprise employee apps. Identified patterns: persistent search, grouped navigation,
+            pinnable favourites and contextual chatbot access were universal in well-rated apps.</p>
+        </div>
+        <div class="card glass">
+          <h3>Stakeholder alignment</h3>
+          <p>Workshop with the HRIT team to align on scope. Established what could be changed in this phase, what
+            required back-end work, and what was out of scope entirely.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow rv">App redesign process</p>
+      <h2 class="rv">Redesigning an app people <span class="acc">use every day</span>.</h2>
+      <p class="lede rv">Redesigning a live, in-use enterprise app requires a different discipline than a greenfield
+        product. Every change needed a rationale — staff have muscle memory, and disrupting it without clear benefit
+        creates resistance, not adoption.</p>
+      <div class="steps rv">
+        <div class="step">
+          <h3>IA mapping</h3>
+          <p>Current tile inventory mapped against card sort results. Five category groupings defined: Safety, Health
+            &amp; Wellbeing · Policies &amp; Information · Smart Buildings · Rewards &amp; Benefits · Company Strategy ·
+            Apps.</p>
+        </div>
+        <div class="step">
+          <h3>Navigation redesign</h3>
+          <p>New persistent bottom navigation with five categories. Search field always reachable from any screen.
+            Profile icon with floating menu replacing the hidden settings page.</p>
+        </div>
+        <div class="step">
+          <h3>Favourites feature</h3>
+          <p>Pinnable Favourites strip below the communications banner — staff pin their top 5 features, visible
+            immediately on landing. Reduces repeat navigation for high-frequency tasks to one tap.</p>
+        </div>
+        <div class="step">
+          <h3>Search implementation</h3>
+          <p>Global search across all features, content and tools. Auto-complete with category context. Results grouped
+            by type — features, articles, people, bots. Typed query surfaced in recent searches.</p>
+        </div>
+        <div class="step">
+          <h3>Chatbot section</h3>
+          <p>Bots section moved to a dedicated tab in the navigation. Cards for each bot: name, purpose, quick-start
+            prompt. No longer buried in the tile wall.</p>
+        </div>
+        <div class="step">
+          <h3>Wireframes &amp; prototype</h3>
+          <p>Low-fi wireframes for all 12 redesigned screens reviewed with HRIT. High-fidelity prototype built in Figma
+            and tested with 8 employees across seniority levels.</p>
+        </div>
+        <div class="step">
+          <h3>Usability testing</h3>
+          <p>Task-based testing: find your payslip, access a wellbeing resource, locate the Smart Buildings tool, use a
+            chatbot. Measured time-on-task against the current app. Average time-on-task reduced by 62%.</p>
+        </div>
+        <div class="step">
+          <h3>Iterative refinement</h3>
+          <p>Two rounds of refinement post-testing. Chatbot section enhanced with icons after testers confused bot names
+            without visual cues. Profile menu expanded with usage stats after request from testers.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow rv">The solution</p>
+      <h2 class="rv">Features staff can <span class="acc">actually find</span>.</h2>
+      <figure class="rv">
+        <img src="../../projects/lulamile/engage-screens.png"
+          alt="Engage app redesigned screens — categorised navigation, search results and Favourites strip"
+          loading="lazy" decoding="async"
+          onerror="this.src='https://masegomongale.co.za/portfolio/employee-engagement-app-redesign/screens.jpg'" />
+        <figcaption>Key redesigned screens: grouped navigation, persistent search, Favourites strip and the Chatbot
+          section.</figcaption>
+      </figure>
+      <div class="g2 rv">
+        <div class="card glass">
+          <h3>Grouped tile sections</h3>
+          <p>40+ tiles organised into six meaningful categories. Staff navigate by context — "Where is my payslip?" →
+            Rewards &amp; Benefits. Intuitive for new joiners on day one.</p>
+        </div>
+        <div class="card glass">
+          <h3>Global search</h3>
+          <p>One search field, all content. Auto-complete, recent searches, results grouped by type. The single biggest
+            complaint — "I can't find it" — resolved in one feature.</p>
+        </div>
+        <div class="card glass">
+          <h3>Pinnable Favourites</h3>
+          <p>Top 5 features pinned to a strip below the banner. Reorder by drag. One tap to access the five things staff
+            use every single day.</p>
+        </div>
+        <div class="card glass">
+          <h3>Chatbot hub</h3>
+          <p>Dedicated tab, not a buried tile. All bots surfaced with name, purpose and quick-start prompt. Bot usage
+            increased significantly post-launch.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow rv">Outcomes</p>
+      <h2 class="rv">"Where do I find" <span class="acc">questions mostly stopped</span>.</h2>
+      <div class="kpis rv">
+        <div class="kpi"><b>↓ 62%</b><span>average time-on-task in usability testing vs the previous design</span></div>
+        <div class="kpi"><b>↑ Engagement</b><span>bot usage and feature discoverability both increased post-launch per
+            HRIT analytics</span></div>
+        <div class="kpi"><b>↓ Support</b><span>"Where do I find" support tickets dropped significantly in the first 30
+            days after rollout</span></div>
+        <div class="kpi"><b>Day 1</b><span>new joiners could navigate the app without a guide — confirmed in
+            post-onboarding surveys</span></div>
+      </div>
+      <p class="note rv">"Lulamile came in, listened properly to how people actually use the app, and rebuilt the
+        navigation around that. The 'where do I find' questions mostly stopped." — Employee Experience Lead, Vodacom
+        HRIT</p>
+    </section>
+
+  </main>
+
+  <div class="cta-block">
+    <div class="wrap">
+      <h2>Enterprise app that staff avoid?</h2>
+      <p class="lede" style="margin:0 auto">Navigation, search and IA rebuilt around how people actually work — not how
+        the org chart is drawn.</p>
+      <a class="cta-main" href="../../contact/">Start a conversation</a>
+      <a class="cta-ghost" href="../../product-design-strategy/">See more product work</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <span>© 2026 LulaMile-HalfMachine · Johannesburg, South Africa</span>
+      <span>Engage case study · NDA — detailed screens confidential</span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var els = document.querySelectorAll('.rv');
+      if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+      }, { threshold: 0.08 });
+      els.forEach(function (e) { io.observe(e); });
+    })();
+  </script>
+</body>
+
+</html>

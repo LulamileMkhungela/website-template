@@ -1,0 +1,31 @@
+node_modules/
+www/
+dist/
+out-tsc/
+.angular/
+.DS_Store
+*.log
+
+# Firebase per-app config files stay local only (they carry project-specific
+# keys and OAuth client IDs). Drop your own copies in place before a native
+# build; see docs/FIREBASE_GOOGLE_AUTH.md.
+google-services.json
+GoogleService-Info.plist
+
+# Firebase Admin / service-account keys must never be committed. If one was
+# ever committed or shared, revoke and rotate it in the Firebase console.
+*firebase-adminsdk*
+*service-account*
+
+# Native projects are in the repo. Ignore only build output.
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/capacitor-cordova-android-plugins/build/
+ios/DerivedData/
+ios/App/Pods/
+**/xcuserdata/
+*.xcuserstate
+*.keystore
+!.gitkeep

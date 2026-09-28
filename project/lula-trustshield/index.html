@@ -1,0 +1,829 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <script src="../../lulamile/base-path-fix.js?v=2"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>(function () { try { var d = document.documentElement, c = d.classList; c.remove('light', 'dark'); var e = localStorage.getItem('theme'); if (e) { c.add(e || '') } else { c.add('light'); } if (e === 'light' || e === 'dark' || !e) d.style.colorScheme = e || 'light' } catch (t) { } })();</script>
+  <link rel="icon" href="../../favicon.webp?v=2" type="image/webp" />
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@200,300,400,500,600,700&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <title>Lula TrustShield — Asset Verification &amp; Escrow Platform | LulaMile-HalfMachine</title>
+  <meta name="description"
+    content="Case study: Lula TrustShield (LulaUnifidMarket) — product design for an escrow lock and proof-of-funds verification platform preventing fraud in high-value peer transactions." />
+  <meta name="author" content="LulaMile-HalfMachine" />
+  <link rel="canonical" href="https://lulamilemkhungela.github.io/website-template/project/lula-trustshield/" />
+  <meta name="robots" content="index, follow, noai, noimageai" />
+  <meta property="og:title" content="Lula TrustShield — Asset Verification &amp; Escrow Platform" />
+  <meta property="og:description"
+    content="Product design for escrow lock and proof-of-funds verification — eliminating fraud in high-value peer transactions." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://lulamilemkhungela.github.io/website-template/project/lula-trustshield/" />
+  <meta property="og:image"
+    content="https://lulamilemkhungela.github.io/website-template/projects/lulamile/lula-trustshield-cover.png" />
+  <meta property="og:locale" content="en_ZA" />
+  <meta property="og:site_name" content="LulaMile-HalfMachine Portfolio" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Lula TrustShield — Asset Verification &amp; Escrow Platform" />
+  <meta name="twitter:image"
+    content="https://lulamilemkhungela.github.io/website-template/projects/lulamile/lula-trustshield-cover.png" />
+  <style>
+    :root {
+      --background: 210 30% 97%;
+      --foreground: 210 45% 10%;
+      --card: 210 24% 94%;
+      --muted-foreground: 210 18% 44%;
+      --border: 210 20% 87%;
+      --hero-accent: 200 90% 38%;
+    }
+
+    .dark {
+      --background: 210 38% 9%;
+      --foreground: 210 30% 93%;
+      --card: 210 32% 13%;
+      --muted-foreground: 210 16% 62%;
+      --border: 210 26% 19%;
+      --hero-accent: 195 85% 50%;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block
+    }
+
+    a {
+      color: inherit
+    }
+
+    :root {
+      --glass-bg: hsl(var(--background)/0.7);
+      --glass-card: hsl(var(--card)/0.6);
+      --glass-brd: hsl(var(--foreground)/0.09);
+      --glass-sh: 0 8px 30px -10px hsl(var(--foreground)/0.16);
+    }
+
+    .dark {
+      --glass-bg: hsl(var(--card)/0.5);
+      --glass-brd: hsl(var(--background)/0.22);
+    }
+
+    .glass {
+      background: var(--glass-card);
+      -webkit-backdrop-filter: blur(14px) saturate(1.35);
+      backdrop-filter: blur(14px) saturate(1.35);
+      border: 1px solid var(--glass-brd);
+      box-shadow: var(--glass-sh);
+    }
+
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 4vw, 36px)
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--glass-bg);
+      -webkit-backdrop-filter: blur(18px) saturate(1.5);
+      backdrop-filter: blur(18px) saturate(1.5);
+      border-bottom: 1px solid var(--glass-brd);
+      box-shadow: var(--glass-sh);
+    }
+
+    .topbar .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 11px;
+      padding-bottom: 11px;
+      gap: 12px
+    }
+
+    .topbar a {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 22px
+    }
+
+    .nav a {
+      font-size: 14px;
+      font-weight: 500;
+      color: hsl(var(--foreground));
+      text-decoration: none;
+      transition: color .18s
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      color: hsl(var(--hero-accent));
+      font-weight: 700
+    }
+
+    .nav a.pill {
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: hsl(var(--hero-accent));
+      color: #fff;
+      font-weight: 700
+    }
+
+    .drop {
+      position: relative
+    }
+
+    .drop summary {
+      list-style: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: hsl(var(--foreground))
+    }
+
+    .drop summary::-webkit-details-marker {
+      display: none
+    }
+
+    .drop summary::after {
+      content: "▾";
+      font-size: 10px;
+      opacity: .55
+    }
+
+    .drop .menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 220px;
+      background: var(--glass-card);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-brd);
+      border-radius: 13px;
+      padding: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      box-shadow: 0 16px 40px -14px hsl(var(--foreground)/.28);
+      z-index: 100;
+    }
+
+    .drop .menu a {
+      padding: 8px 12px;
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: hsl(var(--foreground));
+      transition: background .15s, color .15s
+    }
+
+    .drop .menu a:hover,
+    .drop .menu a.active {
+      background: hsl(var(--background)/.7);
+      color: hsl(var(--hero-accent));
+      font-weight: 700
+    }
+
+    @media(max-width:780px) {
+
+      .nav a:not(.pill),
+      .drop {
+        display: none
+      }
+    }
+
+    .hero {
+      padding: clamp(56px, 9vw, 96px) 0 clamp(28px, 4vw, 44px)
+    }
+
+    .wip-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 16px;
+      border-radius: 999px;
+      background: hsl(var(--hero-accent)/0.12);
+      color: hsl(var(--hero-accent));
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      margin-bottom: 20px
+    }
+
+    .wip-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      animation: pulse 2s infinite
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .4
+      }
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: hsl(var(--hero-accent));
+      margin-bottom: 15px
+    }
+
+    h1 {
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-size: clamp(28px, 5vw, 58px);
+      line-height: 1.06;
+      font-weight: 700;
+      letter-spacing: -.022em;
+      max-width: 22ch
+    }
+
+    .sub {
+      margin-top: 17px;
+      font-size: clamp(15px, 1.8vw, 18px);
+      color: hsl(var(--muted-foreground));
+      max-width: 60ch;
+      line-height: 1.65
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1px;
+      background: hsl(var(--border)/.7);
+      border: 1px solid hsl(var(--border)/.7);
+      border-radius: 15px;
+      overflow: hidden;
+      margin-top: 32px
+    }
+
+    .meta div {
+      background: hsl(var(--card));
+      padding: 13px 16px
+    }
+
+    .meta dt {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: hsl(var(--muted-foreground));
+      margin-bottom: 4px
+    }
+
+    .meta dd {
+      font-size: 13px;
+      font-weight: 600
+    }
+
+    .open-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px
+    }
+
+    .open-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 999px;
+      border: 1.5px solid hsl(var(--border));
+      color: hsl(var(--foreground));
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      transition: transform .2s, border-color .2s
+    }
+
+    .open-btn:hover {
+      transform: translateY(-2px);
+      border-color: hsl(var(--hero-accent));
+      color: hsl(var(--hero-accent))
+    }
+
+    figure {
+      margin: clamp(24px, 4vw, 36px) 0
+    }
+
+    figure img {
+      width: 100%;
+      border-radius: 18px;
+      border: 1px solid hsl(var(--border)/.7);
+      transition: transform .5s ease, box-shadow .5s ease
+    }
+
+    figure img:hover {
+      transform: scale(1.012);
+      box-shadow: 0 24px 56px -22px hsl(var(--foreground)/.28)
+    }
+
+    figcaption {
+      margin-top: 9px;
+      font-size: 13px;
+      color: hsl(var(--muted-foreground));
+      text-align: center
+    }
+
+    section {
+      padding: clamp(36px, 5.5vw, 56px) 0;
+      border-top: 1px solid hsl(var(--border)/.6)
+    }
+
+    h2 {
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-size: clamp(22px, 3.4vw, 38px);
+      font-weight: 700;
+      letter-spacing: -.015em;
+      line-height: 1.1;
+      margin-bottom: 16px
+    }
+
+    h2 .acc {
+      color: hsl(var(--hero-accent))
+    }
+
+    p+p {
+      margin-top: 12px
+    }
+
+    .lede {
+      font-size: clamp(14px, 1.8vw, 17px);
+      color: hsl(var(--muted-foreground));
+      max-width: 66ch
+    }
+
+    ul.bullets {
+      list-style: none;
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      max-width: 680px
+    }
+
+    ul.bullets li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 14px
+    }
+
+    ul.bullets li::before {
+      content: "→";
+      color: hsl(var(--hero-accent));
+      font-size: 16px;
+      flex-shrink: 0;
+      line-height: 1.4
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 13px;
+      margin-top: 20px;
+      counter-reset: st
+    }
+
+    .step {
+      border: 1px solid hsl(var(--border)/.7);
+      border-radius: 14px;
+      padding: 17px;
+      background: hsl(var(--card)/0.5)
+    }
+
+    .step::before {
+      counter-increment: st;
+      content: "0" counter(st);
+      font-family: 'Clash Grotesk', Inter, sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      color: hsl(var(--hero-accent));
+      display: block;
+      margin-bottom: 7px
+    }
+
+    .step h3 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 5px
+    }
+
+    .step p {
+      font-size: 13px;
+      color: hsl(var(--muted-foreground));
+      line-height: 1.55
+    }
+
+    .g2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 15px;
+      margin-top: 20px
+    }
+
+    .card {
+      padding: 20px;
+      border-radius: 15px;
+      border: 1px solid hsl(var(--border)/.7);
+      background: hsl(var(--card)/0.5)
+    }
+
+    .card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 7px
+    }
+
+    .card p {
+      font-size: 13px;
+      color: hsl(var(--muted-foreground));
+      line-height: 1.6
+    }
+
+    .note {
+      margin-top: 16px;
+      font-size: 13px;
+      color: hsl(var(--muted-foreground));
+      border-left: 3px solid hsl(var(--hero-accent));
+      padding: 5px 0 5px 13px;
+      line-height: 1.65
+    }
+
+    .cta-block {
+      padding: clamp(48px, 7vw, 80px) 0 clamp(60px, 9vw, 100px);
+      text-align: center;
+      border-top: 1px solid hsl(var(--border)/.6)
+    }
+
+    .cta-main {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 13px 28px;
+      border-radius: 999px;
+      background: hsl(var(--hero-accent));
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 15px;
+      transition: transform .25s, box-shadow .25s
+    }
+
+    .cta-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px -10px hsl(var(--hero-accent)/.6)
+    }
+
+    .cta-ghost {
+      display: inline-block;
+      margin: 20px 0 0 12px;
+      padding: 13px 22px;
+      border-radius: 999px;
+      border: 1px solid hsl(var(--border));
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      color: hsl(var(--muted-foreground))
+    }
+
+    footer {
+      border-top: 1px solid hsl(var(--border)/.6);
+      padding: 22px 0;
+      font-size: 13px;
+      color: hsl(var(--muted-foreground))
+    }
+
+    footer .wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between
+    }
+
+    .rv {
+      opacity: 0;
+      transform: translateY(13px);
+      transition: opacity .6s ease, transform .6s ease
+    }
+
+    .rv.in {
+      opacity: 1;
+      transform: none
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      .rv {
+        opacity: 1;
+        transform: none;
+        transition: none
+      }
+
+      html {
+        scroll-behavior: auto
+      }
+    }
+
+    @media(max-width:580px) {
+      .meta {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .steps,
+      .g2 {
+        grid-template-columns: 1fr
+      }
+
+      .cta-ghost {
+        display: block;
+        margin: 12px auto 0;
+        width: fit-content
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="wrap">
+      <a href="../../">
+        <span
+          style="width:33px;height:33px;border-radius:50%;overflow:hidden;border:2px solid hsl(var(--hero-accent)/.3);flex-shrink:0">
+          <img src="../../lulamile/meew.jpeg" alt="LulaMile-HalfMachine"
+            style="width:100%;height:100%;object-fit:cover" />
+        </span>
+        <span style="display:flex;flex-direction:column;line-height:1.2">
+          <span style="font-size:14px;font-weight:600">LulaMile-HalfMachine</span>
+          <span style="font-size:11px;color:hsl(var(--muted-foreground))">Johannesburg, Anywhere Remote</span>
+        </span>
+      </a>
+      <nav class="nav" aria-label="Site">
+        <a href="../../">Home</a>
+        <a href="../../services/">Services</a>
+        <details class="drop">
+          <summary>Expertise &amp; Works</summary>
+          <div class="menu">
+            <a href="../../product-design-strategy/" class="active">Product Design &amp; Strategy</a>
+            <a href="../../brand-strategy-and-growth/">Brand Strategy &amp; Growth</a>
+            <a href="../../website-design-conversion/">Website Design &amp; Conversion</a>
+            <a href="../../frontend-development/">Frontend Development</a>
+            <a href="../../microfinance-impact-consulting/">Microfinance &amp; Impact</a>
+          </div>
+        </details>
+        <a href="../../about/">About</a>
+        <a class="pill" href="../../contact/">Book a Call</a>
+      </nav>
+    </div>
+  </div>
+
+  <header class="hero wrap">
+    <div class="wip-badge rv">
+      <span class="wip-dot"></span>
+      Work in progress — live demo on request
+    </div>
+    <p class="eyebrow rv">Case Study · Product Design · Fintech</p>
+    <h1 class="rv">Lula TrustShield — escrow lock and proof-of-funds for high-value peer transactions.</h1>
+    <p class="sub rv">South Africa loses millions to peer transaction fraud every year. A seller requests proof of
+      funds; a screenshot is faked. TrustShield is a verification layer — escrow locks, real-time balance confirmation
+      and tamper-proof receipts — that makes the scam structurally impossible.</p>
+    <dl class="meta rv">
+      <div>
+        <dt>Role</dt>
+        <dd>Lead Product Designer</dd>
+      </div>
+      <div>
+        <dt>Type</dt>
+        <dd>Product Design</dd>
+      </div>
+      <div>
+        <dt>Sector</dt>
+        <dd>Fintech / Escrow</dd>
+      </div>
+      <div>
+        <dt>Duration</dt>
+        <dd>Ongoing</dd>
+      </div>
+      <div>
+        <dt>Status</dt>
+        <dd>Work in progress</dd>
+      </div>
+    </dl>
+    <div class="open-btns rv">
+      <a class="open-btn" href="https://www.figma.com/design/z28iI0zJV1u1cL1wQ4HMrx/Lula-Fig-Studio?node-id=0-1"
+        target="_blank" rel="noopener noreferrer">Design files — Figma ↗</a>
+      <a class="open-btn" href="https://github.com/LulamileMkhungela/LulaUnifidMarket" target="_blank"
+        rel="noopener noreferrer">View on GitHub ↗</a>
+      <a class="open-btn"
+        href="https://chartreuse-scale-c4a.notion.site/Lula-Creatives-UX-Resources-Bookmarks-1e2962b93ef1809dbe07c896db79ad65"
+        target="_blank" rel="noopener noreferrer">UX resource library ↗</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <figure class="rv" style="margin-top:0">
+      <img src="../../projects/lulamile/lula-trustshield-cover.png"
+        alt="Lula TrustShield — escrow verification platform showing transaction lock screen and proof-of-funds flow"
+        loading="eager" fetchpriority="high" style="aspect-ratio:16/9;object-fit:cover;width:100%" />
+      <figcaption>TrustShield transaction lock screen — the seller sees confirmed funds, the buyer sees a locked escrow,
+        both see the same tamper-proof state.</figcaption>
+    </figure>
+
+    <section>
+      <p class="eyebrow rv">The problem</p>
+      <h2 class="rv">A scam that works because <span class="acc">trust is hard to verify</span>.</h2>
+      <p class="lede rv">In South Africa's peer-to-peer marketplace — cars, property, high-value goods — the fraud
+        pattern is well-known: buyer sends a fake proof of payment or a doctored bank screenshot, receives the goods,
+        and disappears. Sellers have no reliable way to verify funds before handing over the item.</p>
+      <p class="rv">Existing solutions (escrow services, bank-to-bank transfers) are too slow, too expensive or too
+        complex for everyday high-value transactions. TrustShield is a lightweight verification layer that sits between
+        the buyer and seller — fast enough for a car-park handover, secure enough that faking it is structurally
+        impossible.</p>
+    </section>
+
+    <section>
+      <p class="eyebrow rv">Discovery &amp; research</p>
+      <h2 class="rv">Understanding the <span class="acc">fraud anatomy</span>.</h2>
+      <p class="lede rv">The research phase started with the fraud itself — mapping every known variant of the
+        proof-of-payment scam to understand what each attack relied on and where a verification layer could intervene.
+      </p>
+      <ul class="bullets rv">
+        <li>Fake EFT confirmation screenshots — no live bank confirmation, easily forged</li>
+        <li>Real partial payments presented as full payment — no real-time balance lock</li>
+        <li>Reversal fraud — EFT sent, goods received, payment reversed through the bank</li>
+        <li>Fake escrow services — phishing sites mimicking legitimate escrow providers</li>
+        <li>Competitive review: PayPal Goods &amp; Services, Escrow.com, SA-specific tools — all either too slow or
+          require both parties to have existing accounts</li>
+      </ul>
+    </section>
+
+    <section>
+      <p class="eyebrow rv">Product design process</p>
+      <h2 class="rv">Designing for <span class="acc">high-trust moments</span>.</h2>
+      <p class="lede rv">A product in this space has no room for ambiguity. Every screen needed to answer one question
+        before the user had to ask it: "Is this real?" That constraint shaped every design decision — from the
+        information hierarchy to the colour choices.</p>
+      <div class="steps rv">
+        <div class="step">
+          <h3>Problem definition</h3>
+          <p>Mapped the fraud variants, the victims, the attackers and the friction points. Defined what "verified"
+            actually means in each scenario — the answer is different for a R15,000 car deposit vs a R500 phone swap.
+          </p>
+        </div>
+        <div class="step">
+          <h3>User research</h3>
+          <p>Interviews with 12 people who had experienced transaction fraud or near-fraud. Mapped the emotional arc:
+            optimism → uncertainty → anxiety → relief or loss. The product had to kill uncertainty fast.</p>
+        </div>
+        <div class="step">
+          <h3>Jobs to be done</h3>
+          <p>Core JTBD: "When I'm about to hand over a high-value item, I need to know the money is real and locked, so
+            I feel safe to complete the handover." One job. One clear success state.</p>
+        </div>
+        <div class="step">
+          <h3>Flow design</h3>
+          <p>Three core flows: seller creates a lock request, buyer confirms and locks funds, both parties see the same
+            verified state. The three-step flow completes in under 90 seconds.</p>
+        </div>
+        <div class="step">
+          <h3>Trust signals</h3>
+          <p>Every screen designed to communicate real-time state clearly: lock confirmed, funds verified, transaction
+            ID, timestamp. No ambiguity, no "pending" without a clear explanation.</p>
+        </div>
+        <div class="step">
+          <h3>High-fidelity design</h3>
+          <p>Figma designs for all states: lock creation, confirmation, verified, disputed, released, cancelled. Every
+            edge case designed before handoff — dispute resolution especially.</p>
+        </div>
+        <div class="step">
+          <h3>Security UX</h3>
+          <p>How the system communicates security without making the interface feel forensic. Confidence through
+            clarity, not through intimidation. Designed with a legal advisor reviewing the copy.</p>
+        </div>
+        <div class="step">
+          <h3>Handoff</h3>
+          <p>Full spec including API contract expectations, real-time update requirements and the security verification
+            flow. Designed to integrate with SA banking APIs — not to replace them.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow rv">The solution</p>
+      <h2 class="rv">A lock both parties <span class="acc">can see</span>.</h2>
+      <figure class="rv">
+        <img src="../../projects/lulamile/lula-trustshield-flow.png"
+          alt="TrustShield transaction flow — seller request, buyer lock confirmation and verified state screens"
+          loading="lazy" decoding="async" />
+        <figcaption>The full transaction flow: seller creates a lock, buyer confirms funds, both see the verified state
+          simultaneously.</figcaption>
+      </figure>
+      <div class="g2 rv">
+        <div class="card glass">
+          <h3>Escrow lock</h3>
+          <p>Funds locked in a verified hold before the handover. Neither party can access them until both confirm the
+            transaction is complete — or a dispute is resolved.</p>
+        </div>
+        <div class="card glass">
+          <h3>Real-time balance verification</h3>
+          <p>Live confirmation with the buyer's bank that the declared funds exist and are available. No screenshots. No
+            forgeable confirmations.</p>
+        </div>
+        <div class="card glass">
+          <h3>Tamper-proof receipt</h3>
+          <p>Transaction ID, timestamp, both-party confirmation and lock state recorded in a way that cannot be altered
+            after the fact. The paper trail that makes reversal fraud impossible.</p>
+        </div>
+        <div class="card glass">
+          <h3>Dispute resolution</h3>
+          <p>Structured dispute flow: either party flags a problem, funds held in escrow until the dispute is reviewed.
+            Designed for the SA legal context — not a US arbitration model.</p>
+        </div>
+      </div>
+      <p class="note rv">TrustShield is a work in progress. The full design files, clickable prototype and API
+        specification are available on request — say the word and I'll walk you through them on a call.</p>
+    </section>
+
+  </main>
+
+  <div class="cta-block">
+    <div class="wrap">
+      <h2>Building a fintech or marketplace product?</h2>
+      <p class="lede" style="margin:0 auto">Trust is a product feature. I design the flows that make it legible at the
+        moment it matters most.</p>
+      <a class="cta-main" href="../../contact/">Start a conversation</a>
+      <a class="cta-ghost" href="../../product-design-strategy/">See more product work</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <span>© 2026 LulaMile-HalfMachine · Johannesburg, South Africa</span>
+      <span>Lula TrustShield case study · content protected · work in progress</span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var els = document.querySelectorAll('.rv');
+      if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+      }, { threshold: 0.08 });
+      els.forEach(function (e) { io.observe(e); });
+    })();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,792 @@
+@import "@ionic/angular/css/core.css";
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+@import "./app/core/theme/variables.scss";
+
+/* ============================ base ============================ */
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--ion-background-color);
+  color: var(--ion-text-color);
+  font-family: var(--ion-font-family);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+
+ion-app {
+  background: var(--ion-background-color);
+}
+
+ion-tabs ion-content {
+  --padding-bottom: calc(32px + var(--lf-safe-bottom));
+  --padding-start: var(--lf-safe-left);
+  --padding-end: var(--lf-safe-right);
+}
+ion-content::part(scroll) {
+  padding-bottom: 24px;
+}
+
+.lf-page {
+  --background: var(--ion-background-color);
+}
+
+ion-toolbar {
+  --background: var(--lf-toolbar);
+  --color: var(--ion-text-color);
+  --border-color: var(--lf-line);
+  --min-height: 52px;
+}
+
+ion-header ion-toolbar {
+  --border-width: 0 0 1px 0;
+  --border-color: var(--lf-line);
+}
+
+ion-tab-bar {
+  --background: var(--lf-tabbar);
+  --color: var(--lf-muted);
+  --color-selected: var(--lf-beacon);
+  border-top: 1px solid var(--lf-line);
+}
+
+ion-item {
+  --background: transparent;
+  --border-color: transparent;
+  --inner-border-width: 0;
+  --border-width: 0;
+  --highlight-height: 0;
+  --color: var(--ion-text-color);
+  --padding-start: 14px;
+  --min-height: 48px;
+}
+
+/* Field styling: clean rounded borders, 48px standard height */
+ion-item:has(ion-input),
+ion-item:has(ion-textarea),
+ion-item:has(ion-select) {
+  --background: var(--lf-card);
+  --border-radius: 12px;
+  --min-height: 48px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 0 0 1px var(--lf-line);
+  transition: box-shadow .15s ease;
+}
+ion-item:has(ion-input):focus-within,
+ion-item:has(ion-textarea):focus-within,
+ion-item:has(ion-select):focus-within {
+  box-shadow: 0 0 0 2px var(--lf-beacon);
+}
+ion-item.bad {
+  box-shadow: 0 0 0 2px var(--lf-signal);
+}
+ion-item:has(ion-toggle) {
+  --background: var(--lf-card);
+  --border-radius: 16px;
+  border-radius: 16px;
+  margin: 6px var(--lf-gap);
+  box-shadow: 0 0 0 1px var(--lf-line);
+}
+ion-item ion-label {
+  font-weight: 700;
+  letter-spacing: .15px;
+}
+ion-item ion-label[position="stacked"] {
+  font-size: 12px;
+  color: var(--lf-muted);
+  margin-bottom: 2px;
+}
+
+ion-refresher-refresher-native::part(spinner) {
+  color: var(--lf-beacon);
+}
+
+ion-segment {
+  --background: transparent;
+}
+
+ion-chip {
+  --background: var(--lf-card-2);
+  --color: var(--ion-text-color);
+  height: 32px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+ion-modal {
+  --background: color-mix(in srgb, var(--ion-background-color) 82%, transparent);
+  --border-radius: 24px;
+  --backdrop-opacity: .45;
+}
+ion-modal::part(content) {
+  backdrop-filter: blur(22px) saturate(1.35);
+  -webkit-backdrop-filter: blur(22px) saturate(1.35);
+  border: 1px solid var(--lf-line);
+}
+
+ion-alert {
+  --background: var(--lf-card);
+  --color: var(--ion-text-color);
+}
+
+ion-action-sheet {
+  --background: var(--ion-background-color);
+  --color: var(--ion-text-color);
+}
+
+ion-searchbar {
+  --background: var(--lf-card);
+  --color: var(--ion-text-color);
+  --placeholder-color: var(--lf-muted);
+  --icon-color: var(--lf-muted);
+  --border-radius: 16px;
+  --box-shadow: 0 0 0 1px var(--lf-line);
+  padding: 8px 12px !important;
+  min-height: 52px;
+}
+
+ion-toggle {
+  --track-background: var(--lf-line);
+  --track-background-checked: var(--lf-ubuntu);
+}
+
+ion-range {
+  --bar-background: var(--lf-line);
+  --bar-background-active: var(--lf-beacon);
+  --knob-background: var(--lf-beacon);
+}
+
+ion-progress-bar {
+  --background: var(--lf-line);
+  --progress-background: var(--lf-beacon);
+}
+
+ion-skeleton-text {
+  --background: var(--lf-card-2);
+  --border-radius: 8px;
+}
+
+ion-textarea,
+ion-input,
+ion-select {
+  --background: transparent;
+  --color: var(--ion-text-color);
+  --placeholder-color: var(--lf-muted);
+  --placeholder-opacity: 1;
+  --highlight-color-focused: var(--lf-beacon);
+  font-size: 16px;
+}
+ion-back-button {
+  --color: var(--ion-text-color);
+  --icon-font-size: 22px;
+  --background: var(--lf-card-2);
+  --border-radius: 50%;
+  --min-width: 44px;
+  --min-height: 44px;
+}
+
+/* ======================= shared utilities ======================= */
+
+.lf-page {
+  --background:
+    radial-gradient(120% 42% at 50% -8%, color-mix(in srgb, var(--lf-beacon) 14%, transparent), transparent 46%),
+    var(--ion-background-color);
+}
+
+.lf-wrap {
+  max-width: var(--lf-maxw);
+  margin: 0 auto;
+}
+
+.lf-pad {
+  padding: 0 var(--lf-gap);
+}
+
+.lf-muted {
+  color: var(--lf-muted);
+}
+
+.lf-tiny {
+  font-size: 12px;
+}
+
+.lf-small {
+  font-size: 13px;
+}
+
+.lf-bold {
+  font-weight: 700;
+}
+
+.lf-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lf-row-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.lf-grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.lf-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lf-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.lf-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.lf-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ============================ cards ============================ */
+
+.lf-card {
+  background: color-mix(in srgb, var(--lf-card) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--lf-line) 80%, #fff);
+  border-radius: var(--lf-radius);
+  margin: 12px var(--lf-gap);
+  overflow: hidden;
+  box-shadow: var(--lf-shadow);
+  backdrop-filter: blur(18px) saturate(1.25);
+  -webkit-backdrop-filter: blur(18px) saturate(1.25);
+}
+.lf-card--danger {
+  background: color-mix(in srgb, var(--lf-signal) 16%, var(--lf-card));
+  border-color: color-mix(in srgb, var(--lf-signal) 48%, transparent);
+}
+.lf-card--clear {
+  opacity: .82;
+}
+
+.lf-card--flat {
+  margin: 10px var(--lf-gap);
+  background: transparent;
+  border: 0;
+}
+
+.lf-card__body {
+  padding: 14px 16px;
+}
+
+.lf-card--critical {
+  border-color: color-mix(in srgb, var(--lf-signal) 55%, var(--lf-line));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--lf-signal) 22%, transparent) inset;
+}
+
+.lf-card--found {
+  border-color: color-mix(in srgb, var(--lf-ubuntu) 55%, var(--lf-line));
+}
+
+/* ============================ chips ============================ */
+
+.lf-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  border: 1px solid var(--lf-line);
+  background: var(--lf-card-2);
+  color: var(--ion-text-color);
+  white-space: nowrap;
+}
+
+.lf-chip--danger {
+  color: #ffd9d1;
+  background: color-mix(in srgb, var(--lf-signal) 22%, transparent);
+  border-color: color-mix(in srgb, var(--lf-signal) 45%, transparent);
+}
+
+.lf-chip--success {
+  color: #c9f2dc;
+  background: color-mix(in srgb, var(--lf-ubuntu) 22%, transparent);
+  border-color: color-mix(in srgb, var(--lf-ubuntu) 45%, transparent);
+}
+
+.lf-chip--warn {
+  color: #ffe6bd;
+  background: color-mix(in srgb, var(--lf-marigold) 22%, transparent);
+  border-color: color-mix(in srgb, var(--lf-marigold) 45%, transparent);
+}
+
+.lf-chip--beacon {
+  color: #1a1200;
+  background: var(--lf-beacon);
+  border-color: var(--lf-beacon);
+}
+
+.lf-chip--ghost {
+  background: transparent;
+  color: var(--lf-muted);
+}
+
+/* =========================== buttons =========================== */
+
+.lf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 16px;
+  border: 1px solid transparent;
+  background: var(--lf-card-2);
+  color: var(--ion-text-color);
+  font-weight: 700;
+  font-size: 15.5px;
+  letter-spacing: -0.2px;
+  cursor: pointer;
+  transition: transform 0.08s ease, filter 0.15s ease;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.lf-btn:active {
+  transform: scale(0.97);
+}
+.lf-btn:focus-visible {
+  outline: 2px solid var(--lf-beacon);
+  outline-offset: 2px;
+}
+.lf-btn--block {
+  min-height: 52px;
+  border-radius: 16px;
+}
+
+.lf-btn--primary {
+  background: #1877f2;
+  color: #ffffff;
+  box-shadow: none;
+}
+
+.lf-btn--success {
+  background: var(--lf-ubuntu);
+  color: #fff;
+}
+
+.lf-btn--danger {
+  background: var(--lf-signal);
+  color: #fff;
+}
+
+.lf-btn--ghost {
+  background: transparent;
+  border-color: var(--lf-line);
+}
+
+.lf-btn--block {
+  width: 100%;
+}
+
+.lf-btn--sm {
+  min-height: 34px;
+  padding: 0 12px;
+  font-size: 13px;
+  border-radius: 999px;
+}
+
+.lf-btn[disabled] {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.lf-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: transparent;
+  border: 0;
+  color: var(--ion-text-color);
+  cursor: pointer;
+}
+
+.lf-icon-btn:active {
+  background: var(--lf-card-2);
+}
+
+/* ========================= action bar ========================== */
+
+.lf-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 8px;
+  border-top: 1px solid var(--lf-line);
+}
+
+.lf-action {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: var(--lf-muted);
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.lf-action:active {
+  background: var(--lf-card-2);
+}
+
+.lf-action--up.lf-on {
+  color: var(--lf-ubuntu);
+}
+
+.lf-action--down.lf-on {
+  color: var(--lf-signal);
+}
+
+.lf-action--save.lf-on {
+  color: var(--lf-beacon);
+}
+
+/* ========================== avatars ============================ */
+
+.lf-avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--lf-card-2);
+  display: block;
+  flex-shrink: 0;
+}
+
+.lf-avatar--ring {
+  padding: 2px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--lf-beacon), var(--lf-marigold), var(--lf-signal));
+}
+
+.lf-avatar--seen {
+  background: var(--lf-line);
+}
+
+/* =========================== media ============================= */
+
+.lf-media {
+  width: 100%;
+  display: block;
+  background: var(--lf-card-2);
+  max-height: 460px;
+  object-fit: cover;
+}
+
+.lf-media--contain {
+  object-fit: contain;
+  max-height: 60vh;
+  background: #000;
+}
+
+.lf-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+
+/* ========================= text blocks ========================= */
+
+.lf-prose {
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.55;
+  font-size: 15px;
+}
+
+.lf-prose p {
+  margin: 0 0 10px;
+}
+
+.lf-title {
+  font-size: 18.5px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.4px;
+}
+
+.lf-h1 {
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -1px;
+}
+
+.lf-h2 {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.45px;
+}
+
+.lf-meta {
+  font-size: 12.5px;
+  color: var(--lf-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.lf-divider {
+  height: 1px;
+  background: var(--lf-line);
+  margin: 10px 0;
+}
+
+/* ======================== key-value list ======================= */
+
+.lf-kv {
+  display: grid;
+  grid-template-columns: 108px 1fr;
+  gap: 6px 12px;
+  font-size: 13.5px;
+}
+
+.lf-kv dt {
+  color: var(--lf-muted);
+  font-weight: 600;
+}
+
+.lf-kv dd {
+  margin: 0;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+/* =========================== banner ============================ */
+
+.lf-banner {
+  display: flex;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: var(--lf-radius);
+  margin: 12px var(--lf-gap);
+  border: 1px solid var(--lf-line);
+  background: var(--lf-card-2);
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+.lf-banner--danger {
+  border-color: color-mix(in srgb, var(--lf-signal) 50%, transparent);
+  background: color-mix(in srgb, var(--lf-signal) 12%, var(--lf-card-2));
+}
+
+.lf-banner--warn {
+  border-color: color-mix(in srgb, var(--lf-marigold) 50%, transparent);
+  background: color-mix(in srgb, var(--lf-marigold) 12%, var(--lf-card-2));
+}
+
+.lf-banner--success {
+  border-color: color-mix(in srgb, var(--lf-ubuntu) 50%, transparent);
+  background: color-mix(in srgb, var(--lf-ubuntu) 12%, var(--lf-card-2));
+}
+
+/* ====================== horizontal scroller ==================== */
+
+.lf-scroller {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 4px var(--lf-gap) 8px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.lf-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.lf-scroller > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* ============================ misc ============================= */
+
+.lf-empty {
+  padding: 48px 28px;
+  text-align: center;
+  color: var(--lf-muted);
+}
+
+.lf-empty h3 {
+  color: var(--ion-text-color);
+  margin: 12px 0 6px;
+  font-size: 17px;
+}
+
+.lf-fab-note {
+  text-align: center;
+  font-size: 11px;
+  color: var(--lf-muted);
+  padding: 6px 20px 18px;
+}
+
+.lf-badge {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--lf-signal);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lf-pulse {
+  animation: lf-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes lf-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 transparent; }
+  50% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--lf-signal) 35%, transparent); }
+}
+
+.lf-fade-in {
+  animation: lf-fade 0.18s ease;
+}
+
+@keyframes lf-fade {
+  from { transform: translateY(4px); }
+  to { transform: none; }
+}
+
+/* Colour is never the only clue. One line, not a popup. */
+.ring-key {
+  margin: 2px 16px 10px;
+  font-size: 12.5px;
+  line-height: 1.35;
+  font-weight: 700;
+  color: var(--lf-muted);
+}
+
+.status-word {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+.status-word[data-status="safe"] { color: var(--lf-ubuntu); background: color-mix(in srgb, var(--lf-ubuntu) 16%, transparent); }
+.status-word[data-status="unfamiliar"] { color: var(--lf-marigold); background: color-mix(in srgb, var(--lf-marigold) 18%, transparent); }
+.status-word[data-status="need_help"] { color: var(--lf-signal); background: color-mix(in srgb, var(--lf-signal) 16%, transparent); }
+
+/* No cross-fade flash between screens. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+.lf-safe-bottom {
+  padding-bottom: max(16px, var(--lf-safe-bottom));
+}
+
+.lf-safe-top {
+  padding-top: var(--lf-safe-top);
+}
+
+:root.lf-light .danger-note,
+:root.lf-light .lf-chip--danger {
+  color: #8d2a18;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===================== desktop / tablet ======================== */
+
+@media (min-width: 768px) {
+  .lf-card {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: var(--lf-maxw);
+  }
+  .lf-wrap,
+  .lf-pad {
+    max-width: var(--lf-maxw);
+  }
+  .lf-banner {
+    max-width: var(--lf-maxw);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.lf-contrib {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-start;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  color: #c9f2dc;
+  background: color-mix(in srgb, var(--lf-ubuntu) 22%, transparent);
+  border: 1px solid color-mix(in srgb, var(--lf-ubuntu) 45%, transparent);
+}
+.lf-contrib.top {
+  color: #1a1200;
+  background: var(--lf-beacon);
+  border-color: var(--lf-beacon);
+}

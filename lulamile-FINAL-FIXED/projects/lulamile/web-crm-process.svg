@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Website design and CRM process diagram">
+  <defs>
+    <linearGradient id="bgp" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f6f8fc"/>
+      <stop offset="100%" stop-color="#e9eefa"/>
+    </linearGradient>
+    <marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9aa9c2"/>
+    </marker>
+    <filter id="ps" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#16233c" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bgp)"/>
+  <text x="120" y="96" font-family="Inter, Helvetica, Arial, sans-serif" font-size="34" font-weight="700" fill="#16233c">Web design + CRM process</text>
+  <text x="120" y="132" font-family="Inter, Helvetica, Arial, sans-serif" font-size="17" fill="#6b7a94">From discovery to launch to lead follow-up — one connected system.</text>
+
+  <!-- stage 1 -->
+  <g filter="url(#ps)">
+    <rect x="120" y="200" width="300" height="230" rx="16" fill="#ffffff"/>
+    <circle cx="160" cy="242" r="17" fill="#1f6feb"/>
+    <text x="160" y="248" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">01</text>
+    <text x="190" y="248" font-family="Inter, Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#16233c">Discovery</text>
+    <rect x="150" y="286" width="240" height="11" rx="5" fill="#c8d3e6"/>
+    <rect x="150" y="310" width="200" height="11" rx="5" fill="#c8d3e6"/>
+    <rect x="150" y="334" width="220" height="11" rx="5" fill="#c8d3e6"/>
+    <rect x="150" y="372" width="240" height="40" rx="10" fill="#eef3fb"/>
+    <text x="170" y="397" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14" fill="#5c6c88">Stakeholder workshops</text>
+  </g>
+
+  <!-- stage 2 -->
+  <g filter="url(#ps)">
+    <rect x="470" y="200" width="300" height="230" rx="16" fill="#ffffff"/>
+    <circle cx="510" cy="242" r="17" fill="#1f6feb"/>
+    <text x="510" y="248" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">02</text>
+    <text x="540" y="248" font-family="Inter, Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#16233c">Sitemap &amp; flows</text>
+    <rect x="500" y="286" width="100" height="66" rx="8" fill="#eef3fb"/>
+    <rect x="612" y="286" width="100" height="66" rx="8" fill="#eef3fb"/>
+    <rect x="500" y="362" width="212" height="50" rx="8" fill="#eef3fb"/>
+    <rect x="500" y="430" width="240" height="8" rx="4" fill="#d5dded"/>
+  </g>
+
+  <!-- stage 3 -->
+  <g filter="url(#ps)">
+    <rect x="820" y="200" width="300" height="230" rx="16" fill="#ffffff"/>
+    <circle cx="860" cy="242" r="17" fill="#1f6feb"/>
+    <text x="860" y="248" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">03</text>
+    <text x="890" y="248" font-family="Inter, Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#16233c">UI design</text>
+    <rect x="850" y="286" width="240" height="86" rx="10" fill="#12244a"/>
+    <rect x="870" y="308" width="150" height="14" rx="7" fill="#ffffff" opacity="0.9"/>
+    <rect x="870" y="334" width="110" height="10" rx="5" fill="#8fa4c2"/>
+    <rect x="850" y="386" width="240" height="52" rx="10" fill="#eef3fb"/>
+  </g>
+
+  <!-- stage 4 -->
+  <g filter="url(#ps)">
+    <rect x="1170" y="200" width="310" height="230" rx="16" fill="#ffffff"/>
+    <circle cx="1210" cy="242" r="17" fill="#1f6feb"/>
+    <text x="1210" y="248" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">04</text>
+    <text x="1240" y="248" font-family="Inter, Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#16233c">Build &amp; connect</text>
+    <rect x="1200" y="286" width="250" height="24" rx="8" fill="#e6f6ee"/>
+    <rect x="1200" y="320" width="250" height="24" rx="8" fill="#eef3fb"/>
+    <rect x="1200" y="354" width="250" height="24" rx="8" fill="#eef3fb"/>
+    <rect x="1200" y="388" width="250" height="24" rx="8" fill="#fdf3e6"/>
+    <rect x="1200" y="418" width="150" height="8" rx="4" fill="#d5dded"/>
+  </g>
+
+  <g stroke="#9aa9c2" stroke-width="2" marker-end="url(#arw)" fill="none">
+    <path d="M 424 315 L 466 315"/>
+    <path d="M 774 315 L 816 315"/>
+    <path d="M 1124 315 L 1166 315"/>
+  </g>
+
+  <!-- CRM layer -->
+  <g filter="url(#ps)">
+    <rect x="120" y="500" width="1360" height="290" rx="18" fill="#ffffff"/>
+    <text x="160" y="548" font-family="Inter, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#16233c">CRM layer — every enquiry tracked from first click to closed deal</text>
+
+    <rect x="160" y="580" width="300" height="170" rx="12" fill="#f3f7fd" stroke="#e0e8f5"/>
+    <text x="184" y="614" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1f6feb">Capture</text>
+    <rect x="184" y="632" width="250" height="11" rx="5" fill="#c8d3e6"/>
+    <rect x="184" y="654" width="200" height="11" rx="5" fill="#c8d3e6"/>
+    <rect x="184" y="676" width="230" height="11" rx="5" fill="#c8d3e6"/>
+    <rect x="184" y="702" width="140" height="26" rx="13" fill="#ffffff" stroke="#d5dded"/>
+
+    <rect x="500" y="580" width="300" height="170" rx="12" fill="#f3f7fd" stroke="#e0e8f5"/>
+    <text x="524" y="614" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#7c5cff">Qualify &amp; route</text>
+    <rect x="524" y="632" width="250" height="11" rx="5" fill="#c8d3e6"/>
+    <rect x="524" y="654" width="180" height="11" rx="5" fill="#c8d3e6"/>
+    <rect x="524" y="676" width="230" height="11" rx="5" fill="#c8d3e6"/>
+    <rect x="524" y="702" width="140" height="26" rx="13" fill="#ffffff" stroke="#d5dded"/>
+
+    <rect x="840" y="580" width="300" height="170" rx="12" fill="#f3f7fd" stroke="#e0e8f5"/>
+    <text x="864" y="614" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#22b573">Automate follow-up</text>
+    <rect x="864" y="632" width="250" height="11" rx="5" fill="#c8d3e6"/>
+    <rect x="864" y="654" width="210" height="11" rx="5" fill="#c8d3e6"/>
+    <rect x="864" y="676" width="230" height="11" rx="5" fill="#c8d3e6"/>
+    <rect x="864" y="702" width="140" height="26" rx="13" fill="#ffffff" stroke="#d5dded"/>
+
+    <rect x="1180" y="580" width="260" height="170" rx="12" fill="#f3f7fd" stroke="#e0e8f5"/>
+    <text x="1204" y="614" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#f2a03d">Report</text>
+    <rect x="1204" y="632" width="210" height="11" rx="5" fill="#c8d3e6"/>
+    <rect x="1204" y="654" width="170" height="11" rx="5" fill="#c8d3e6"/>
+    <rect x="1204" y="676" width="200" height="11" rx="5" fill="#c8d3e6"/>
+    <rect x="1204" y="702" width="140" height="26" rx="13" fill="#ffffff" stroke="#d5dded"/>
+  </g>
+
+  <text x="1480" y="862" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" fill="#6b7a94" text-anchor="end">LulaMile-HalfMachine</text>
+</svg>

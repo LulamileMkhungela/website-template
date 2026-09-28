@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="../lulamile/base-path-fix.js?v=2"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function(){try{var d=document.documentElement,c=d.classList;c.remove('light','dark');var e=localStorage.getItem('theme');if(e){c.add(e||'')}else{c.add('light');}if(e==='light'||e==='dark'||!e)d.style.colorScheme=e||'light'}catch(t){}})();
+    </script>
+    <link rel="icon" href="../favicon.webp?v=2" type="image/webp" />
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@200,300,400,500,600,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <title>ServiceWaze — Live Service Status for Your Area | LulaMile-HalfMachine</title>
+    <meta name="description" content="Case study: ServiceWaze — suburb-level service status for South Africa. Eskom load shedding, City Power outages, water quality and supply, weather and air quality, transport disruptions and local news. Free, no login, works offline, multilingual." />
+    <meta name="author" content="LulaMile-HalfMachine" />
+    <meta name="keywords" content="ServiceWaze, load shedding, City Power outages, Johannesburg water, service disruption PWA, civic tech South Africa, product designer Johannesburg" />
+    <link rel="canonical" href="https://lulamilemkhungela.github.io/website-template/project/service-waze/" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1, noai, noimageai" />
+
+    <meta property="og:title" content="ServiceWaze — Live Service Status for Your Area" />
+    <meta property="og:description" content="The warning is not the same in Alexandra and in Cape Town. Pick the street, not the country: load shedding, water, weather, transport and news for your suburb. Free, no login, works offline." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://lulamilemkhungela.github.io/website-template/project/service-waze/" />
+    <meta property="og:image" content="https://lulamilemkhungela.github.io/website-template/projects/lulamile/servicewaze/cover.png" />
+    <meta property="og:locale" content="en_ZA" />
+    <meta property="og:site_name" content="LulaMile-HalfMachine Portfolio" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ServiceWaze — Live Service Status for Your Area" />
+    <meta name="twitter:description" content="Pick the street, not the country. Load shedding, water, weather, transport and news for your suburb — free, no login, works offline." />
+    <meta name="twitter:image" content="https://lulamilemkhungela.github.io/website-template/projects/lulamile/servicewaze/cover.png" />
+    <meta name="twitter:site" content="@lulamile_m" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "CreativeWork",
+        "name": "ServiceWaze — Live Service Status for Your Area",
+        "author": { "@type": "Person", "name": "LulaMile-HalfMachine", "alternateName": "Lulamile Mkhungela" },
+        "dateCreated": "2026",
+        "genre": "Civic Tech / PWA",
+        "about": "Suburb-level service status for South Africa: electricity, water, weather, transport and news — free, no login, works offline, multilingual",
+        "image": "https://lulamilemkhungela.github.io/website-template/projects/lulamile/servicewaze/cover.png",
+        "url": "https://lulamilemkhungela.github.io/website-template/project/service-waze/",
+        "sameAs": "https://lulamilemkhungela.github.io/ServiceWaze/"
+      }
+    </script>
+
+    <style>
+      :root{
+        --background:222 30% 97%; --foreground:222 45% 11%; --card:222 25% 95%;
+        --muted-foreground:222 18% 40%; --border:222 20% 88%; --hero-accent:203 92% 42%;
+      }
+      .dark{
+        --background:222 40% 9%; --foreground:222 25% 94%; --card:222 32% 13%;
+        --muted-foreground:222 16% 72%; --border:222 24% 20%; --hero-accent:199 89% 54%;
+      }
+      *{box-sizing:border-box;margin:0;padding:0}
+      html{scroll-behavior:smooth}
+      body{
+        background:hsl(var(--background)); color:hsl(var(--foreground));
+        font-family:Inter,system-ui,-apple-system,sans-serif; font-size:16px; line-height:1.65;
+        -webkit-font-smoothing:antialiased;
+      }
+      .display{font-family:'Clash Grotesk',Inter,sans-serif}
+      .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+      a{color:inherit}
+      .topbar{position:sticky;top:0;z-index:50;background:hsl(var(--background)/.92);backdrop-filter:blur(14px);border-bottom:1px solid hsl(var(--border)/.6)}
+      .topbar .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:12px;padding-bottom:12px;gap:16px}
+      .topbar a{ text-decoration:none; font-size:14px; font-weight:600; display:inline-flex; align-items:center; gap:8px;}
+      .mainnav{display:flex;align-items:center;gap:26px}
+      .mainnav a{font-size:14px;font-weight:500;color:hsl(var(--foreground));transition:color .2s ease}
+      .mainnav a:hover{color:hsl(var(--hero-accent))}
+      .mainnav a.pill{padding:9px 18px;border-radius:999px;background:hsl(var(--hero-accent));color:hsl(var(--background));font-weight:700}
+      .drop{position:relative}
+      .drop summary{list-style:none;cursor:pointer;font-size:14px;font-weight:500;display:inline-flex;align-items:center;gap:6px}
+      .drop summary::-webkit-details-marker{display:none}
+      .drop summary:after{content:"▾";font-size:11px;color:hsl(var(--muted-foreground))}
+      .drop .menu{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);min-width:240px;background:hsl(var(--card)/.72);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);border:1px solid hsl(var(--border));border-radius:16px;padding:8px;display:flex;flex-direction:column;gap:2px;box-shadow:0 18px 44px -18px hsl(var(--foreground)/.35)}
+      .drop .menu a{padding:9px 12px;border-radius:10px;font-size:13px;font-weight:500}
+      .drop .menu a:hover{background:hsl(var(--background)/.7);color:hsl(var(--hero-accent))}
+      .drop[open] summary{color:hsl(var(--hero-accent))}
+      @media (max-width: 860px){ .mainnav a:not(.pill), .drop{display:none} }
+      .hero{padding:84px 0 40px}
+      .eyebrow{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:hsl(var(--hero-accent));margin-bottom:18px}
+      h1{font-family:'Clash Grotesk',Inter,sans-serif;font-size:clamp(34px,6vw,64px);line-height:1.05;font-weight:700;letter-spacing:-.02em;max-width:18ch}
+      .sub{margin-top:20px;font-size:clamp(16px,2.2vw,20px);color:hsl(var(--muted-foreground));max-width:66ch}
+      .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:hsl(var(--border)/.7);border:1px solid hsl(var(--border)/.7);border-radius:18px;overflow:hidden;margin-top:44px}
+      .meta div{background:hsl(var(--card)/.62);-webkit-backdrop-filter:blur(12px) saturate(1.3);backdrop-filter:blur(12px) saturate(1.3);padding:18px 20px}
+      .meta dt{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:hsl(var(--muted-foreground));margin-bottom:6px}
+      .meta dd{font-size:14px;font-weight:600}
+      .note{margin-top:18px;font-size:13px;color:hsl(var(--muted-foreground));border-left:3px solid hsl(var(--hero-accent));padding:6px 0 6px 14px}
+      .livebtn{display:inline-flex;align-items:center;gap:9px;margin-top:22px;padding:13px 26px;border-radius:999px;background:hsl(var(--hero-accent));color:hsl(var(--background));text-decoration:none;font-weight:700;font-size:15px;transition:transform .25s ease,box-shadow .25s ease}
+      .livebtn:hover{transform:translateY(-2px);box-shadow:0 14px 34px -12px hsl(var(--hero-accent)/.7)}
+      .livebtn .dot{width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 0 0 4px hsl(var(--hero-accent)/.25)}
+      .ghostbtn{display:inline-block;margin-left:14px;padding:11px 22px;border-radius:999px;border:1px solid hsl(var(--border));background:hsl(var(--card)/.58);-webkit-backdrop-filter:blur(10px) saturate(1.3);backdrop-filter:blur(10px) saturate(1.3);text-decoration:none;font-weight:600;font-size:14px;color:hsl(var(--foreground));transition:transform .25s ease,box-shadow .25s ease}
+      .ghostbtn:hover{transform:translateY(-2px);box-shadow:0 10px 26px -12px hsl(var(--hero-accent)/.5)}
+      figure{margin:34px 0}
+      figure img{width:100%;border-radius:20px;border:1px solid hsl(var(--border)/.7);display:block;transition:transform .5s ease, box-shadow .5s ease}
+      figure img:hover{transform:scale(1.012);box-shadow:0 24px 60px -24px hsl(var(--foreground)/.35)}
+      figcaption{margin-top:10px;font-size:13px;color:hsl(var(--muted-foreground));text-align:center}
+      .shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:26px}
+      .shots figure{margin:0}
+      .shots img{border-radius:16px}
+      .shots figcaption{text-align:left;margin-top:8px}
+      section{padding:52px 0;border-top:1px solid hsl(var(--border)/.6)}
+      h2{font-family:'Clash Grotesk',Inter,sans-serif;font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-.015em;line-height:1.12;margin-bottom:18px}
+      h2 .accent{color:hsl(var(--hero-accent))}
+      p+p{margin-top:14px}
+      .lede{font-size:clamp(16px,2vw,19px);color:hsl(var(--muted-foreground));max-width:70ch}
+      ul{margin:16px 0 0 2px;list-style:none}
+      li{position:relative;padding-left:26px;margin-top:10px;max-width:78ch}
+      li:before{content:"";position:absolute;left:2px;top:.62em;width:8px;height:8px;border-radius:2px;background:hsl(var(--hero-accent));transform:rotate(45deg)}
+      .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:26px}
+      .card{background:hsl(var(--card)/.58);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);border:1px solid hsl(var(--border)/.7);border-radius:18px;padding:22px}
+      .card h3{font-family:'Clash Grotesk',Inter,sans-serif;font-size:18px;margin-bottom:8px}
+      .card p{font-size:14px;color:hsl(var(--muted-foreground))}
+      .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:26px;counter-reset:st}
+      .step{border:1px solid hsl(var(--border)/.7);border-radius:16px;padding:18px;background:hsl(var(--card)/.58);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);position:relative;overflow:hidden}
+      .step:before{counter-increment:st;content:"0" counter(st);font-family:'Clash Grotesk',Inter,sans-serif;font-weight:700;font-size:13px;color:hsl(var(--hero-accent));display:block;margin-bottom:8px}
+      .step h3{font-size:15px;margin-bottom:6px}
+      .step p{font-size:13px;color:hsl(var(--muted-foreground))}
+      .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-top:26px}
+      .kpi{border:1px solid hsl(var(--border)/.7);border-radius:16px;padding:18px;background:hsl(var(--card)/.58);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4)}
+      .kpi b{display:block;font-family:'Clash Grotesk',Inter,sans-serif;font-size:26px;color:hsl(var(--hero-accent));letter-spacing:-.02em}
+      .kpi span{font-size:12.5px;color:hsl(var(--muted-foreground))}
+      .cta{padding:70px 0 90px;text-align:center}
+      .cta .btn{display:inline-block;margin-top:22px;padding:15px 30px;border-radius:999px;background:hsl(var(--hero-accent));color:hsl(var(--background));text-decoration:none;font-weight:700;font-size:15px;transition:transform .25s ease, box-shadow .25s ease}
+      .cta .btn:hover{transform:translateY(-2px);box-shadow:0 14px 34px -12px hsl(var(--hero-accent)/.7)}
+      .cta .ghost{display:inline-block;margin:22px 0 0 14px;padding:15px 26px;border-radius:999px;border:1px solid hsl(var(--border));text-decoration:none;font-weight:600;font-size:15px;color:hsl(var(--muted-foreground))}
+      footer{border-top:1px solid hsl(var(--border)/.6);padding:26px 0;font-size:13px;color:hsl(var(--muted-foreground));background:hsl(var(--background)/.65);-webkit-backdrop-filter:blur(14px) saturate(1.3);backdrop-filter:blur(14px) saturate(1.3)}
+      footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
+      .rv{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+      .rv.in{opacity:1;transform:none}
+      @media (prefers-reduced-motion: reduce){ .rv{opacity:1;transform:none;transition:none} figure img:hover{transform:none} html{scroll-behavior:auto} }
+    </style>
+  </head>
+  <body>
+    <div class="topbar">
+      <div class="wrap">
+        <a href="../" style="gap:10px">
+          <span style="width:36px;height:36px;border-radius:50%;overflow:hidden;border:2px solid hsl(var(--hero-accent)/.35);display:inline-block">
+            <img src="../lulamile/meew.jpeg" alt="LulaMile-HalfMachine" style="width:100%;height:100%;object-fit:cover;border-radius:0;display:block" />
+          </span>
+          <span style="display:flex;flex-direction:column;line-height:1.2">
+            <span style="font-size:14px;font-weight:600">LulaMile-HalfMachine</span>
+            <span style="font-size:11px;font-weight:400;color:hsl(var(--muted-foreground))">Johannesburg, Anywhere Remote</span>
+          </span>
+        </a>
+        <nav class="mainnav" aria-label="Site">
+          <a href="../">Home</a>
+          <a href="../services/">Services</a>
+          <details class="drop">
+            <summary>Expertise &amp; Works</summary>
+            <div class="menu">
+              <a href="../product-design-strategy/">Product Design &amp; Strategy</a>
+              <a href="../brand-strategy-and-growth/">Brand Strategy &amp; Growth</a>
+              <a href="../website-design-conversion/">Website Design &amp; Conversion</a>
+              <a href="../frontend-development/">Frontend Development</a>
+              <a href="../microfinance-impact-consulting/">Microfinance &amp; Impact</a>
+              <a href="lula-gazette/">LulaGazette case study</a>
+              <a href="service-waze/" style="color:hsl(var(--hero-accent));font-weight:700">ServiceWaze case study</a>
+            </div>
+          </details>
+          <a href="../about/">About</a>
+          <a class="pill" href="../contact/">Book a Call</a>
+        </nav>
+      </div>
+    </div>
+
+    <header class="hero wrap">
+      <p class="eyebrow rv">Case study · Civic Tech / PWA · 2026</p>
+      <h1 class="rv">ServiceWaze: what is coming, what to do, what it costs.</h1>
+      <p class="sub rv">The warning is not the same in Alexandra and in Cape Town. National load shedding is off —
+        Joburg water and City Power are not. ServiceWaze is a service board for your suburb: electricity, water,
+        weather, transport and news, pulled from the same official sources the municipalities publish.</p>
+      <dl class="meta rv">
+        <div><dt>Role</dt><dd>Designer &amp; Builder</dd></div>
+        <div><dt>Industry</dt><dd>Civic Tech / Utilities</dd></div>
+        <div><dt>Platform</dt><dd>Progressive web app</dd></div>
+        <div><dt>Languages</dt><dd>EN · ZU · XH · ST</dd></div>
+        <div><dt>Cost</dt><dd>Free — no login</dd></div>
+        <div><dt>Status</dt><dd>Live</dd></div>
+      </dl>
+      <p class="note rv">ServiceWaze is live and scraping tonight's board — the home screen shows the exact pull,
+        the exact time and the sources it used. Open it and pick your suburb.</p>
+      <p class="rv lm-live-btn" style="margin-top:22px">
+        <a class="livebtn" href="https://lulamilemkhungela.github.io/ServiceWaze/" target="_blank" rel="noopener noreferrer"><span class="dot"></span>Open the live site&nbsp;&nbsp;↗</a>
+        <a class="ghostbtn" href="https://github.com/LulamileMkhungela/ServiceWaze" target="_blank" rel="noopener noreferrer">Code on GitHub</a>
+      </p>
+    </header>
+
+    <main class="wrap">
+      <figure class="rv" style="margin-top:0">
+        <img src="../projects/lulamile/servicewaze/cover.png"
+          alt="ServiceWaze cover — live service status for your area: electricity, water, weather, transport and news"
+          loading="eager" fetchpriority="high" />
+        <figcaption>The live cover: "Live service status for your area — Electricity · Water · Weather · Transport ·
+          News. Free · No login · Works offline · Multilingual."</figcaption>
+      </figure>
+
+      <section id="the-product">
+        <p class="eyebrow rv">The product</p>
+        <h2 class="rv">Pick the street, <span class="accent">not the country</span>.</h2>
+        <p class="lede rv">A national dashboard tells you the grid is at stage zero and leaves you there. ServiceWaze
+          starts one level lower — the suburb. Search a suburb or tap one that is on tonight's board, and every screen
+          answers for that place: the burst pipe in Alexandra, the do-not-use-tap-water notice in Bezuidenhout Valley,
+          the partial restoration in Honeydew.</p>
+        <div class="grid2 rv">
+          <div class="card"><h3>⚡ Electricity</h3><p>Eskom GetStatus for the country, then the local reality: City Power faults, metro utility status and what it means for your area.</p></div>
+          <div class="card"><h3>🚰 Water</h3><p>Reservoir levels, burst pipes, quality notices — with plain-language actions ("do not use the taps") instead of a code list.</p></div>
+          <div class="card"><h3>🌤️ Weather &amp; air</h3><p>Current conditions, three-day forecast, wind, sunrise and air quality for the metros — Cape Town AQI 138 at 22:00 is a headline, not a footnote.</p></div>
+          <div class="card"><h3>🚌 Transport</h3><p>Gautrain, Gautrain Bus, Prasa Metrorail and Rea Vaya with live disruption counts, phone numbers and official sites.</p></div>
+          <div class="card"><h3>📰 News</h3><p>Electricity, water, weather and transport news filtered by topic and area — in English, isiZulu, Xhosa and Sesotho.</p></div>
+          <div class="card"><h3>🔔 Alerts</h3><p>Notifications for stage 2+ load shedding, severe weather, community reports and news. Push works even when the app is closed, plus a WhatsApp summary.</p></div>
+        </div>
+        <div class="shots rv">
+          <figure>
+            <img src="../projects/lulamile/servicewaze/01-home.png" alt="ServiceWaze home screen — Soweto board with active alerts, weather cards and report button" loading="lazy" decoding="async" />
+            <figcaption>The home board for Soweto: active alerts, the day's weather and air quality, report in one tap.</figcaption>
+          </figure>
+          <figure>
+            <img src="../projects/lulamile/servicewaze/02-transport.png" alt="ServiceWaze transport screen — Gautrain, Prasa Metrorail and Rea Vaya disruption status" loading="lazy" decoding="async" />
+            <figcaption>Transport: disruption counts per network, with the number to call and the official site.</figcaption>
+          </figure>
+          <figure>
+            <img src="../projects/lulamile/servicewaze/05-areas.png" alt="ServiceWaze alerts screen — notification toggles, push alerts and WhatsApp alerts" loading="lazy" decoding="async" />
+            <figcaption>Alerts: pick exactly what wakes you up — stage 2+, severe weather, community reports, news. No login; everything stays on the phone.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="the-challenge">
+        <p class="eyebrow rv">The challenge</p>
+        <h2 class="rv">The national feed is <span class="accent">not your feed</span>.</h2>
+        <p class="lede rv">Load shedding ended nationally in 2025 — and for the people ServiceWaze is built for, the
+          problem got smaller in geography and harder to find. Water boards, City Power, metro utilities and
+          transport agencies each publish in their own place, in their own format, at their own pace.</p>
+        <ul class="rv">
+          <li>A burst pipe in Alexandra is invisible on a national dashboard that says "all clear".</li>
+          <li>A water quality notice in Bezuidenhout Valley lives on a suburb page nobody bookmarks.</li>
+          <li>Nineteen Joburg reservoirs on bypass and Lawley running low — the detail is published, buried and dated
+            by morning.</li>
+          <li>The people most affected are least likely to own a data plan, a car or an English-only interface — and
+            most likely to need the answer on a phone, offline.</li>
+          <li>Headlines are not data: a News24 line about Sandton meter closures is a claim until the article body
+            says so. The product had to know the difference.</li>
+        </ul>
+      </section>
+
+      <section id="the-goal">
+        <p class="eyebrow rv">The goal</p>
+        <h2 class="rv">Answers at <span class="accent">suburb level</span>, for free.</h2>
+        <p class="lede rv">The bar: a resident of any covered suburb should get the same answer their municipality
+          gives — faster, in their language, on a phone that works offline. No account, no subscription, no
+          fine print.</p>
+        <div class="kpis rv">
+          <div class="kpi"><b>5</b><span>service streams on one board — electricity, water, weather, transport, news</span></div>
+          <div class="kpi"><b>4</b><span>languages — English, isiZulu, Xhosa and Sesotho, switchable on every screen</span></div>
+          <div class="kpi"><b>0</b><span>logins — no account, everything stored on the phone, alerts follow the area chip</span></div>
+          <div class="kpi"><b>22:40</b><span>SAST on the board — every pull is timestamped, so the board always says what was scraped and when</span></div>
+        </div>
+      </section>
+
+      <section id="the-solution">
+        <p class="eyebrow rv">The solution</p>
+        <h2 class="rv">Scrape the officials, <span class="accent">design for the street</span>.</h2>
+        <ul class="rv">
+          <li>An area chip instead of a login: Soweto, Johannesburg, Malamuule, Durban — add as many suburbs as you
+            live in, and every screen follows the selected chip.</li>
+          <li>Honest scraping: the board states exactly what was pulled and when — "Eskom GetStatus = 1, which means
+            stage 0", "19 Joburg reservoirs on bypass, Lawley running low" — and it says when it did <em>not</em>
+            scrape. Bryanston cleared on its own page, so it's not shown as an outage; a headline-only story stays a
+            headline.</li>
+          <li>Actions, not just status: each item comes with what to do — "do not use the taps", the number to call,
+            the official site — plus a one-tap community report that feeds the next board.</li>
+          <li>Alerts that respect the phone: notification toggles per stream, push that works with the app closed,
+            and a ready-made WhatsApp summary you can forward to the family group.</li>
+          <li>Offline-first PWA: installable, cached, readable on a mid-range phone on a patchy signal — the network
+            the alerts are about is the same network that may be down.</li>
+        </ul>
+        <div class="shots rv">
+          <figure>
+            <img src="../projects/lulamile/servicewaze/06-report.png" alt="ServiceWaze services screen — Eskom, City Power and water hotline directory with report confirmation" loading="lazy" decoding="async" />
+            <figcaption>Services: the hotline directory — Eskom, City Power, Cape Town, eThekwini, Tshwane, Ekurhuleni,
+              Johannesburg Water — with the report button that closes the loop.</figcaption>
+          </figure>
+          <figure>
+            <img src="../projects/lulamile/servicewaze/02-alerts.png" alt="ServiceWaze news screen — filtered news with language switcher EN ZU XH ST" loading="lazy" decoding="async" />
+            <figcaption>News filtered by topic and area, with the EN · ZU · XH · ST switcher — the same board in the
+              language you think in.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="the-process">
+        <p class="eyebrow rv">The process</p>
+        <h2 class="rv">How a <span class="accent">public board</span> gets built.</h2>
+        <div class="steps rv">
+          <div class="step"><h3>Map the sources</h3><p>Eskom GetStatus, City Power, Joburg Water, reservoir dashboards, Open-Meteo, transport agencies — each with its own format, cadence and failure mode.</p></div>
+          <div class="step"><h3>Draw the board</h3><p>One screen per suburb, five streams, status colour everyone understands. The area chip replaced the login on the second sketch.</p></div>
+          <div class="step"><h3>Write the scraper</h3><p>Each source gets a puller with its own timestamp and confidence rule. Headlines are claims; scraped bodies are facts. The board shows the difference.</p></div>
+          <div class="step"><h3>Localise</h3><p>isiZulu, Xhosa and Sesotho from day one — "read alerts aloud" included, because some of the most important alerts should be heard, not read.</p></div>
+          <div class="step"><h3>Ship the PWA</h3><p>Installable, offline-cached, push-enabled. Then watch the board fail in the wild and fix the pullers that break first.</p></div>
+        </div>
+      </section>
+
+      <section id="the-results">
+        <p class="eyebrow rv">Where it stands</p>
+        <h2 class="rv">Live, and <span class="accent">reading the board</span>.</h2>
+        <p class="lede rv">ServiceWaze is live — a real night on the board, as the product reports it:</p>
+        <ul class="rv">
+          <li>Scraped at 22:40 SAST: Eskom GetStatus = 1 (stage 0), Alexandra burst pipe isolated with no published
+            restoration time, Bezuidenhout Valley quality notice still active, 19 Joburg reservoirs on bypass, 20
+            City Power outages including a partial Honeydew restoration.</li>
+          <li>Weather and air for the metros from Open-Meteo — Cape Town AQI 138 at 22:00, flagged on the board, not
+            hidden in a widget.</li>
+          <li>The honesty test: Bryanston was on the water index and cleared on its own page, so it's off the board.
+            Sandton meter closures are a News24 headline only, so they're reported as such.</li>
+          <li>Community reports and the hotline directory keep the loop closed: the board tells you what's wrong,
+            what to do, and what it costs to fix — including the number to dial.</li>
+        </ul>
+        <p class="note rv" style="margin-top:22px">Open the live site — search a suburb, tap it, and see exactly what
+          was scraped, from where, and when.</p>
+      </section>
+
+      <section id="takeaways">
+        <p class="eyebrow rv">Key takeaways</p>
+        <h2 class="rv">What I'd tell the next team.</h2>
+        <div class="grid2 rv">
+          <div class="card"><h3>Granularity is the product</h3><p>The national feed answers for the country. The suburb chip answers for the person. Most "civic" products stop a level too high.</p></div>
+          <div class="card"><h3>Cite the scrape</h3><p>Timestamp every pull and state the source on the board. A status board that can't say where it looked is just a rumour with better typography.</p></div>
+          <div class="card"><h3>Status without actions is noise</h3><p>"Do not use the taps" and "call 0860 562 874" are the design. The icon is decoration.</p></div>
+          <div class="card"><h3>Offline is a feature, not a fallback</h3><p>The utility that's down is often the connection. The PWA has to answer in the dark.</p></div>
+          <div class="card"><h3>Language is access</h3><p>EN · ZU · XH · ST in a header switcher is cheap to build and the difference between "information" and "usable".</p></div>
+          <div class="card"><h3>Free and no-login is a trust decision</h3><p>Utility status is public information. A paywall on a water outage is a brand decision, not a business one.</p></div>
+        </div>
+      </section>
+
+      <div class="cta rv">
+        <h2>Building a public-facing, real-time product?</h2>
+        <p class="lede" style="margin:0 auto">I design and build: the scrapers, the boards, the PWA and the
+          localisation — one pair of hands, end to end.</p>
+        <a class="btn" href="../contact/">Start a conversation</a>
+        <a class="ghost" href="../services/">See how I work</a>
+      </div>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <span>© 2026 LulaMile-HalfMachine · Johannesburg, South Africa</span>
+        <span>ServiceWaze case study · content protected, please ask before reuse</span>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        var els = document.querySelectorAll('.rv');
+        if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+        }, { threshold: 0.12 });
+        els.forEach(function (e) { io.observe(e); });
+      })();
+    </script>
+  </body>
+</html>
